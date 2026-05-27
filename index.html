@@ -1050,7 +1050,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   border-radius:4px;transition:background .15s}
 .rrow:hover{background:rgba(255,255,255,.04)}
 .r-spark{flex-shrink:0;opacity:.8}
-
+@media (max-width: 900px) { /* <-- AJOUTEZ CETTE LIGNE */
   #shell{grid-template-columns:1fr;grid-template-rows:50px auto auto 32px}
   #main{padding:9px 10px;gap:9px}
   #side{border-left:none;border-top:1px solid var(--border);padding:9px 10px}
@@ -1060,6 +1060,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   .setup-body{grid-template-columns:1fr}
   .setup-inner{padding:14px 14px 30px}
   .wiki-2col{grid-template-columns:1fr}
+}
 }
 </style>
 </head>
@@ -5576,7 +5577,7 @@ const _v15_showFinal=showFinal;
 showFinal=function(){
   _v15_showFinal();
   // Nexus: accumulate scores and relaunch if not done yet
-    if(T.structure==="nexus"&&T.nexusTourneyIdx<2)
+    if(T.structure==="nexus"&&T.nexusTourneyIdx<2){
     [...Array(T.N).keys()].forEach(i=>{T.nexusScores[i]+=T.points[i]||0;});
     T.nexusResults.push([...T.points]);
     T.nexusTourneyIdx++;
