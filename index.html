@@ -2474,6 +2474,7 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
     worldEventNext:120+Math.floor(Math.random()*80),
     worldEventActive:null, worldEventPayMod:null,
     duelLosses:Array(p.N).fill(0), duelLBPairs:[], duelLBResults:[],
+    duelResults:[], duelElim:[],
     consolBracket:[], consolElim:[],
     heatmapMatrix:Array.from({length:p.N},()=>new Float64Array(p.N)),
     heatmapCount:Array.from({length:p.N},()=>new Float64Array(p.N)),
@@ -3237,61 +3238,6 @@ function endPhase(phase){
     if(T.modifiers.includes("koh")) T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.kohPts[b]-T.kohPts[a]);
     else if(T.structure==="bracket") T.finalRanking=buildBracketRanking();
     else T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-    const weO=document.getElementById("world-event-overlay");if(weO){clearTimeout(worldEventOverlayTimeout);weO.style.display="none";}
-    showFinal();
-  }
-}
-
-  /* ─── BRACKET with consolation ─── */
-  if(T.mode==="bracket"){
-    T.bracket[phase].forEach(g=>{
-      g.ranked=[...g.group].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-      g.done=true;
-    });
-    grank=interleave(T.bracket[phase]);
-    buildNextBracket(phase);
-    renderSide();
-  } else if(T.mode==="survival"){
-    const alive=[...Array(T.N).keys()].filter(i=>T.survHP[i]>0).sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-    const dead=[...Array(T.N).keys()].filter(i=>T.survHP[i]<=0);
-    grank=[...alive,...dead];
-  } else if(T.mode==="koh"||T.mode==="gauntlet"){
-    // KOH: rank by kohPts accumulated THIS phase only (reset each phase)
-    grank=T.mode==="koh"
-      ?[...Array(T.N).keys()].sort((a,b)=>T.kohPts[b]-T.kohPts[a])
-      :[T.kohKing,...[...Array(T.N).keys()].filter(i=>i!==T.kohKing).sort((a,b)=>T.strats[b].pop-T.strats[a].pop)];
-  } else if(T.mode==="royale"){
-    const alive=[...Array(T.N).keys()].filter(i=>T.strats[i].pop>0.5).sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-    grank=[...alive,...T.royaleElims.slice().reverse()];
-  } else {
-    grank=[...Array(T.N).keys()].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-  }
-
-  // Bracket and duel: no point system, ranking by bracket only
-  const noPts=["bracket","duel","duel2"].includes(T.mode);
-  if(!noPts){
-    const PTMAP=getPtMap(T.N);
-    const phPts=Array(T.N).fill(0);
-    grank.forEach((idx,r)=>{const pt=PTMAP[r]||0;T.points[idx]+=pt;phPts[idx]=pt;});
-    if(T.mode==="royale")grank.forEach((idx,r)=>{if(T.points[idx]===phPts[idx])T.points[idx]=PTMAP[r]||0;});
-    T.phasePoints.push(phPts);
-    updatePtsTable();
-    document.getElementById("pts-main").style.display="";
-  }
-
-  if(phase<T.maxPhases-1){
-    T.phase=phase+1;
-    // KOH: reset per-phase points for next phase
-    if(T.mode==="koh"){T.kohPts=Array(T.N).fill(0);}
-    setSt("wait",`Manche ${phase+1} terminée — cliquez ▶`);
-    document.getElementById("btn-next").style.display="";
-    document.getElementById("pbadge").style.display="none";
-  } else {
-    // Final ranking
-    if(T.mode==="koh")T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.kohPts[b]-T.kohPts[a]);
-    else if(T.mode==="bracket")T.finalRanking=buildBracketRanking();
-    else T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-    // Clear any world event overlay
     const weO=document.getElementById("world-event-overlay");if(weO){clearTimeout(worldEventOverlayTimeout);weO.style.display="none";}
     showFinal();
   }
@@ -5962,20 +5908,17 @@ function makeMiniPay(T0,mod,tMod){
 }
 
 function initObservatoire(){
-  const basePay={coop:{coop:[T.R,T.R],betray:[T.S,T.T]},betray:{coop:[T.T,T.S],betray:[T.P,T.P]}};
+  const pay0=T.pendingPayoff||{R:3,T:5,P:1,S:0};
   T.obsArenas=OBS_VARIANTS.map((v,vi)=>{
-    // Clone strategies with separate state
-    const strats=defs.map((def,i)=>{
-    let initPop=p.POP/p.N;
-    if(p.modifiers.includes("gauntlet") && def.sid===draft.me) initPop=p.POP*2/p.N;
-    if(p.modifiers.includes("invasion")){initPop=def.sid===draft.me?p.POP*0.05:p.POP*0.95/(p.N-1);}
-    return{...def,idx:i,pop:initPop,isMe:def.sid===draft.me,st:{},coopRate:0.5,peakPop:initPop,totalScore:0,matchCount:0};
-  });
+    const strats=T.strats.map((s,i)=>{
+      const initPop=T.POP/T.N;
+      return{...s,idx:i,pop:initPop,st:{},coopRate:0.5,peakPop:initPop,totalScore:0,matchCount:0};
+    });
     return{
       id:vi,label:v.label,strats,
       noise:Math.min(0.4,T.NOISE+v.noiseBonus),
       alpha:Math.min(0.12,T.ALPHA+v.alphaBonus),
-      pay:makeMiniPay(T,v.payMod,v.tMod),
+      pay:makeMiniPay(pay0,v.payMod,v.tMod),
       coopHistory:[],gen:0,leader:-1,
     };
   });
