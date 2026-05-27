@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Axelrod Arena X · v15</title>
+<title>Axelrod Arena X · v17</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -3387,7 +3387,7 @@ function renderSurvival(el){
 function renderKoH(el){
   const king=T.strats[T.kohKing];if(!king)return;
   // For KOH: sort by kohPts; for gauntlet: by pop
-  const sorted=T.mode==="koh"
+  const sorted=T.modifiers.includes("koh")
     ?[...Array(T.N).keys()].sort((a,b)=>T.kohPts[b]-T.kohPts[a])
     :[T.kohKing,...[...Array(T.N).keys()].filter(i=>i!==T.kohKing).sort((a,b)=>T.strats[b].pop-T.strats[a].pop)];
   const maxPts=T.kohPts[sorted[0]]||1;
@@ -3477,7 +3477,7 @@ function renderDuel(el){
   }
 
   // LB (double elim)
-  if(T.mode==="duel2"&&T.duelLBPairs.length>0){
+  if(T.structure==="duel2"&&T.duelLBPairs.length>0){
     h+=`<div class="duel-round">`;
     h+=`<div class="duel-lb-title">Losers</div>`;
     T.duelLBPairs.filter(p=>p[1]>=0).forEach(pair=>{
@@ -4578,7 +4578,7 @@ function showFinal(){
   document.getElementById("btn-replay").style.display="";
   document.getElementById("pbadge").style.display="none";
 
-  const noPts=["bracket","duel","duel2"].includes(T.mode);
+  const noPts=["bracket","duel","duel2"].includes(T.structure);
   if(!noPts){updatePtsTable();document.getElementById("pts-main").style.display="";}
   else{document.getElementById("pts-main").style.display="none";}
 
@@ -4960,11 +4960,11 @@ function saveBuilder(){
   if(!draft.sel.includes(customStrategy.sid)){
     if(draft.sel.length<nPlayers){draft.sel.push(customStrategy.sid);}
     else{draft.sel[draft.sel.length-1]=customStrategy.sid;}
-    buildDraftSlots();updateSummary();
+    renderSlots();updateSummary();
   }
   // Set as me
   draft.me=customStrategy.sid;
-  buildDraftSlots();updateSummary();
+  renderSlots();updateSummary();
 }
 
 /* ══════════════════════════════════════════════════
@@ -5042,6 +5042,7 @@ function openMission(id){
   document.getElementById("mm-setup").innerHTML=`⚙ ${m.setup}`;
   document.getElementById("mission-modal-bg").classList.add("open");
 }
+function closeMission(){document.getElementById("mission-modal-bg").classList.remove("open");}
 function launchMission(){
   const m=activeMission; if(!m)return;
   closeMission();
@@ -5575,7 +5576,7 @@ const _v15_showFinal=showFinal;
 showFinal=function(){
   _v15_showFinal();
   // Nexus: accumulate scores and relaunch if not done yet
-  if(T.mode==="nexus"&&T.nexusTourneyIdx<2){
+    if(T.structure==="nexus"&&T.nexusTourneyIdx<2)
     [...Array(T.N).keys()].forEach(i=>{T.nexusScores[i]+=T.points[i]||0;});
     T.nexusResults.push([...T.points]);
     T.nexusTourneyIdx++;
