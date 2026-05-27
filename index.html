@@ -1050,7 +1050,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   border-radius:4px;transition:background .15s}
 .rrow:hover{background:rgba(255,255,255,.04)}
 .r-spark{flex-shrink:0;opacity:.8}
-@media (max-width: 900px) { /* <-- AJOUTEZ CETTE LIGNE */
+
   #shell{grid-template-columns:1fr;grid-template-rows:50px auto auto 32px}
   #main{padding:9px 10px;gap:9px}
   #side{border-left:none;border-top:1px solid var(--border);padding:9px 10px}
@@ -1060,7 +1060,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   .setup-body{grid-template-columns:1fr}
   .setup-inner{padding:14px 14px 30px}
   .wiki-2col{grid-template-columns:1fr}
-}
 }
 </style>
 </head>
@@ -2879,12 +2878,6 @@ function runPhase(){
   document.getElementById("scrubber-wrap").classList.add("visible");
   updateLegend();
   if(T.matrix==="arms")document.getElementById("arms-t-info").textContent=`T boost: ×${(T.armsBoost[phase]||1).toFixed(1)}`;
-  
-  // (La suite de la fonction reste identique : let rafId=null; ...)
-
-  // ── PERF: decouple simulation from rendering ──────────────
-  // Simulation runs in setInterval (pure math, no DOM)
-  // Rendering runs in requestAnimationFrame (max 60fps)
   let rafId=null;
   let renderDirty=false;
   let _lastSideRender=0,_lastStatsRender=0;
@@ -3128,6 +3121,7 @@ function runPhase(){
       endPhase(phase);
     }
   },T.spdVal);
+}
 
 /* END PHASE */
 function endPhase(phase){
@@ -5564,7 +5558,7 @@ function exportResults(){
     params:{alpha:T.ALPHA,noise:T.NOISE,drift:T.DRIFT,pop:T.POP,rmatch:T.RMATCH}
   };
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);
+  const url=URL.createObjectURL(blob);a
   const a=document.createElement("a");
   a.href=url;a.download=`axelrod_sandbox_${new Date().toISOString().slice(0,10)}.json`;
   a.click();URL.revokeObjectURL(url);
@@ -5577,7 +5571,7 @@ const _v15_showFinal=showFinal;
 showFinal=function(){
   _v15_showFinal();
   // Nexus: accumulate scores and relaunch if not done yet
-    if(T.structure==="nexus"&&T.nexusTourneyIdx<2){
+    if(T.structure==="nexus"&&T.nexusTourneyIdx<2) {
     [...Array(T.N).keys()].forEach(i=>{T.nexusScores[i]+=T.points[i]||0;});
     T.nexusResults.push([...T.points]);
     T.nexusTourneyIdx++;
