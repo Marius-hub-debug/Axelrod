@@ -2206,242 +2206,180 @@ function goSetup(){
 /* ══════════════════════════════════════════════════
    WIKI
 ══════════════════════════════════════════════════ */
-function buildWikiAll(){
-  const half=Math.ceil(CHARS.length/2);
-  document.getElementById("wiki-strats-content").innerHTML=
-    `<div>${CHARS.slice(0,half).map(c=>c.strats.map(s=>wikiStratHTML(c,s)).join("")).join("")}</div>`+
-    `<div>${CHARS.slice(half).map(c=>c.strats.map(s=>wikiStratHTML(c,s)).join("")).join("")}</div>`;
-  document.getElementById("wp-modes").innerHTML=MODES.map(m=>`
-    <div class="wm">
-      <div class="wm-head"><div class="wm-icon">${m.icon}</div>
-      <div class="wm-name">${m.name}${m.badge?` <span style="font-size:7px;color:var(--amber);border:1px solid rgba(255,140,0,.3);padding:1px 4px;border-radius:3px;margin-left:5px">${m.badge}</span>`:""}</div></div>
-      <div class="wm-desc">${m.wiki}</div>
-    </div>`).join("");
-  document.getElementById("wp-concepts").innerHTML=[
-    {t:"Le Dilemme du Prisonnier",
-     b:"Deux joueurs choisissent simultanément <b>Coopérer (C)</b> ou <b>Trahir (T)</b>. La tension : trahir est individuellement rationnel mais collectivement destructeur.",
-     f:"T > R > P > S  (Tentation > Récompense > Punition > Naïf)",n:null},
-    {t:"Les Tournois d'Axelrod (1984)",
-     b:"Robert Axelrod organisa des tournois computationnels. Gagnant : <b>Tit-for-Tat</b> de Rapoport — 4 lignes de code. Les 4 règles du succès : gentil, réciproque, pardonneur, clair.",
-     f:null,n:"TFT n'est jamais premier à trahir, punit immédiatement, pardonne dès que l'adversaire recoopère."},
-    {t:"Dynamique Évolutionnaire",
-     b:"Chaque stratégie est une population. Les meilleurs scores <b>croissent</b>, les autres <b>déclinent</b>. La dérive empêche la convergence prématurée.",
-     f:"pop[i] ← pop[i] × (1 + α×(f[i]−f̄)) + dérive_aléatoire",
-     n:"α bas (0.005-0.01) = évolution lente et renversements naturels."},
-    {t:"Bruit & Erreurs",
-     b:"Un coup inversé aléatoirement déclenche une spirale si la stratégie est rigide. <b>TF2T</b> et <b>GTFT</b> résistent mieux car elles pardonnent les accidents.",
-     f:null,n:"Bruit 4-6% : dynamiques réalistes avec renversements naturels."},
-    {t:"Équilibre de Nash",
-     b:"(Trahir,Trahir) est l'unique équilibre de Nash en interaction unique. Pourtant sous-optimal vs (Coop,Coop). C'est le cœur du dilemme.",
-     f:null,n:null},
-    {t:"Réciprocité Directe",
-     b:"La coopération émerge si les interactions sont répétées. Condition de stabilité de TFT :",
-     f:"w > (T−R) / (T−P)   où w = probabilité d'interactions futures",
-     n:"Plus T est tentant, plus il faut d'interactions répétées."},
-    {t:"Taux de Coopération (v12)",
-     b:"Arena v12 mesure en temps réel le taux de coopération global (C/total coups). Un taux >60% indique un écosystème sain. <b>En dessous de 40%</b> : spirale de trahisons mutuelles.",
-     f:null,n:"Mode Écologie exploite ce mécanisme : quand tout le monde coopère, la tentation monte. Un équilibre dynamique."},
-    {t:"Effet Miroir (v12)",
-     b:"Le mode Miroir teste la <b>cohérence interne</b> : une stratégie qui joue bien contre elle-même a un avantage évolutionnaire. TFT vs TFT = (R,R). AllD vs AllD = (P,P). Pavlov vs Pavlov oscille mais converge bien.",
-     f:null,n:null},
-  ].map(c=>`<div class="wc"><div class="wc-title">${c.t}</div>
-    <div class="wc-body">${c.b}${c.f?`<span class="wc-formula">${c.f}</span>`:""}</div>
-    ${c.n?`<div class="wc-note">💡 ${c.n}</div>`:""}</div>`).join("");
+/* ══════════════════════════════════════════════════
+   WIKI ENCYCLOPÉDIQUE (V17 SANDBOX EDITION)
+══════════════════════════════════════════════════ */
+function wikiStratHTML(c, s) {
+  return `<div class="we" id="we_${s.sid}">
+    <div class="we-head">
+      <div class="we-emoji">${c.e}</div>
+      <div><div class="we-name" style="color:${c.color}">${s.name}</div><div class="we-strat">${c.name} · ${s.tag}</div></div>
+    </div>
+    <div class="we-desc">${s.desc}</div>
+    <div class="we-behav">"${s.behav}"</div>
+    <div class="we-tags">${s.tags.map(t => `<span class="tag ${t.c}">${t.t}</span>`).join("")}</div>
+    <div class="we-stats">${Object.entries(s.stats).map(([k, v]) => `<div class="we-stat"><div class="we-sv">${k}</div><div class="we-sv2">${v}</div></div>`).join("")}</div>
+    <div class="we-vs">${s.vs}</div>
+  </div>`;
+}
 
-  // GOAT History
-  document.getElementById("wp-goat").innerHTML=`
+function buildWikiAll() {
+  // 1. STRATÈGES (Colonnes dynamiques)
+  const half = Math.ceil(CHARS.length / 2);
+  document.getElementById("wiki-strats-content").innerHTML =
+    `<div>${CHARS.slice(0, half).map(c => c.strats.map(s => wikiStratHTML(c, s)).join("")).join("")}</div>` +
+    `<div>${CHARS.slice(half).map(c => c.strats.map(s => wikiStratHTML(c, s)).join("")).join("")}</div>`;
+
+  // 2. MODES (Adapté au Sandbox avec le lore complet)
+  const sandboxLore = [
+    { cat: "1. STRUCTURES DE RENCONTRE", desc: "Définit comment les stratèges s'affrontent et le système de points.", items: [
+      { i: "🔄", n: "Round Robin", b: "Classique", d: "Chacun affronte tous les autres. Le format le plus équitable pour évaluer la force brute d'une stratégie sur l'ensemble de l'écosystème." },
+      { i: "🏆", n: "Bracket", b: "Éliminatoire", d: "Arbre de tournoi classique. Les vainqueurs avancent, les perdants vont en consolante. Favorise les stratégies capables de battre des adversaires spécifiques." },
+      { i: "🔄", n: "Double Élimination", b: "Esport", d: "Format compétitif. Une défaite vous envoie dans le Loser Bracket. Deux défaites = élimination définitive de l'arène." },
+      { i: "🇨🇭", n: "Système Suisse", b: "Équilibré", d: "À chaque manche, les forts affrontent les forts et les faibles affrontent les faibles. Évite les massacres unilatéraux initiaux." },
+      { i: "🗺", n: "Territoire", b: "Spatial", d: "Simule une grille 2D. Un stratège ne joue qu'avec ses 4 voisins directs. Permet aux coopérateurs de former des clusters inexpugnables." },
+      { i: "🌐", n: "Nexus", b: "Méta-tournoi", d: "Enchaîne automatiquement 3 tournois complets consécutifs. Le vrai test d'endurance évolutionnaire." },
+      { i: "🔭", n: "Observatoire", b: "Multivers", d: "Lance 6 arènes parallèles avec des conditions différentes (bruit, rapidité, matrices mutées) et compile un Méta-classement." }
+    ]},
+    { cat: "2. MATRICES DE GAINS", desc: "Le cœur du Dilemme du Prisonnier.", items: [
+      { i: "🎲", n: "Standard", b: "Aléatoire", d: "Génère une matrice aléatoire respectant T > R > P > S à chaque nouvelle manche." },
+      { i: "🐐", n: "Mode GOAT", b: "Historique", d: "Force la matrice canonique d'Axelrod 1984 (T=5, R=3, P=1, S=0) pour toute la durée de la partie." },
+      { i: "⚡", n: "Chaos", b: "Instable", d: "La matrice mute et change toutes les 80 générations. Empêche toute adaptation à long terme." },
+      { i: "🌿", n: "Écologie", b: "Réactif", d: "Feedback en temps réel : si tout le monde coopère, la Tentation (T) augmente. Si tout le monde trahit, la Récompense mutuelle (R) augmente." },
+      { i: "🚀", n: "Course aux Armements", b: "Escalade", d: "À chaque nouvelle manche, la Tentation (T) augmente brutalement. Survivre à la dernière manche relève de l'exploit." }
+    ]},
+    { cat: "3. PROTOCOLES DE FIN DE VIE", desc: "Règles d'élimination de l'écosystème.", items: [
+      { i: "💀", n: "Survie (Deathmatch)", b: "Tension", d: "Tout stratège dont la population chute sous les 5% est éliminé définitivement." },
+      { i: "💥", n: "Battle Royale", b: "Timer", d: "Toutes les 60 générations, le stratège avec la population la plus faible est exécuté sur-le-champ." },
+      { i: "☄️", n: "Extinction", b: "Purge", d: "Un cataclysme régulier balaie les 20% les plus faibles du classement." },
+      { i: "🌊", n: "Tsunami", b: "Rotation", d: "Périodiquement, les plus faibles sont effacés et remplacés par de nouveaux stratèges tirés au sort." }
+    ]},
+    { cat: "4. MODIFICATEURS ENVIRONNEMENTAUX", desc: "Règles spéciales cumulables.", items: [
+      { i: "🦠", n: "Invasion", b: "Asymétrique", d: "Votre stratège démarre avec seulement 5% de la population. L'objectif est d'atteindre 50% de domination." },
+      { i: "⚔", n: "Gauntlet", b: "Boss", d: "Votre stratège commence avec une population doublée. Serez-vous le boss final intouchable ou la cible de tous ?" },
+      { i: "👑", n: "King of the Hill", b: "Bonus", d: "Contrôler la première place octroie un flux constant de points supplémentaires." },
+      { i: "🌍", n: "Diplomatie", b: "Équilibrage", d: "Si un stratège dépasse 40% de population globale, une coalition se forme pour le détruire passivement (-0.2 pts)." },
+      { i: "🪞", n: "Miroir", b: "Introspection", d: "Chaque stratège joue 30% de ses matchs contre un clone parfait de lui-même." },
+      { i: "🗡", n: "Vendetta", b: "Rancune", d: "Les trahisons s'accumulent en jauge de 'rancune' globale, ostracisant progressivement les traîtres." },
+      { i: "🦠", n: "Épidémie", b: "Contagion", d: "Un stratège hautement agressif a une probabilité de contaminer ses voisins, propageant la trahison." },
+      { i: "🧬", n: "Mutation", b: "Dérive", d: "Un stratège au bord de l'extinction (<3%) mute et voit son code altéré par l'injection de bruit aléatoire." },
+      { i: "🧬", n: "Coévolution", b: "Copie", d: "Les stratèges faibles tentent de copier l'algorithme des leaders pour survivre, avec un taux d'erreur génétique." },
+      { i: "🤝", n: "Coalition", b: "Guerre", d: "Les profils aux taux de coopération similaires fusionnent en factions idéologiques. Des guerres éclatent." },
+      { i: "🏛", n: "Civilisations", b: "Géopolitique", d: "4 super-puissances prédéfinies. Le but est la conquête territoriale (60%) plutôt que la survie individuelle." }
+    ]}
+  ];
+
+  document.getElementById("wp-modes").innerHTML = sandboxLore.map(cat => `
+    <div style="margin-bottom:20px;">
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:2px;border-bottom:1px solid var(--border);padding-bottom:4px;">${cat.cat}</div>
+      <div style="font-size:8px;color:var(--muted);margin-bottom:12px;letter-spacing:.05em;">${cat.desc}</div>
+      ${cat.items.map(m => `
+        <div class="wm">
+          <div class="wm-head">
+            <div class="wm-icon">${m.i}</div>
+            <div class="wm-name">${m.n} <span style="font-size:7px;color:var(--amber);border:1px solid rgba(255,140,0,.3);padding:1px 4px;border-radius:3px;margin-left:5px">${m.b}</span></div>
+          </div>
+          <div class="wm-desc">${m.d}</div>
+        </div>`).join("")}
+    </div>`).join("");
+
+  // 3. THÉORIE & CONCEPTS
+  document.getElementById("wp-concepts").innerHTML = [
+    { t: "Le Dilemme du Prisonnier", b: "Deux joueurs choisissent simultanément <b>Coopérer (C)</b> ou <b>Trahir (T)</b>. La tension : trahir est individuellement rationnel mais collectivement destructeur.", f: "T > R > P > S  (Tentation > Récompense > Punition > Naïf)", n: null },
+    { t: "Les Tournois d'Axelrod (1984)", b: "Robert Axelrod organisa des tournois computationnels où des stratégies s'affrontaient en round robin. Gagnant surprenant : <b>Tit-for-Tat</b> de Rapoport — seulement 5 lignes de code.", f: null, n: "TFT n'est jamais premier à trahir, punit immédiatement, pardonne dès que l'adversaire recoopère." },
+    { t: "Dynamique Évolutionnaire (Replicator Eq.)", b: "Chaque stratégie est une population. Les meilleurs scores <b>croissent</b> proportionnellement, les autres <b>déclinent</b>. La dérive empêche la convergence prématurée.", f: "pop[i] ← pop[i] × (1 + α×(f[i]−f̄)) + dérive", n: "α bas (0.005-0.01) = évolution lente et renversements naturels. Fortement recommandé." },
+    { t: "Bruit & Erreurs", b: "Un coup inversé aléatoirement déclenche une spirale de représailles si la stratégie est rigide (comme TFT ou Grudger). <b>TF2T</b> et <b>GTFT</b> y résistent mieux car elles pardonnent les accidents.", f: null, n: "Bruit 4-6% : dynamiques parfaitement réalistes." },
+    { t: "Équilibre de Nash", b: "(Trahir,Trahir) est l'unique équilibre de Nash en interaction unique. Pourtant sous-optimal vs (Coop,Coop). C'est le cœur philosophique du dilemme.", f: null, n: null },
+    { t: "Réciprocité Directe", b: "La coopération émerge si les interactions sont répétées. La probabilité d'une prochaine interaction (w) doit être suffisante pour dissuader la trahison.", f: "w > (T−R) / (T−P)", n: "Plus T est tentant, plus il faut de tours pour stabiliser la coop." },
+    { t: "Écosystèmes SandBox", b: "Dans Arena X, la survie dépend des autres. AllD gagne contre AllC, mais si les AllC meurent, AllD s'effondre contre TFT. C'est l'essence de l'évolution interdépendante.", f: null, n: "Aucune stratégie n'est absolue. Tout dépend du pool de départ." }
+  ].map(c => `<div class="wc"><div class="wc-title">${c.t}</div><div class="wc-body">${c.b}${c.f ? `<span class="wc-formula">${c.f}</span>` : ""}</div>${c.n ? `<div class="wc-note">💡 ${c.n}</div>` : ""}</div>`).join("");
+
+  // 4. MODE GOAT (Historique)
+  document.getElementById("wp-goat").innerHTML = `
     <div style="margin-bottom:14px;padding:10px;background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.15);border-radius:8px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:5px">🐐 Hall of Fame — Légendes Axelrod</div>
-      <div style="font-size:9px;line-height:1.7;color:rgba(255,255,255,.55)">Le mode GOAT utilise la matrice canonique (<b>T=5, R=3, P=1, S=0</b>) — identique aux tournois Axelrod 1984. Le benchmark universel de la théorie des jeux évolutionnaire.</div>
+      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:5px">🐐 Hall of Fame — Les Légendes d'Axelrod</div>
+      <div style="font-size:9px;line-height:1.7;color:rgba(255,255,255,.58)">La Matrice GOAT utilise les payoffs originaux (<b>T=5, R=3, P=1, S=0</b>) des tournois de 1984. C'est le test universel de la théorie des jeux évolutionnaire.</div>
     </div>
     ${[
-      {rank:"🥇",name:"Tit-for-Tat (TFT)",year:"Axelrod 1984 · Rapoport",score:"504.5 pts",
-       desc:"Le champion inattendu. 4 lignes de code. Jamais premier à trahir. Copie exactement le dernier coup. Toujours pardonner. Gagna les deux tournois."},
-      {rank:"🥈",name:"Tit-for-Two-Tats (TF2T)",year:"Axelrod 1984",score:"491.3 pts",
-       desc:"Attend deux trahisons consécutives avant de punir. Résiste mieux au bruit. Dans certaines simulations (>5% d'erreur), il bat TFT."},
-      {rank:"🥉",name:"GRIM / Grudger",year:"Friedman 1971",score:"477.1 pts",
-       desc:"Dissuasion maximale : une seule trahison = guerre permanente. Fragile face au bruit — un accident détruit toute relation."},
-      {rank:"4",name:"Gradual",year:"Beaufils & Mathieu 1996",score:"510.7 pts",
-       desc:"Souvent considéré comme la vraie stratégie optimale : N trahisons → N punitions exactes puis pardon complet. Plus robuste que TFT à long terme."},
-      {rank:"5",name:"Pavlov (Win-Stay Lose-Shift)",year:"Nowak & May 1993",score:"498.2 pts",
-       desc:"Auto-correcteur : répète si résultat satisfaisant, change sinon. Peut exploiter AllC, brise les cycles. Certaines analyses le placent au-dessus de TFT."},
-      {rank:"6",name:"Contrite TFT",year:"Sugden 1986",score:"468.9 pts",
-       desc:"TFT avec mécanisme de contrition : s'il trahit accidentellement, accepte la punition sans contre-attaquer. Résout le problème des cycles vengeance-accident."},
-      {rank:"7",name:"Joss",year:"Axelrod 1984",score:"432.6 pts",
-       desc:"TFT mais trahit 10% du temps après coop adverse. Espère exploiter. En pratique déclenche des guerres cycliques et finit par perdre face à TFT."},
-      {rank:"8",name:"AllDefect",year:"Axelrod 1984",score:"401.2 pts",
-       desc:"Trahit toujours. Gagne contre AllC mais perd sur le long terme. Preuve que la rationalité individuelle détruit le bien commun."},
-    ].map(g=>`<div class="wgoat-entry">
+      { rank: "🥇", name: "Tit-for-Tat (TFT)", year: "Axelrod 1984 · Rapoport", score: "504.5 pts", desc: "Le champion inattendu. Jamais premier à trahir. Copie exactement le dernier coup. Gagna les deux tournois successifs d'Axelrod." },
+      { rank: "🥈", name: "Tit-for-Two-Tats (TF2T)", year: "Axelrod 1984 · Generous TFT", score: "491.3 pts", desc: "Attend deux trahisons consécutives avant de punir. Résiste magnifiquement au bruit (malentendus)." },
+      { rank: "🥉", name: "GRIM / Grudger", year: "Axelrod 1984 · Friedman", score: "477.1 pts", desc: "Dissuasion nucléaire : une seule trahison déclenche une guerre permanente. Fragile face au bruit." },
+      { rank: "4", name: "Gradual", year: "Beaufils & Mathieu 1996", score: "510.7 pts", desc: "Souvent considérée comme la vraie stratégie optimale : N trahisons adverses → N punitions exactes puis pardon total." },
+      { rank: "5", name: "Pavlov (Win-Stay Lose-Shift)", year: "Nowak & May 1993", score: "498.2 pts", desc: "Auto-correcteur évolutionnaire : répète si résultat satisfaisant, change sinon. Exploit AllC impitoyablement." },
+      { rank: "6", name: "Contrite TFT", year: "Sugden 1986 · Patching", score: "468.9 pts", desc: "S'il trahit par accident (bruit), accepte la punition adverse sans contre-attaquer. Évite la spirale de mort." },
+      { rank: "7", name: "Joss", year: "Axelrod 1984 · Joss", score: "432.6 pts", desc: "TFT mais trahit 10% du temps pour tester l'adversaire. Finit par s'autodétruire contre TFT." },
+      { rank: "8", name: "AllDefect", year: "Axelrod 1984 · Harrington", score: "401.2 pts", desc: "L'équilibre de Nash. Gagne sur des interactions courtes, mais anéantit son propre pool de ressources à long terme." }
+    ].map(g => `<div class="wgoat-entry">
       <div class="wgoat-rank">${g.rank}</div>
       <div class="wgoat-name">${g.name}</div>
-      <div class="wgoat-year">${g.year} · ${g.score}</div>
+      <div class="wgoat-year">${g.year} · ${g.score} (moyenne)</div>
       <div class="wgoat-desc">${g.desc}</div>
     </div>`).join("")}`;
 
-  // GUIDE PAR MODE
-  document.getElementById("wp-guide").innerHTML=`
-    <div style="font-size:9px;line-height:1.65;color:rgba(255,255,255,.5);margin-bottom:12px">Pour chaque mode : stratégies recommandées <span class="guide-pick good" style="display:inline">✓</span> et à éviter <span class="guide-pick bad" style="display:inline">✗</span></div>
+  // 5. GUIDE D'UTILISATION (SANDBOX)
+  document.getElementById("wp-guide").innerHTML = `
+    <div style="font-size:9px;line-height:1.65;color:rgba(255,255,255,.5);margin-bottom:12px">Conseils de survie selon les options Sandbox. <span class="guide-pick good" style="display:inline">✓ Picks recommandés</span> <span class="guide-pick bad" style="display:inline">✗ À éviter</span></div>
     ${[
-      {icon:"🏆",name:"Bracket",tip:"Résilience sur 3 phases différentes. Les stratégies adaptatives (TFT, GTFT, Graduel) dominent grâce à leur polyvalence. Évitez les purs AllD qui éclatent vite.",goods:["TFT","GTFT","Graduel","TF2T"],bads:["AllD","Anarchiste","Crescendo"]},
-      {icon:"🎯",name:"Points",tip:"Score cumulatif : les stratégies coopératives gagnent sur le long terme car elles maintiennent de bons scores dans toutes les manches.",goods:["GTFT","Philosophe","Négociateur","Contrat"],bads:["Aléatoire","AllD","Anarchiste"]},
-      {icon:"💀",name:"Survie",tip:"Éviter de descendre sous 5%. Stratégies stables et non-provocatrices. Les cooperateurs purs surviveront longtemps tant qu'ils ne tombent pas dans un bain de traîtres.",goods:["TF2T","Bouclier","Philosophe","Humaniste"],bads:["AllC","Aléatoire","Vagabond"]},
-      {icon:"⚡",name:"Chaos",tip:"La matrice change toutes les 80 gens. Avantage aux stratégies adaptatives qui ne dépendent pas d'une matrice spécifique.",goods:["Pavlov","TFT","Explorateur","Philosophe"],bads:["Crescendo","Autocrate","AllC"]},
-      {icon:"💥",name:"Battle Royale",tip:"Élimination directe toutes les 60 gens. Soyez agressif dès le début pour ne pas être dernier. AllD et Opportuniste excellent ici.",goods:["AllD","Opportuniste","Trompeur","Graduel"],bads:["AllC","Speed Runner","Pacifiste"]},
-      {icon:"🚀",name:"Arms Race",tip:"T monte à chaque phase. En phase finale (T×2.2) les traîtres dominent. Choisissez des stratégies qui survivent aux deux extrêmes.",goods:["Graduel","Czar","Mur","TF2T"],bads:["AllC","Pacifiste","Contrat"]},
-      {icon:"🤝",name:"Diplomatie",tip:"Éviter de trop dominer — vous devenez la cible de la coalition. Les stratégies modestes et résilientes excellent.",goods:["GTFT","Philosophe","Humaniste","Sage"],bads:["Opportuniste","AllD","Trompeur"]},
-      {icon:"🦠",name:"Invasion",tip:"Votre stratège doit survivre seul dans un territoire hostile. Il faut une stratégie défensive solide qui ne se laisse pas exploiter.",goods:["Graduel","Grudger","Titan","Czar"],bads:["AllC","Pacifiste","Aléatoire"]},
-      {icon:"🌿",name:"Écologie",tip:"La matrice oscille avec le taux de coop. Les stratégies qui s'adaptent aux deux états (coop et hostile) dominent.",goods:["Pavlov","Miroir","Philosophe","TFT"],bads:["AllD","AllC","Crescendo"]},
-      {icon:"🪞",name:"Miroir",tip:"30% du score vient d'un match vs soi-même. TFT vs TFT = excellent (R,R). AllD vs AllD = terrible (P,P). Favorise fortement les stratégies mutuellement bénéfiques.",goods:["TFT","GTFT","TF2T","Graduel","Sage"],bads:["AllD","Anarchiste","Saboteur"]},
-      {icon:"🐐",name:"GOAT",tip:"Matrice canonique T=5 R=3 P=1 S=0 d'Axelrod 1984. Les stratégies connues pour gagner ce setup historique.",goods:["TFT","Graduel","GTFT","Pavlov"],bads:["AllD","Trompeur","Testeur"]},
-      {icon:"👑",name:"King of Hill",tip:"Objectif : tenir le trône le plus longtemps. Il faut dominer tôt et résister aux remontées. Les traîtres peuvent prendre le trône brièvement mais se font punir.",goods:["TFT","Opportuniste","Czar","Graduel"],bads:["Aléatoire","Vagabond","AllC"]},
-    ].map(g=>`<div class="guide-mode">
+      { icon: "🏆", name: "Structures Compétitives", tip: "En Bracket ou Duel, la polyvalence est clé. Les stratégies adaptatives (TFT, GTFT, Graduel) dominent.", goods: ["TFT", "GTFT", "Graduel"], bads: ["AllD", "Crescendo"] },
+      { icon: "💀", name: "Modes Fin de Vie", tip: "En Survie, Extinction ou Royale, évitez de provoquer les autres. Restez stable pour ne pas chuter sous les seuils.", goods: ["TF2T", "Philosophe", "Humaniste"], bads: ["AllC", "Aléatoire", "Vagabond"] },
+      { icon: "⚡", name: "Matrices Mutantes", tip: "Chaos, Éco, ou Arms Race détruisent les stratégies statiques. Il faut des profils capables de lire la méta.", goods: ["Pavlov", "Miroir", "Explorateur"], bads: ["Autocrate", "AllC", "Contrat"] },
+      { icon: "🤝", name: "Modificateurs Sociaux", tip: "Diplomatie, Vendetta ou Civilisations punissent l'arrogance et la tyrannie. La discrétion prime.", goods: ["GTFT", "Philosophe", "Sage"], bads: ["Opportuniste", "AllD", "Trompeur"] },
+      { icon: "🗺", name: "Modificateurs Spatiaux", tip: "Territoire ou Miroir favorisent la cohérence interne. Les coopérateurs forment des forteresses en se regroupant.", goods: ["TFT", "TF2T", "Graduel"], bads: ["AllD", "Anarchiste", "Saboteur"] }
+    ].map(g => `<div class="guide-mode">
       <div class="guide-mode-head"><div class="guide-mode-icon">${g.icon}</div><div class="guide-mode-name">${g.name}</div></div>
-      <div class="guide-picks">${g.goods.map(x=>`<span class="guide-pick good">✓ ${x}</span>`).join("")}${g.bads.map(x=>`<span class="guide-pick bad">✗ ${x}</span>`).join("")}</div>
+      <div class="guide-picks">${g.goods.map(x => `<span class="guide-pick good">✓ ${x}</span>`).join("")}${g.bads.map(x => `<span class="guide-pick bad">✗ ${x}</span>`).join("")}</div>
       <div class="guide-tip">${g.tip}</div>
     </div>`).join("")}`;
 
-  // MATCHUP MATRIX
-  const archs=["AllC","TFT","Graduel","TF2T","GTFT","Pavlov","AllD","Grudger","Chaos"];
-  const outcomes={
-    "AllC":     {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"--",Grudger:"++",Chaos:"+"},
-    "TFT":      {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"-",Grudger:"++",Chaos:"~"},
-    "Graduel":  {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"~",Grudger:"++",Chaos:"+"},
-    "TF2T":     {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"+",Grudger:"++",Chaos:"+"},
-    "GTFT":     {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"-",Grudger:"++",Chaos:"+"},
-    "Pavlov":   {AllC:"+",TFT:"+",Graduel:"+",TF2T:"+",GTFT:"+",Pavlov:"+",AllD:"-",Grudger:"+",Chaos:"~"},
-    "AllD":     {AllC:"++",TFT:"-",Graduel:"~",TF2T:"+",GTFT:"~",Pavlov:"-",AllD:"--",Grudger:"--",Chaos:"+"},
-    "Grudger":  {AllC:"++",TFT:"++",Graduel:"++",TF2T:"++",GTFT:"++",Pavlov:"+",AllD:"--",Grudger:"++",Chaos:"~"},
-    "Chaos":    {AllC:"+",TFT:"~",Graduel:"+",TF2T:"+",GTFT:"+",Pavlov:"~",AllD:"+",Grudger:"~",Chaos:"~"},
+  // 6. MATCHUPS MATRIX
+  const archs = ["AllC", "TFT", "Graduel", "TF2T", "GTFT", "Pavlov", "AllD", "Grudger", "Chaos"];
+  const outcomes = {
+    "AllC": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "--", Grudger: "++", Chaos: "+" },
+    "TFT": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "-", Grudger: "++", Chaos: "~" },
+    "Graduel": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "~", Grudger: "++", Chaos: "+" },
+    "TF2T": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "+", Grudger: "++", Chaos: "+" },
+    "GTFT": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "-", Grudger: "++", Chaos: "+" },
+    "Pavlov": { AllC: "+", TFT: "+", Graduel: "+", TF2T: "+", GTFT: "+", Pavlov: "+", AllD: "-", Grudger: "+", Chaos: "~" },
+    "AllD": { AllC: "++", TFT: "-", Graduel: "~", TF2T: "+", GTFT: "~", Pavlov: "-", AllD: "--", Grudger: "--", Chaos: "+" },
+    "Grudger": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "--", Grudger: "++", Chaos: "~" },
+    "Chaos": { AllC: "+", TFT: "~", Graduel: "+", TF2T: "+", GTFT: "+", Pavlov: "~", AllD: "+", Grudger: "~", Chaos: "~" },
   };
-  const symMap={"++":"pp","+":"p","~":"e","-":"n","--":"nn"};
-  const lblMap={"++":"⊕⊕","+":"⊕","~":"~","-":"⊖","--":"⊖⊖"};
-  document.getElementById("wp-matchups").innerHTML=`
-    <div style="font-size:8px;line-height:1.6;color:rgba(255,255,255,.5);margin-bottom:10px">Résultats attendus sur le long terme (T=3 R=1.5 P=0.5 S=0 avg, bruit 4%). <b style="color:var(--teal)">⊕⊕</b>=excellent <b style="color:rgba(0,229,200,.55)">⊕</b>=bon <b>~</b>=équilibré <b style="color:rgba(255,48,96,.55)">⊖</b>=difficile <b style="color:var(--red)">⊖⊖</b>=désastreux</div>
+  const symMap = { "++": "pp", "+": "p", "~": "e", "-": "n", "--": "nn" };
+  const lblMap = { "++": "⊕⊕", "+": "⊕", "~": "~", "-": "⊖", "--": "⊖⊖" };
+  document.getElementById("wp-matchups").innerHTML = `
+    <div style="font-size:8px;line-height:1.6;color:rgba(255,255,255,.5);margin-bottom:10px">Résultats 1v1 théoriques sans bruit. <b style="color:var(--teal)">⊕⊕</b>=excellent <b style="color:rgba(0,229,200,.55)">⊕</b>=bon <b>~</b>=neutre <b style="color:rgba(255,48,96,.55)">⊖</b>=faible <b style="color:var(--red)">⊖⊖</b>=écrasé</div>
     <div style="overflow-x:auto">
     <table class="mu-table">
-      <tr><th>vs →</th>${archs.map(a=>`<th>${a}</th>`).join("")}</tr>
-      ${archs.map(row=>`<tr><td>${row}</td>${archs.map(col=>{
-        const o=outcomes[row]?.[col]||"~";
-        return`<td><span class="mu-vp ${symMap[o]}">${lblMap[o]}</span></td>`;
-      }).join("")}</tr>`).join("")}
+      <tr><th>vs →</th>${archs.map(a => `<th>${a}</th>`).join("")}</tr>
+      ${archs.map(row => `<tr><td>${row}</td>${archs.map(col => {
+    const o = outcomes[row]?.[col] || "~";
+    return `<td><span class="mu-vp ${symMap[o]}">${lblMap[o]}</span></td>`;
+  }).join("")}</tr>`).join("")}
     </table>
     </div>
     <div style="margin-top:12px;font-size:8px;line-height:1.7;color:rgba(255,255,255,.45)">
-    <b style="color:rgba(255,255,255,.7)">Lecture :</b> ligne = vous, colonne = adversaire. Ex : TFT vs AllD = ⊖ (TFT perd légèrement face à AllD en raison de la première trahison). TFT vs TFT = ⊕⊕ (coopération mutuelle parfaite).<br>
-    <b style="color:var(--gold)">Note :</b> Ces résultats valent pour une interaction 1v1 isolée. Dans un tournoi avec N joueurs, les interactions croisées changent drastiquement les équilibres.
-    </div>`
-  document.getElementById("wp-concepts").innerHTML=[
-    {t:"Le Dilemme du Prisonnier",
-     b:"Deux joueurs choisissent simultanément <b>Coopérer (C)</b> ou <b>Trahir (T)</b>. La tension : trahir est individuellement rationnel mais collectivement destructeur.",
-     f:"T > R > P > S  (Tentation > Récompense > Punition > Naïf)",n:null},
-    {t:"Les Tournois d'Axelrod (1984)",
-     b:"Robert Axelrod organisa des tournois computationnels où des stratégies s'affrontaient en round robin. Gagnant surprenant : <b>Tit-for-Tat</b> de Rapoport — seulement 5 lignes de code. Les 4 règles du succès : gentil, réciproque, pardonneur, clair.",
-     f:null,n:"TFT n'est jamais premier à trahir, punit immédiatement, pardonne dès que l'adversaire recoopère."},
-    {t:"Dynamique Évolutionnaire (Replicator Eq.)",
-     b:"Chaque stratégie est une population. Les meilleurs scores <b>croissent</b>, les autres <b>déclinent</b>. La dérive empêche la convergence prématurée.",
-     f:"pop[i] ← pop[i] × (1 + α×(f[i]−f̄)) + dérive_aléatoire",
-     n:"α bas (0.005-0.01) = évolution lente et renversements naturels. Fortement recommandé."},
-    {t:"Bruit & Erreurs",
-     b:"Un coup inversé aléatoirement déclenche une spirale si la stratégie est rigide. <b>TF2T</b> et <b>GTFT</b> résistent mieux car elles pardonnent les accidents.",
-     f:null,n:"Bruit 4-6% : dynamiques réalistes avec renversements naturels."},
-    {t:"Équilibre de Nash",
-     b:"(Trahir,Trahir) est l'unique équilibre de Nash en interaction unique. Pourtant sous-optimal vs (Coop,Coop). C'est le cœur du dilemme.",
-     f:null,n:null},
-    {t:"Réciprocité Directe & Indirecte",
-     b:"La coopération émerge si les interactions sont répétées (<b>directe</b>) ou si la réputation est trackée (<b>indirecte</b>). Dans Arena X, seule la réciprocité directe joue.",
-     f:"w > (T−R) / (T−P)   où w = probabilité d'interactions futures",
-     n:"Plus T est tentant, plus il faut d'interactions répétées pour stabiliser la coop."},
-    {t:"L'Effet Chaos (Arms Race)",
-     b:"Quand T augmente dans le mode Arms Race, les stratégies coopératives s'effondrent progressivement. La sélection naturelle favorise les traîtres. Ce phénomène explique les courses aux armements réels.",
-     f:null,n:"Les stratégies adaptatives (TFT, GTFT, TF2T) résistent mieux que les pures (AllC, Grudger)."},
-    {t:"Diplomatie & Coalitions",
-     b:"La dynamique de coalition dans le mode Diplomatie illustre le principe <b>Balance of Power</b> : les acteurs s'allient contre le dominant. Observé dans l'histoire : Coalition anti-napoléonienne, Guerre Froide, etc.",
-     f:null,n:"Attention : les coalitions peuvent se retourner contre un des membres si celui-ci prend trop d'importance."},
-  ].map(c=>`<div class="wc"><div class="wc-title">${c.t}</div>
-    <div class="wc-body">${c.b}${c.f?`<span class="wc-formula">${c.f}</span>`:""}</div>
-    ${c.n?`<div class="wc-note">💡 ${c.n}</div>`:""}</div>`).join("");
-
-  document.getElementById("wp-goat").innerHTML=`
-    <div style="margin-bottom:14px;padding:10px;background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.15);border-radius:8px">
-      <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:5px">🐐 Hall of Fame — Les Légendes d'Axelrod</div>
-      <div style="font-size:9px;line-height:1.7;color:rgba(255,255,255,.58)">Le mode GOAT utilise la matrice canonique du Dilemme du Prisonnier (<b>T=5, R=3, P=1, S=0</b>) — identique aux tournois historiques d'Axelrod (1984, 1987). C'est le benchmark universel de la théorie des jeux évolutionnaire.</div>
-    </div>
-    ${[
-      {rank:"🥇",name:"Tit-for-Tat (TFT)",year:"Axelrod 1984 · Rapoport",score:"504.5 pts",
-       desc:"Le champion inattendu. Seulement 4 lignes de code. Jamais premier à trahir. Copie exactement le dernier coup. Toujours pardonner. Gagna les deux tournois successifs d'Axelrod. Démonstration que la bonté paie sur le long terme."},
-      {rank:"🥈",name:"Tit-for-Two-Tats (TF2T)",year:"Axelrod 1984 · Generous TFT",score:"491.3 pts",
-       desc:"Plus tolérant que TFT : attend deux trahisons consécutives avant de punir. Résiste mieux au bruit. Dans certaines simulations avec erreurs (>5%), il bat TFT."},
-      {rank:"🥉",name:"GRIM / Grudger",year:"Axelrod 1984 · Friedman",score:"477.1 pts",
-       desc:"Dissuasion maximale : une seule trahison déclenche une guerre permanente. Excellent à court terme pour punir. Fragile face au bruit — un accident de transmission détruit toute relation."},
-      {rank:"4",name:"Gradual",year:"Beaufils & Mathieu 1996",score:"510.7 pts",
-       desc:"Amélioration de TFT : N trahisons adverses → N punitions exactes puis pardon. Plus robuste que TFT sur le long terme. Souvent considéré comme la véritable stratégie optimale."},
-      {rank:"5",name:"Pavlov (Win-Stay Lose-Shift)",year:"Nowak & May 1993",score:"498.2 pts",
-       desc:"Auto-correcteur évolutionnaire : répète si résultat satisfaisant, change sinon. Peut exploiter AllC, brise les cycles de vengeance. Certaines analyses le placent au-dessus de TFT."},
-      {rank:"6",name:"Contrite TFT",year:"Sugden 1986 · Patching",score:"468.9 pts",
-       desc:"TFT avec mécanisme de contrition : s'il trahit accidentellement (bruit), accepte la punition sans contre-attaquer. Résout le problème des cycles vengeance-accident de TFT."},
-      {rank:"7",name:"Joss",year:"Axelrod 1984 · Joss",score:"432.6 pts",
-       desc:"TFT mais trahit 10% du temps au lieu de coopérer après coopération adverse. Espère exploiter. En pratique déclenche des guerres cycliques et finit par perdre face à TFT."},
-      {rank:"8",name:"AllDefect",year:"Axelrod 1984 · Harrington",score:"401.2 pts",
-       desc:"Trahit toujours. Gagne contre AllC mais perd contre TFT et Grudger sur le long terme. L'équilibre de Nash existe, mais il est collectivement sous-optimal. Preuve que la rationalité individuelle détruit le bien commun."},
-    ].map(g=>`<div class="wgoat-entry">
-      <div class="wgoat-rank">${g.rank}</div>
-      <div class="wgoat-name">${g.name}</div>
-      <div class="wgoat-year">${g.year} · ${g.score} (moyenne historique)</div>
-      <div class="wgoat-desc">${g.desc}</div>
-    </div>`).join("")}`;
-
-  // TERRITOIRE + MUTATION in guide (append)
-  const guideEl=document.getElementById("wp-guide");
-  if(guideEl&&!guideEl.dataset.extra){
-    guideEl.dataset.extra="1";
-    guideEl.innerHTML+=`
-    <div class="guide-mode">
-      <div class="guide-mode-head"><div class="guide-mode-icon">🗺</div><div class="guide-mode-name">Territoire</div></div>
-      <div class="guide-picks"><span class="guide-pick good">✓ TFT</span><span class="guide-pick good">✓ Graduel</span><span class="guide-pick good">✓ TF2T</span><span class="guide-pick bad">✗ AllD</span><span class="guide-pick bad">✗ Anarchiste</span></div>
-      <div class="guide-tip">Sur grille spatiale, les coopérateurs forment des îlots inexpugnables. AllD ne peut exploiter que ses voisins directs et s'isole rapidement. TFT est imbattable en clusters.</div>
-    </div>
-    <div class="guide-mode">
-      <div class="guide-mode-head"><div class="guide-mode-icon">🧬</div><div class="guide-mode-name">Mutation</div></div>
-      <div class="guide-picks"><span class="guide-pick good">✓ TFT</span><span class="guide-pick good">✓ Pavlov</span><span class="guide-pick good">✓ Graduel</span><span class="guide-pick bad">✗ Stratégies rigides</span></div>
-      <div class="guide-tip">Les mutations créent des stratèges imprévisibles. Les stratégies flexibles (TFT, Pavlov) résistent mieux aux perturbations évolutives qu'une stratégie pure comme AllD ou AllC.</div>
+    <b style="color:var(--gold)">Note :</b> En Sandbox multicorps (Round Robin), ces interactions s'entremêlent. Écraser un AllC en 1v1 ne vous fera pas gagner si les TFT vous détruisent en parallèle !
     </div>`;
-  }
 
-  // LEXIQUE
-  document.getElementById("wp-lexique").innerHTML=`
-    <div style="font-size:8px;line-height:1.6;color:rgba(255,255,255,.4);margin-bottom:12px">Glossaire de tous les termes utilisés dans Axelrod Arena. Référence complète.</div>
+  // 7. LEXIQUE
+  document.getElementById("wp-lexique").innerHTML = `
+    <div style="font-size:8px;line-height:1.6;color:rgba(255,255,255,.4);margin-bottom:12px">Glossaire technique de l'Arena X.</div>
     <div class="lex-cols">
     ${[
-      {t:"α (alpha)",d:"Pression de sélection. Contrôle la vitesse d'évolution. α élevé = dominance rapide. α bas = diversité maintenue."},
-      {t:"AllC",d:"Always Cooperate. Coopère sans condition. Idéal dans un écosystème coopératif, catastrophique face aux traîtres. Voir : Pacifiste."},
-      {t:"AllD",d:"Always Defect. Trahit toujours. L'équilibre de Nash pur — rationnel individuellement, collectivement destructeur."},
-      {t:"Arms Race",d:"Course aux armements. T croît à chaque manche (×1→×1.5→×2.2), rendant la trahison progressivement irrésistible."},
-      {t:"Battle Royale",d:"Élimination directe : le stratège le moins populeux est éliminé toutes les 60 générations."},
-      {t:"Bruit",d:"Probabilité qu'un coup soit inversé accidentellement. Simule les malentendus et erreurs. Typiquement 4–6%."},
-      {t:"Cluster",d:"En mode Territoire, groupe de stratèges identiques qui se forment et résistent collectivement aux invasions."},
-      {t:"Dérive",d:"Perturbation aléatoire ajoutée à chaque génération. Simule les mutations génétiques, empêche la stagnation."},
-      {t:"Diplomatie",d:"Coalition automatique contre le leader dès 40% de population. Crée des renversements spectaculaires."},
-      {t:"Dyn. réplicatrice",d:"pop[i]←pop[i]×(1+α×(f[i]−f̄)). Les stratèges performants croissent, les autres déclinent. Base de l'évolution."},
-      {t:"Écologie",d:"Mode où la matrice évolue selon le taux de coop global. Trop de coop → T monte. Trop de trahison → R monte."},
-      {t:"ESS",d:"Evolutionary Stable Strategy. Stratégie résistante à l'invasion par des mutants. TFT est quasi-ESS."},
-      {t:"GOAT",d:"Greatest Of All Time. Matrice canonique T=5 R=3 P=1 S=0 d'Axelrod 1984. Le benchmark universel."},
-      {t:"GTFT",d:"Generous Tit-for-Tat. TFT mais pardonne 20% des trahisons aléatoirement. Plus robuste au bruit. Voir : Généreuse."},
-      {t:"Grudger",d:"Coopère jusqu'à la première trahison puis trahit à jamais. Fragile au bruit. Voir : Implacable."},
-      {t:"Invasion",d:"Mode où votre stratège démarre à 5% et doit coloniser jusqu'à 50% du territoire."},
-      {t:"Matrice de gains",d:"Table {T,R,P,S} définissant les payoffs. Condition dilemme : T>R>P>S."},
-      {t:"Miroir",d:"Mode où 30% du score vient d'un match contre une copie de soi-même. Avantage aux stratégies mutuellement bénéfiques."},
-      {t:"Mutation",d:"Mode évolutif : les stratèges faibles (<3%) mutent en variantes aléatoires toutes les 70 générations."},
-      {t:"Nash (équilibre de)",d:"Situation stable où aucun joueur ne peut améliorer son sort unilatéralement. (AllD,AllD) est Nash mais sous-optimal."},
-      {t:"P (Punition)",d:"Payoff de la trahison mutuelle. Typiquement 0.1–1.2. Pire collectivement que R mais meilleur que S."},
-      {t:"Pavlov",d:"Win-Stay Lose-Shift : répète si résultat ≥R, change sinon. Auto-correcteur fascinant. Voir : Pavlov."},
-      {t:"R (Récompense)",d:"Payoff de la coopération mutuelle. Meilleur résultat collectif. Typiquement 1.4–3.2."},
-      {t:"S (Naïf)",d:"Sucker's payoff : vous coopérez, l'adversaire trahit. Toujours ≤P. La punition de la naïveté."},
-      {t:"Scrubber",d:"Curseur sous le graphique permettant de revivre l'historique d'une partie en glissant vers n'importe quelle génération."},
-      {t:"T (Tentation)",d:"Payoff de la trahison unilatérale. Doit être >R pour qu'il y ait un dilemme. En Arms Race, T monte."},
-      {t:"Territoire",d:"Mode spatial : grille N×N où chaque stratège n'affronte que ses 4 voisins. Les coopérateurs forment des clusters."},
-      {t:"TFT",d:"Tit-for-Tat. Commence par coopérer, copie le dernier coup adverse. Champion d'Axelrod 1984. Voir : Analyste."},
-      {t:"TF2T",d:"Tit-for-Two-Tats. Attend deux trahisons consécutives avant de punir. Plus indulgent. Voir : Patient."},
-    ].map(e=>`<div class="lex-entry"><div class="lex-term">${e.t}</div><div class="lex-def">${e.d}</div></div>`).join("")}
+      { t: "α (Alpha)", d: "Pression de sélection. Contrôle la vitesse d'évolution. α élevé = domination fulgurante. α bas = évolution stable." },
+      { t: "AllC / AllD", d: "Always Cooperate / Always Defect. Les deux extrêmes absolus." },
+      { t: "Bruit (Noise)", d: "Erreur de transmission (%). Transforme accidentellement un C en T ou inversement." },
+      { t: "Dérive", d: "Facteur aléatoire (mutation) appliqué à la reproduction. Empêche la stagnation." },
+      { t: "Dyn. réplicatrice", d: "Équation d'évolution : Les profils au score supérieur à la moyenne se reproduisent, les autres dépérissent." },
+      { t: "ESS", d: "Evolutionary Stable Strategy. Une stratégie qui, si dominante, ne peut être envahie par un mutant." },
+      { t: "Nash (équilibre de)", d: "Situation où aucun joueur ne gagne à changer sa décision seul. (AllD, AllD) en est un." },
+      { t: "P (Punition)", d: "Le Payoff de la trahison mutuelle." },
+      { t: "R (Récompense)", d: "Le Payoff de la coopération mutuelle." },
+      { t: "S (Sucker)", d: "Le Payoff du 'Pigeon' : coopérer face à une trahison." },
+      { t: "T (Tentation)", d: "Le Payoff de la trahison face à une coopération." },
+      { t: "TFT", d: "Tit-For-Tat. L'algorithme roi. Coopère puis copie le coup précédent." },
+      { t: "ZD (Zero-Determinant)", d: "Stratégies asymétriques fixant mathématiquement le score de l'adversaire de force." }
+    ].map(e => `<div class="lex-entry"><div class="lex-term">${e.t}</div><div class="lex-def">${e.d}</div></div>`).join("")}
     </div>`;
 }
 function wikiStratHTML(c,s){
@@ -2867,17 +2805,17 @@ function addEvt(cls,txt){
 /* MODAL */
 function openModal(){
   let pay;
-  if(T.mode==="goat"){
+  if(T.matrix==="goat"){
     pay={...T.goatMatrix,R:3,T:5,P:1,S:0};
   } else {
-    const boost=T.mode==="arms"?(T.armsBoost[T.phase]||1.0):1.0;
+    const boost=T.matrix==="arms"?(T.armsBoost[T.phase]||1.0):1.0;
     pay=mkMatrix(boost);
   }
   T.pendingPayoff=pay;
-  const m=MODES.find(x=>x.id===T.mode);
-  document.getElementById("mt").textContent=`${(m?.name||T.mode).toUpperCase()} · MANCHE ${T.phase+1}/${T.maxPhases}`;
-  const isGoat=T.mode==="goat";
-  const isArms=T.mode==="arms";
+  const mStruct=CONFIG_STRUCTURE.find(x=>x.id===T.structure);
+  document.getElementById("mt").textContent=`${(mStruct?.name||"Sandbox").toUpperCase()} · MANCHE ${T.phase+1}/${T.maxPhases}`;
+  const isGoat=T.matrix==="goat";
+  const isArms=T.matrix==="arms";
   let subtitle=`${T.N} joueurs · ${T.RMATCH} rounds/match · α=${T.ALPHA.toFixed(3)} · bruit=${(T.NOISE*100).toFixed(0)}%`;
   if(isGoat)subtitle="⚜️ Matrice canonique T=5 R=3 P=1 S=0 — Axelrod 1984";
   if(isArms)subtitle=`🚀 Arms Race · Boost T×${(T.armsBoost[T.phase]||1).toFixed(1)} · Manche ${T.phase+1}`;
@@ -2887,15 +2825,15 @@ function openModal(){
   document.getElementById("mm").innerHTML=`
     <div class="mc mmt"></div><div class="mc mh">🤝 Coop</div><div class="mc mh">⚔ Trahit</div>
     <div class="mc mh">🤝</div>
-    <div class="mc md"><span class="bv" style="color:#5bdfb4">${R.toFixed?R.toFixed(2):R}</span><span class="sv">R</span></div>
-    <div class="mc md"><span class="bv" style="color:#ff5f5f">${S.toFixed?S.toFixed(2):S}</span><span class="sv">S</span></div>
+    <div class="mc md"><span class="bv" style="color:#5bdfb4">${R.toFixed(2)}</span><span class="sv">R</span></div>
+    <div class="mc md"><span class="bv" style="color:#ff5f5f">${S.toFixed(2)}</span><span class="sv">S</span></div>
     <div class="mc mh">⚔</div>
-    <div class="mc md"><span class="bv" style="color:#f5c842">${Tv.toFixed?Tv.toFixed(2):Tv}</span><span class="sv">T</span></div>
-    <div class="mc md"><span class="bv" style="color:rgba(255,255,255,.35)">${P.toFixed?P.toFixed(2):P}</span><span class="sv">P</span></div>`;
+    <div class="mc md"><span class="bv" style="color:#f5c842">${Tv.toFixed(2)}</span><span class="sv">T</span></div>
+    <div class="mc md"><span class="bv" style="color:rgba(255,255,255,.35)">${P.toFixed(2)}</span><span class="sv">P</span></div>`;
   const tent=Tv-R,dil=Tv>R&&R>P&&P>S;
   document.getElementById("mtg").innerHTML=
-    `<span class="mtag">T=${(Tv.toFixed?Tv.toFixed(1):Tv)}</span><span class="mtag">R=${(R.toFixed?R.toFixed(1):R)}</span>`+
-    `<span class="mtag">P=${(P.toFixed?P.toFixed(1):P)}</span><span class="mtag">S=${(S.toFixed?S.toFixed(1):S)}</span>`+
+    `<span class="mtag">T=${Tv.toFixed(1)}</span><span class="mtag">R=${R.toFixed(1)}</span>`+
+    `<span class="mtag">P=${P.toFixed(1)}</span><span class="mtag">S=${S.toFixed(1)}</span>`+
     `<span class="mtag ${tent>1.5?"w":"ok"}">${tent>1.5?"⚠ haute tentation":"✓ stable"}</span>`+
     `<span class="mtag ${dil?"w":"ok"}">${dil?"Dilemme du Prisonnier":"Coop. favorable"}</span>`+
     (isGoat?`<span class="mtag goat">🐐 GOAT CANONICAL</span>`:"");
@@ -2915,31 +2853,32 @@ function runPhase(){
     const e=T.POP/Math.max(1,g.length);
     g.forEach(i=>{T.strats[i].pop=e;T.strats[i].st={};T.strats[i].coopRate=0.5;});
   });
-  // V17: start chronicle chapter
+  
   if(T.chronicle!==undefined){
     const chIdx=T.chronicleChapters.length;
     const chName=CHAPTER_NAMES[chIdx%CHAPTER_NAMES.length];
     T.chronicleChapters.push({title:`Chapitre ${chIdx+1} : ${chName}`,gen:0});
-    addChronicle(`${chName} — ${T.N} stratèges entrent en lice en mode ${MODES.find(m=>m.id===T.mode)?.name||T.mode}.`,"hope");
+    const mStruct = CONFIG_STRUCTURE.find(m=>m.id===T.structure)?.name || "Sandbox";
+    addChronicle(`${chName} — ${T.N} stratèges entrent en lice (${mStruct}).`,"hope");
   }
-  // For invasion: restore initial pops
-  if(T.mode==="invasion"){
+  if(T.modifiers.includes("invasion")){
     T.strats.forEach(s=>{s.pop=s.isMe?T.POP*0.05:T.POP*0.95/(T.N-1);s.st={};});
   }
   setSt("run",`Manche ${phase+1}/${T.maxPhases} — ${batch}g/tick`);
   document.getElementById("ph-lbl").textContent=`Manche ${phase+1}/${T.maxPhases}`;
   document.getElementById("btn-next").style.display="none";
-  document.getElementById("pbadge").textContent=`${MODES.find(m=>m.id===T.mode)?.icon||""} ${phase+1}/${T.maxPhases}`;
+  document.getElementById("pbadge").textContent=`${CONFIG_STRUCTURE.find(m=>m.id===T.structure)?.icon||"🏆"} ${phase+1}/${T.maxPhases}`;
   document.getElementById("pbadge").style.display="";
-  // Show coop chart and stats bar
-  const coopWrap=document.getElementById("coop-wrap");if(coopWrap)coopWrap.style.display="";
-  const statsBar=document.getElementById("stats-bar");if(statsBar)statsBar.style.display="";
-  const liveMs=document.getElementById("live-match-section");if(liveMs)liveMs.style.display="";
-  // Show pause + scrubber
-  const pb=document.getElementById("btn-pause");if(pb){pb.classList.add("visible");pb.classList.remove("paused");pb.textContent="⏸ Pause";}
-  const sw=document.getElementById("scrubber-wrap");if(sw)sw.classList.add("visible");
+  
+  document.getElementById("coop-wrap").style.display="";
+  document.getElementById("stats-bar").style.display="";
+  document.getElementById("live-match-section").style.display="";
+  document.getElementById("btn-pause").classList.add("visible");
+  document.getElementById("scrubber-wrap").classList.add("visible");
   updateLegend();
-  if(T.mode==="arms")document.getElementById("arms-t-info").textContent=`T boost: ×${(T.armsBoost[phase]||1).toFixed(1)}`;
+  if(T.matrix==="arms")document.getElementById("arms-t-info").textContent=`T boost: ×${(T.armsBoost[phase]||1).toFixed(1)}`;
+  
+  // (La suite de la fonction reste identique : let rafId=null; ...)
 
   // ── PERF: decouple simulation from rendering ──────────────
   // Simulation runs in setInterval (pure math, no DOM)
@@ -6026,7 +5965,12 @@ function initObservatoire(){
   const basePay={coop:{coop:[T.R,T.R],betray:[T.S,T.T]},betray:{coop:[T.T,T.S],betray:[T.P,T.P]}};
   T.obsArenas=OBS_VARIANTS.map((v,vi)=>{
     // Clone strategies with separate state
-    const strats=T.strats.map(s=>({...s,pop:T.POP/T.N,st:{},coopRate:0.5,idx:s.idx}));
+    const strats=defs.map((def,i)=>{
+    let initPop=p.POP/p.N;
+    if(p.modifiers.includes("gauntlet") && def.sid===draft.me) initPop=p.POP*2/p.N;
+    if(p.modifiers.includes("invasion")){initPop=def.sid===draft.me?p.POP*0.05:p.POP*0.95/(p.N-1);}
+    return{...def,idx:i,pop:initPop,isMe:def.sid===draft.me,st:{},coopRate:0.5,peakPop:initPop,totalScore:0,matchCount:0};
+  });
     return{
       id:vi,label:v.label,strats,
       noise:Math.min(0.4,T.NOISE+v.noiseBonus),
