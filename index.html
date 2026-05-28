@@ -2912,6 +2912,7 @@ function addEvt(cls,txt){
 }
 
 /* MODAL */
+/* MODAL */
 function openModal(){
   let pay;
   if(T.matrix==="goat"){
@@ -2926,7 +2927,7 @@ function openModal(){
     pay.coop = { coop: [pay.R, pay.R], betray: [pay.S, pay.T] };
     pay.betray = { coop: [pay.T, pay.S], betray: [pay.P, pay.P] };
   } else if(T.matrix==="quantique") {
-    pay = mkMatrix(); // La matrice de départ, elle fluctuera in-game
+    pay = mkMatrix();
   } else {
     const boost=T.matrix==="arms"?(T.armsBoost[T.phase]||1.0):1.0;
     pay=mkMatrix(boost);
@@ -2959,6 +2960,10 @@ function openModal(){
     (isGoat?`<span class="mtag goat">🐐 GOAT CANONICAL</span>`:"");
   document.getElementById("mbg").classList.add("open");
 }
+
+function closeModal(){document.getElementById("mbg").classList.remove("open");}
+function confirmRun(){closeModal();runPhase();}
+document.getElementById("mbg").addEventListener("click",e=>{if(e.target===document.getElementById("mbg"))closeModal();});
 /* RUN PHASE */
 function runPhase(){
   const phase=T.phase;
