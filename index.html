@@ -788,7 +788,32 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;
   background:#fff;border-radius:50%;transition:.2s}
 .toggle-sw input:checked+.toggle-track::after{transform:translateX(14px)}
-
+/* ── DIDACTICIEL INTERACTIF ── */
+#tut-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.8);
+  z-index: 9999; display: none; transition: opacity 0.3s;
+}
+#tut-box {
+  position: fixed; background: #0f0f22; border: 1px solid var(--gold);
+  border-radius: 8px; padding: 16px; width: 320px; color: var(--text);
+  box-shadow: 0 0 30px rgba(245,200,66,0.2); transition: all 0.3s ease;
+  z-index: 10001;
+}
+.tut-title {
+  font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+  color: var(--gold); margin-bottom: 6px; letter-spacing: 1px;
+}
+.tut-text {
+  font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 15px;
+}
+.tut-btns { display: flex; justify-content: space-between; }
+/* Classe ajoutée dynamiquement pour mettre en valeur l'élément ciblé */
+.tut-highlight {
+  position: relative !important; z-index: 10000 !important;
+  background: rgba(20,20,40,1) !important;
+  box-shadow: 0 0 0 4px rgba(245,200,66,0.4), 0 0 20px rgba(245,200,66,0.6) !important;
+  border-radius: 8px; pointer-events: none;
+}
 /* WORLD EVENT TOAST (non-bloquant) */
 .we-overlay{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9000;
   pointer-events:none;width:min(420px,92vw)}
@@ -1084,6 +1109,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
     <div class="setup-version">v17 — Rivalités · Chronique Vivante · Coévolution · Sparklines</div>
    </div>
    <div style="display:flex;gap:8px;align-items:flex-start;flex-wrap:wrap">
+    <button class="btn bq bsm" onclick="startTutorial()">🎓 Tutoriel</button>
     <button class="btn bq bsm" onclick="openWiki()">📖 Wiki</button>
     <button class="btn bq bsm" onclick="openBuilder()">🔧 Créer</button>
     <button class="btn bg bxl" onclick="launchTournament()">▶ LANCER</button>
@@ -1621,6 +1647,19 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    <button class="btn bg bsm" onclick="confirmRun()">▶ Lancer cette manche</button>
   </div>
  </div>
+</div>
+<div id="tut-overlay">
+  <div id="tut-box">
+    <div class="tut-title" id="tut-title">Titre</div>
+    <div class="tut-text" id="tut-text">Texte</div>
+    <div class="tut-btns">
+      <button class="btn bq bsm" onclick="endTutorial()">✕ Quitter</button>
+      <div>
+        <button class="btn bq bsm" id="tut-prev" onclick="prevTut()">◀ Préc.</button>
+        <button class="btn bg bsm" id="tut-next" onclick="nextTut()">Suivant ▶</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -6268,6 +6307,83 @@ checkMilestones=function(){
     addChronicle(clean,type);
   }
 };
+/* ══════════════════════════════════════════════════
+   MOTEUR DE DIDACTICIEL
+══════════════════════════════════════════════════ */
+const tutorialSteps = [
+  { target: null, title: "Bienvenue dans Arena X", text: "Ce didacticiel va vous guider pas à pas pour préparer votre premier tournoi évolutionnaire." },
+  { target: "#grid-structure", title: "1. La Structure", text: "Ici, vous choisissez le format du tournoi. 'Round Robin' (chacun affronte tout le monde) est parfait pour commencer et évaluer la force brute." },
+  { target: "#grid-matrix", title: "2. La Matrice", text: "Ceci définit les points gagnés ou perdus lors d'une coopération ou d'une trahison (le fameux Dilemme du Prisonnier). Laissez sur 'Standard'." },
+  { target: ".n-select", title: "3. Les Joueurs", text: "Combien d'algorithmes vont s'affronter dans cette arène ? Gardons 8 joueurs pour que ce soit facile à suivre." },
+  { target: "#char-grid", title: "4. Le Casting", text: "Voici toutes les stratégies disponibles. Pour faire simple, cliquez sur le bouton '🎲 Aléatoire' juste au-dessus pour remplir l'arène." },
+  { target: ".bg.bxl", title: "5. Lancement", text: "Tout est prêt. Cliquez sur '▶ LANCER' en haut à droite pour démarrer la simulation et observer l'évolution en temps réel !" }
+];
+
+let currentTutStep = 0;
+
+function startTutorial() {
+  currentTutStep = 0;
+  document.getElementById("tut-overlay").style.display = "block";
+  showTutStep(currentTutStep);
+}
+
+function showTutStep(index) {
+  // Enlever la surbrillance précédente
+  document.querySelectorAll('.tut-highlight').forEach(el => el.classList.remove('tut-highlight'));
+
+  const step = tutorialSteps[index];
+  const box = document.getElementById("tut-box");
+
+  document.getElementById("tut-title").textContent = step.title;
+  document.getElementById("tut-text").textContent = step.text;
+  document.getElementById("tut-prev").style.visibility = index > 0 ? "visible" : "hidden";
+  document.getElementById("tut-next").textContent = index === tutorialSteps.length - 1 ? "Terminer" : "Suivant ▶";
+
+  if (step.target) {
+    const targetEl = document.querySelector(step.target);
+    if (targetEl) {
+      targetEl.classList.add('tut-highlight');
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Fait défiler jusqu'à l'élément
+      
+      setTimeout(() => { // Petit délai pour attendre le scroll
+        const rect = targetEl.getBoundingClientRect();
+        box.style.transform = "none";
+        // Positionnement intelligent de la boîte
+        let topPos = rect.bottom + 15;
+        if (topPos + 150 > window.innerHeight) topPos = Math.max(10, rect.top - 160); 
+        box.style.top = topPos + "px";
+        box.style.left = Math.max(10, rect.left) + "px";
+      }, 300);
+    }
+  } else {
+    // Si pas de cible, on centre la boîte au milieu de l'écran
+    box.style.top = "40%";
+    box.style.left = "50%";
+    box.style.transform = "translate(-50%, -50%)";
+  }
+}
+
+function nextTut() {
+  if (currentTutStep < tutorialSteps.length - 1) {
+    currentTutStep++;
+    showTutStep(currentTutStep);
+  } else {
+    endTutorial();
+  }
+}
+
+function prevTut() {
+  if (currentTutStep > 0) {
+    currentTutStep--;
+    showTutStep(currentTutStep);
+  }
+}
+
+function endTutorial() {
+  document.getElementById("tut-overlay").style.display = "none";
+  document.querySelectorAll('.tut-highlight').forEach(el => el.classList.remove('tut-highlight'));
+  document.getElementById("tut-box").style.transform = "none"; 
+}
 </script>
 </body>
 </html>
