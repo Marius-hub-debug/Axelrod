@@ -1061,6 +1061,15 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   .setup-inner{padding:14px 14px 30px}
   .wiki-2col{grid-template-columns:1fr}
 }
+/* NOUVELLES BANNIÈRES */
+.reseau-banner { background:rgba(184,84,255,.05); border:1px solid rgba(184,84,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#b854ff; display:flex; align-items:center; gap:6px; }
+.quantique-banner { background:rgba(0,255,255,.05); border:1px solid rgba(0,255,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#00ffff; display:flex; align-items:center; gap:6px; }
+.temp-banner { background:linear-gradient(90deg, rgba(255,140,0,.05), rgba(255,48,96,.15)); border:1px solid rgba(255,48,96,.3); border-radius:6px; padding:6px 9px; font-size:8px; color:var(--red); display:flex; align-items:center; gap:6px; }
+.propaganda-banner { background:rgba(245,200,66,.05); border:1px solid rgba(245,200,66,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:var(--gold); display:flex; align-items:center; gap:6px; }
+
+/* RECHAUFFEMENT CLIMATIQUE */
+.temp-bar-bg { flex:1; height:4px; background:rgba(255,255,255,.06); border-radius:2px; overflow:hidden; }
+.temp-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--amber), var(--red)); transition:width .4s ease; }
 </style>
 </head>
 <body>
@@ -1172,6 +1181,13 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
        <span class="adv-arr">▶</span> Paramètres avancés
       </div>
       <div id="adv-body">
+        <div id="cfg-custom-mat" style="display:none; padding:5px; background:rgba(0,0,0,.3); border:1px dashed var(--border); border-radius:6px; margin-bottom:6px;">
+        <div style="font-size:7px; color:var(--teal); margin-bottom:4px; text-transform:uppercase;">🎛️ Matrice Custom</div>
+        <div class="ccrow"><span>Tentation (T)</span><input type="range" id="c-mat-t" min="1" max="10" step="0.5" value="5" oninput="document.getElementById('cm-t-v').textContent=this.value"><span class="pval" id="cm-t-v">5</span></div>
+        <div class="ccrow"><span>Récompense (R)</span><input type="range" id="c-mat-r" min="0.5" max="8" step="0.5" value="3" oninput="document.getElementById('cm-r-v').textContent=this.value"><span class="pval" id="cm-r-v">3</span></div>
+        <div class="ccrow"><span>Punition (P)</span><input type="range" id="c-mat-p" min="0" max="5" step="0.5" value="1" oninput="document.getElementById('cm-p-v').textContent=this.value"><span class="pval" id="cm-p-v">1</span></div>
+        <div class="ccrow"><span>Pigeon (S)</span><input type="range" id="c-mat-s" min="0" max="4" step="0.5" value="0" oninput="document.getElementById('cm-s-v').textContent=this.value"><span class="pval" id="cm-s-v">0</span></div>
+       </div>
        <div class="ccrow" style="margin-top:6px"><span>Pression α</span>
         <input type="range" id="p-alpha" min="0.002" max="0.04" step="0.001" value="0.007"
          oninput="document.getElementById('pv-alpha').textContent=parseFloat(this.value).toFixed(3)" style="flex:1;accent-color:var(--gold)">
@@ -1474,6 +1490,19 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   <div class="chaos-banner" id="duel2-banner" style="display:none;border-color:rgba(255,48,96,.3);background:rgba(255,48,96,.04)">
    🔄 <b>DOUBLE ÉLIMINATION</b> — Deux défaites pour être éliminé · Bracket Winners + Losers
    <span id="duel2-info" style="margin-left:auto;color:var(--red)"></span>
+  </div>
+  <div class="quantique-banner" id="quantique-banner" style="display:none">
+   🌌 <b>QUANTIQUE</b> — Les valeurs de T, R, P et S fluctuent à chaque affrontement !
+  </div>
+  <div class="reseau-banner" id="reseau-banner" style="display:none">
+   🕸️ <b>RÉSEAU</b> — Les stratèges sont connectés via un Graphe. Évolution par influence locale.
+  </div>
+  <div class="temp-banner" id="temp-banner" style="display:none">
+   🌡️ <b>RÉCHAUFFEMENT</b> — Seuil de survie : <span id="temp-val" style="color:var(--gold);margin-left:4px">0%</span>
+   <div class="temp-bar-bg" style="margin-left:8px; max-width:100px;"><div class="temp-bar-fill" id="temp-fill" style="width:0%"></div></div>
+  </div>
+  <div class="propaganda-banner" id="propaganda-banner" style="display:none">
+   📢 <b>PROPAGANDE</b> — Le leader actuel convertit passivement les faibles à sa cause.
   </div>
 
   <div id="pts-main" style="display:none">
@@ -1941,6 +1970,62 @@ const CHARS=[
        return Math.random()<(0.5*cr+0.08)?"coop":"betray";
      }},
   ]},
+  {id:"zephyr", name:"Zephyr", e:"🔮",color:"#b854ff",strats:[
+    {sid:"zephyr_a", name:"L'Oracle", tag:"Markov", tc:"adapt",
+     desc:"Analyse vos séquences. Tente de deviner votre prochain coup basé sur le passé.",
+     behav:"Modèle de Markov basique sur 1 coup",
+     stats:{Agressivité:"Anticipative",Coopération:"Stratégique",Mémoire:"Séquentielle"},
+     tags:[{t:"Prédiction",c:"adapt"}],
+     vs:"Très fort contre les patterns répétitifs (Vagabond, Crescendo).",
+     fn(h,r,st){
+       if(r<3) return "coop";
+       if(!st.markov) st.markov = {cc:0, cb:0, bc:0, bb:0};
+       let prev = h[h.length-2], curr = h[h.length-1];
+       if(prev==="coop"&&curr==="coop") st.markov.cc++;
+       if(prev==="coop"&&curr==="betray") st.markov.cb++;
+       if(prev==="betray"&&curr==="coop") st.markov.bc++;
+       if(prev==="betray"&&curr==="betray") st.markov.bb++;
+       
+       let pBetray = 0.5;
+       if(curr==="coop" && (st.markov.cc+st.markov.cb)>0) pBetray = st.markov.cb/(st.markov.cc+st.markov.cb);
+       if(curr==="betray" && (st.markov.bc+st.markov.bb)>0) pBetray = st.markov.bb/(st.markov.bc+st.markov.bb);
+       
+       return pBetray > 0.5 ? "betray" : "coop";
+     }},
+    {sid:"zephyr_b", name:"Le Maître Chanteur", tag:"Psychologique", tc:"chaos",
+     desc:"Alterne aléatoirement, mais si on le trahit, il punit lourdement pendant 3 tours.",
+     behav:"Mixte + Punition longue",
+     stats:{Agressivité:"Aléatoire",Coopération:"Imprévisible",Mémoire:"Punitive (3 tours)"},
+     tags:[{t:"Dissuasion",c:"aggr"}],
+     vs:"Détruit les AllD. Rend fous les TFT.",
+     fn(h,r,st){
+       if(!st.punish) st.punish = 0;
+       if(h.length && h[h.length-1]==="betray" && st.punish===0) st.punish = 3;
+       if(st.punish > 0){ st.punish--; return "betray"; }
+       return Math.random() < 0.5 ? "coop" : "betray";
+     }},
+    {sid:"zephyr_c", name:"L'Altruiste Calculateur", tag:"Équilibre", tc:"def",
+     desc:"Coopère seulement si l'adversaire a un taux de coopération entre 40% et 60%. Exploite les extrêmes.",
+     behav:"Coop si taux adverse ∈ [0.4, 0.6]",
+     stats:{Agressivité:"Contre les extrêmes",Coopération:"Modératrice",Mémoire:"Totale"},
+     tags:[{t:"Anti-Extrême",c:"def"}],
+     vs:"Punit les AllC (exploit) et punit les AllD (réciproque). Stabilise les Randoms.",
+     fn(h){
+       if(h.length < 4) return "coop";
+       let rate = h.filter(x=>x==="coop").length / h.length;
+       return (rate >= 0.4 && rate <= 0.6) ? "coop" : "betray";
+     }},
+    {sid:"zephyr_d", name:"L'Écho Décalé", tag:"Retardement", tc:"adapt",
+     desc:"Copie l'avant-dernier coup de l'adversaire (et non le dernier). Perturbe les stratégies réactives.",
+     behav:"Copie coup n-2",
+     stats:{Agressivité:"Réactive",Coopération:"Réactive",Mémoire:"Décalée"},
+     tags:[{t:"Anti-TFT",c:"chaos"}],
+     vs:"Crée des cycles infinis très étranges contre TFT et GTFT.",
+     fn(h){
+       if(h.length < 2) return "coop";
+       return h[h.length-2];
+     }},
+  ]},
   {id:"nina",   name:"Nina",   e:"📚",color:"#ff6eb5",strats:[
     {sid:"nina_a",   name:"La Généreuse (GTFT)",   tag:"Indulgente",  tc:"coop",
      desc:"TFT avec 20% de pardon après une trahison. Brise les cycles de vengeance.",
@@ -2017,6 +2102,7 @@ const CONFIG_STRUCTURE = [
   {id:"duel2", icon:"🔄", name:"Double Élim", desc:"1v1, deux défaites = out"},
   {id:"swiss", icon:"🇨🇭", name:"Swiss", desc:"Appariement équitable"},
   {id:"territoire", icon:"🗺", name:"Territoire", desc:"Jeu spatial sur grille"},
+  {id:"reseau", icon:"🕸️", name:"Réseau", desc:"Graphe social (Hubs & Isolés)"}, // <-- NOUVEAU
   {id:"nexus", icon:"🌐", name:"Nexus", desc:"3 tournois enchaînés"},
   {id:"observatoire", icon:"🔭", name:"Observatoire", desc:"6 arènes parallèles"}
 ];
@@ -2024,6 +2110,8 @@ const CONFIG_STRUCTURE = [
 const CONFIG_MATRIX = [
   {id:"standard", icon:"🎲", name:"Standard", desc:"Générée aléatoirement"},
   {id:"goat", icon:"🐐", name:"GOAT Mode", desc:"Canonique T=5 R=3 P=1 S=0"},
+  {id:"custom_mat", icon:"🎛️", name:"Sur Mesure", desc:"Définissez T, R, P, S"}, // <-- NOUVEAU
+  {id:"quantique", icon:"🌌", name:"Quantique", desc:"Payoffs fluctuants"}, // <-- NOUVEAU
   {id:"chaos", icon:"⚡", name:"Chaos", desc:"Change toutes les 80 gens"},
   {id:"eco", icon:"🌿", name:"Écologie", desc:"S'adapte au taux de coop"},
   {id:"arms", icon:"🚀", name:"Arms Race", desc:"Tentation T monte à chaque manche"}
@@ -2031,6 +2119,7 @@ const CONFIG_MATRIX = [
 
 const CONFIG_EOL = [
   {id:"survival", icon:"💀", name:"Survie", desc:"Éliminé si pop < 5%"},
+  {id:"rechauffement", icon:"🌡️", name:"Réchauffement", desc:"Seuil de survie croissant"}, // <-- NOUVEAU
   {id:"extinction", icon:"☄️", name:"Extinction", desc:"Les 20% faibles balayés (50g)"},
   {id:"royale", icon:"💥", name:"Battle Royale", desc:"Le dernier exécuté (60g)"},
   {id:"tsunami", icon:"🌊", name:"Tsunami", desc:"Remplacement par des challengers"}
@@ -2040,6 +2129,7 @@ const CONFIG_MODIFIERS = [
   {id:"invasion", icon:"🦠", name:"Invasion", desc:"Vous commencez à 5%"},
   {id:"gauntlet", icon:"⚔", name:"Gauntlet", desc:"Vous commencez avec pop x2"},
   {id:"koh", icon:"👑", name:"King of Hill", desc:"Points bonus pour le trône"},
+  {id:"propaganda", icon:"📢", name:"Propagande", desc:"Le leader convertit les faibles"},
   {id:"diplomacy", icon:"🌍", name:"Diplomatie", desc:"Coalitions anti-leader (>40%)"},
   {id:"mirror", icon:"🪞", name:"Miroir", desc:"+30% auto-évaluation"},
   {id:"vendetta", icon:"🗡", name:"Vendetta", desc:"Rancune permanente"},
@@ -2075,7 +2165,12 @@ function buildSandboxGrids() {
 }
 
 function setStructure(id) { sandboxConfig.structure = id; buildSandboxGrids(); updateSummary(); }
-function setMatrix(id) { sandboxConfig.matrix = id; buildSandboxGrids(); updateSummary(); }
+function setMatrix(id) { 
+  sandboxConfig.matrix = id; 
+  buildSandboxGrids(); 
+  updateSummary(); 
+  document.getElementById("cfg-custom-mat").style.display = (id === "custom_mat") ? "block" : "none";
+}
 function toggleEol(id) { 
   const idx = sandboxConfig.eol.indexOf(id); 
   if(idx > -1) sandboxConfig.eol.splice(idx, 1); else sandboxConfig.eol.push(id);
@@ -2486,6 +2581,7 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
     coevoCountdown:60, coevoLineage:[], coevoMutRates:new Float64Array(p.N).fill(0),
     civFactions:null, civTerritoryHistory:[], civWars:[], civAlliances:[], civUpdateIn:30,
     obsArenas:null, obsWins:null, obsGens:0,
+    T.tempSeuil = 0;
   };
 
   if(p.structure === "bracket"){
@@ -2505,6 +2601,7 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
     if(p.structure === "duel2") T.duelLBPairs=[];
   }
   if(p.structure === "territoire") initTerritoire();
+  if(p.structure === "reseau") initReseau();
   if(p.modifiers.includes("vendetta")) T.vendettaMatrix=Array.from({length:p.N},()=>new Float64Array(p.N));
   if(p.modifiers.includes("epidemie")) T.epidemicAggro=new Float64Array(p.N).fill(0);
   if(p.structure === "nexus"){T.nexusScores=new Float64Array(p.N);T.nexusTourneyIdx=0;T.nexusResults=[];}
@@ -2539,6 +2636,12 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
   if(p.matrix === "goat") document.getElementById("goat-banner").style.display="";
   if(p.matrix === "arms") document.getElementById("arms-banner").style.display="";
   if(p.matrix === "eco") document.getElementById("eco-banner").style.display="";
+
+  // Dans la liste existante des "banner.style.display="
+  if(p.matrix === "quantique") document.getElementById("quantique-banner").style.display="";
+  if(p.structure === "reseau") document.getElementById("reseau-banner").style.display="";
+  if(p.eol.includes("rechauffement")) document.getElementById("temp-banner").style.display="";
+  if(p.modifiers.includes("propaganda")) document.getElementById("propaganda-banner").style.display="";
 
   if(p.structure === "territoire") document.getElementById("territoire-banner").style.display="";
   if(p.structure === "nexus") document.getElementById("nexus-banner").style.display="";
@@ -2804,14 +2907,22 @@ function addEvt(cls,txt){
 }
 
 /* MODAL */
-function openModal(){
-  let pay;
+let pay;
   if(T.matrix==="goat"){
     pay={...T.goatMatrix,R:3,T:5,P:1,S:0};
+  } else if(T.matrix==="custom_mat"){ // <-- AJOUT ICI
+    pay = {
+      T: parseFloat(document.getElementById("c-mat-t").value),
+      R: parseFloat(document.getElementById("c-mat-r").value),
+      P: parseFloat(document.getElementById("c-mat-p").value),
+      S: parseFloat(document.getElementById("c-mat-s").value)
+    };
+    pay.coop = { coop: [pay.R, pay.R], betray: [pay.S, pay.T] };
+    pay.betray = { coop: [pay.T, pay.S], betray: [pay.P, pay.P] };
+  } else if(T.matrix==="quantique") { // <-- AJOUT ICI
+    // Valeur de base, elles fluctueront pendant le jeu
+    pay = mkMatrix();
   } else {
-    const boost=T.matrix==="arms"?(T.armsBoost[T.phase]||1.0):1.0;
-    pay=mkMatrix(boost);
-  }
   T.pendingPayoff=pay;
   const mStruct=CONFIG_STRUCTURE.find(x=>x.id===T.structure);
   document.getElementById("mt").textContent=`${(mStruct?.name||"Sandbox").toUpperCase()} · MANCHE ${T.phase+1}/${T.maxPhases}`;
@@ -2929,9 +3040,12 @@ function runPhase(){
       }
       
       checkRoyaleElim();
-      if(T.structure==="territoire"){terrStep(currentPay);}
-      else{getGroups().forEach(g=>simGroup(g,currentPay));}
-      
+      if(T.structure==="territoire"){ terrStep(currentPay); }
+      else if(T.structure==="reseau"){ reseauStep(currentPay); }
+      else{ 
+          // Si mode quantique, on passe un flag pour que simGroup recalcule les payoffs
+          getGroups().forEach(g=>simGroup(g, currentPay)); 
+      }
       if(T.modifiers.includes("mutation") && T.gen>0 && T.gen%70===0){checkMutation(currentPay);}
       
       if(T.eol.includes("extinction")){
@@ -2957,6 +3071,34 @@ function runPhase(){
         }
       }
 
+      if(T.modifiers.includes("propaganda") && T.gen > 10){
+          const sorted = [...Array(T.N).keys()].filter(i=>T.strats[i].pop>0).sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
+          if(sorted.length >= 4) {
+             const leader = sorted[0];
+             const bottoms = sorted.slice(-3); // Les 3 derniers
+             bottoms.forEach(b => {
+                 let stole = T.strats[b].pop * 0.05; // vole 5% de la pop des faibles
+                 T.strats[b].pop -= stole;
+                 T.strats[leader].pop += stole;
+             });
+          }
+      }
+
+      // A ajouter dans le setInterval (avec T.eol.includes("extinction"))
+      if(T.eol.includes("rechauffement")){
+          if(T.gen % 10 === 0) T.tempSeuil += 0.005; // +0.5% tous les 10 tours
+          document.getElementById("temp-val").textContent = (T.tempSeuil*100).toFixed(1) + "%";
+          document.getElementById("temp-fill").style.width = Math.min(100, T.tempSeuil*200) + "%"; // visuel bar
+          
+          T.strats.forEach((s,i) => {
+              if(s.pop > 0 && s.pop / T.POP < T.tempSeuil) {
+                  s.pop = 0;
+                  addEvt("ek", `🔥 <b>${s.name}</b> a brûlé (sous le seuil de ${Math.round(T.tempSeuil*100)}%)`);
+                  spawnElimination(i);
+              }
+          });
+      }
+      
       if(T.eol.includes("tsunami")){
         T.tsunamiCountdown--;
         const tc=document.getElementById("tsunami-countdown");
@@ -4158,6 +4300,68 @@ function renderTerritoire(el){
   }).join("")}`;
 }
 
+/* ══════════════════════════════════════════════════
+   RESEAU
+══════════════════════════════════════════════════ */
+function initReseau(){
+  // Génère un graphe simple "Small World"
+  T.graph = [];
+  for(let i=0; i<T.N; i++) T.graph[i] = new Set();
+  
+  // Connecte en anneau
+  for(let i=0; i<T.N; i++){
+    T.graph[i].add((i+1)%T.N);
+    T.graph[(i+1)%T.N].add(i);
+  }
+  // Ajoute des liens aléatoires (Hubs)
+  for(let i=0; i<T.N; i++){
+    if(Math.random()<0.3) {
+      let target = Math.floor(Math.random()*T.N);
+      if(target !== i) {
+        T.graph[i].add(target);
+        T.graph[target].add(i);
+      }
+    }
+  }
+  // Convertit les Sets en Arrays pour la facilité
+  T.graph = T.graph.map(set => Array.from(set));
+}
+
+function reseauStep(pay){
+  const N = T.N;
+  const scores = new Float64Array(N);
+  
+  // Matchs locaux sur le graphe
+  for(let i=0; i<N; i++){
+    let sc = 0;
+    let neighbors = T.graph[i];
+    neighbors.forEach(n => {
+      let localPay = pay;
+      // MODE QUANTIQUE : Fluctuation de matrice
+      if(T.matrix === "quantique"){
+          localPay = mkMatrix(1.0); // Génère une mini variation
+      }
+      sc += playMatch(T.strats[i], T.strats[n], localPay);
+    });
+    scores[i] = neighbors.length > 0 ? sc / neighbors.length : 0;
+  }
+  
+  // Replicateur adapté au graphe : On copie le meilleur voisin
+  const newPop = new Float64Array(N);
+  for(let i=0; i<N; i++){
+    let bestScore = scores[i];
+    let bestIdx = i;
+    T.graph[i].forEach(n => {
+      if(scores[n] > bestScore){ bestScore = scores[n]; bestIdx = n; }
+    });
+    // On hérite d'une partie de la population du meilleur voisin
+    newPop[i] = T.strats[bestIdx].pop; 
+  }
+  
+  const total = newPop.reduce((a,b)=>a+b, 0) || 1;
+  T.strats.forEach((s,i) => { s.pop = newPop[i] / total * T.POP; });
+}
+  
 /* ══════════════════════════════════════════════════
    MUTATION
 ══════════════════════════════════════════════════ */
