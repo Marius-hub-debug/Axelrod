@@ -1076,6 +1076,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .rrow:hover{background:rgba(255,255,255,.04)}
 .r-spark{flex-shrink:0;opacity:.8}
 
+@media (max-width: 900px) {
   #shell{grid-template-columns:1fr;grid-template-rows:50px auto auto 32px}
   #main{padding:9px 10px;gap:9px}
   #side{border-left:none;border-top:1px solid var(--border);padding:9px 10px}
@@ -1086,6 +1087,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   .setup-inner{padding:14px 14px 30px}
   .wiki-2col{grid-template-columns:1fr}
 }
+
 /* NOUVELLES BANNIÈRES */
 .reseau-banner { background:rgba(184,84,255,.05); border:1px solid rgba(184,84,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#b854ff; display:flex; align-items:center; gap:6px; }
 .quantique-banner { background:rgba(0,255,255,.05); border:1px solid rgba(0,255,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#00ffff; display:flex; align-items:center; gap:6px; }
@@ -4406,20 +4408,24 @@ function reseauStep(pay){
     scores[i] = neighbors.length > 0 ? sc / neighbors.length : 0;
   }
   
-  // Replicateur adapté au graphe : On copie le meilleur voisin
-  const newPop = new Float64Array(N);
-  for(let i=0; i<N; i++){
-    let bestScore = scores[i];
-    let bestIdx = i;
-    T.graph[i].forEach(n => {
-      if(scores[n] > bestScore){ bestScore = scores[n]; bestIdx = n; }
-    });
-    // On hérite d'une partie de la population du meilleur voisin
-    newPop[i] = T.strats[bestIdx].pop; 
-  }
+  // Dynamique du Réplicateur basée sur les scores locaux
+  const avgScore = scores.reduce((a,b)=>a+b, 0) / N;
+  const totalPop = T.strats.reduce((a,x)=>a+x.pop, 0) || 1;
   
-  const total = newPop.reduce((a,b)=>a+b, 0) || 1;
-  T.strats.forEach((s,i) => { s.pop = newPop[i] / total * T.POP; });
+  T.strats.forEach((s,i) => {
+    // La stratégie croît si son score local est au-dessus de la moyenne
+    let np = s.pop * (1 + T.ALPHA * (scores[i] - avgScore));
+    // Ajout de la dérive (bruit naturel)
+    if(T.DRIFT > 0) np += (Math.random() * 2 - 1) * T.DRIFT * totalPop * 0.5;
+    s.pop = Math.max(0.2, np);
+  });
+  
+  // Renormalisation globale
+  const newTotal = T.strats.reduce((a,x)=>a+x.pop, 0) || 1;
+  T.strats.forEach(s => { 
+    s.pop = (s.pop / newTotal) * T.POP; 
+    if(s.pop > s.peakPop) s.peakPop = s.pop; 
+  });
 }
 /* ══════════════════════════════════════════════════
    VISUALISATION DU RÉSEAU (MOTEUR PHYSIQUE FLUIDE)
