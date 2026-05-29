@@ -498,3 +498,204 @@ const CONFIG_MODIFIERS = [
 ];
 let nPlayers=8;
 let draft={sel:[],me:null};
+const MISSIONS=[
+  {id:"m1",n:"MISSION 01",name:"Les Origines",
+   story:"Nous sommes en 1981. Axelrod vient de recevoir les résultats de son premier tournoi. Un inconnu nommé Rapoport a soumis le code le plus simple : 4 lignes. Vous jouez TFT. Prouvez qu'il méritait de gagner.",
+   obj:"Finir 1er avec TFT (Analyste)",boss:"AllD (Despote)",
+   setup:"8 joueurs · Round Robin · Standard",
+   structure:"rrobin", matrix:"standard", eol:[], modifiers:[], N:8, me:"brick_a",
+   tags:["obj:Victoire avec L'Analyste","boss:Le Despote"],
+   condition:{type:"winner_sid",value:"brick_a"}},
+  {id:"m2",n:"MISSION 02",name:"La Guerre Froide",
+   story:"Les missiles sont pointés. Chaque nation calcule : trahir rapporte plus, mais si tout le monde trahit, c'est l'anéantissement mutuel. Vous dirigez une puissance qui refuse l'escalade.",
+   obj:"Survive 3 manches d'Arms Race",boss:"L'Implacable + Le Crescendo",
+   setup:"8 joueurs · Round Robin · Arms Race",
+   structure:"rrobin", matrix:"arms", eol:[], modifiers:[], N:8, me:"pedro_a",
+   tags:["obj:Finir dans le top 3","boss:Escalade de T"],
+   condition:{type:"top3"}},
+  {id:"m3",n:"MISSION 03",name:"Invasion",
+   story:"Une colonie de coopérateurs contrôle 95% du territoire. Vos traîtres ne représentent que 5% de la population. Infiltrez-vous, adaptez-vous, dominez.",
+   obj:"Invasion réussie : atteindre 50%",boss:"Territoire hostile (95%)",
+   setup:"8 joueurs · Invasion",
+   structure:"rrobin", matrix:"standard", eol:[], modifiers:["invasion"], N:8, me:"nick_c",
+   tags:["obj:Coloniser 50% du territoire","boss:Masse de coopérateurs"],
+   condition:{type:"invasion"}},
+  {id:"m4",n:"MISSION 04",name:"Le Chaos Absolu",
+   story:"Les règles changent sans prévenir. La matrice de gains se recalibrate toutes les 80 générations. Dans l'instabilité totale, seuls les adaptables survivent.",
+   obj:"Gagner le tournoi Chaos",boss:"Le Chaos lui-même",
+   setup:"16 joueurs · Chaos",
+   structure:"rrobin", matrix:"chaos", eol:[], modifiers:[], N:16, me:null,
+   tags:["obj:1er place finale","boss:Instabilité matricielle"],
+   condition:{type:"winner"}},
+  {id:"m5",n:"MISSION 05",name:"La Diplomatie",
+   story:"L'hégémonie est impossible. Chaque fois qu'un empire monte, les autres se coalisent contre lui. Naviguez dans ce jeu d'alliances précaires sans jamais vous exposer.",
+   obj:"Gagner sans jamais dépasser 60%",boss:"Coalition permanente",
+   setup:"16 joueurs · Diplomatie",
+   structure:"rrobin", matrix:"standard", eol:[], modifiers:["diplomacy"], N:16, me:null,
+   tags:["obj:Gagner en restant discret","boss:Coalitions automatiques"],
+   condition:{type:"winner"}},
+  {id:"m6",n:"MISSION 06",name:"Le GOAT Final",
+   story:"Matrice canonique T=5 R=3 P=1 S=0. Le benchmark d'Axelrod 1984. Toutes les légendes sont là. Une seule question : qui est réellement le plus grand de tous les temps ?",
+   obj:"Gagner le mode GOAT",boss:"Les 32 stratèges",
+   setup:"32 joueurs · GOAT Mode",
+   structure:"rrobin", matrix:"goat", eol:[], modifiers:[], N:32, me:null,
+   tags:["obj:Champion GOAT","boss:Tous les stratèges"],
+   condition:{type:"winner"}},
+];
+const COMM_TEMPLATES={
+  phoenix:[
+    (e,c)=>`Incroyable retournement ! ${c.p1} semblait condamné — et pourtant, le voilà qui surgit des décombres à la génération ${c.gen}. ${c.p2?`${c.p2} ferait bien de regarder derrière lui.`:""}`,
+    (e,c)=>`On les avait enterrés trop tôt. ${c.p1} vient de signer l'une des remontées les plus spectaculaires de ce tournoi. À ${c.coopPct}% de coopération globale, rien n'est jamais acquis.`,
+    (e,c)=>`${c.gen} générations de combat, et c'est maintenant que ${c.p1} se réveille ! ${c.coop>55?"La patience coopérative a payé.":"La trahison au bon moment — un classique."} La salle est en délire.`,
+    (e,c)=>`De l'ombre à la lumière. ${c.p1} refait surface avec une brutalité déconcertante. Ceux qui avaient parié sur sa disparition regrettent amèrement leur cynisme.`,
+    (e,c)=>`Phoenix ! ${c.p1} était à l'agonie — le voilà qui dépasse ${c.p2||"ses adversaires"} d'un coup d'aile rageur. Ce tournoi n'est pas fini, loin de là.`,
+  ],
+  dom:[
+    (e,c)=>`${c.p1} établit sa domination — ${c.leadPct}% de la population sous son contrôle. ${c.p2?`${c.p2} résiste encore, mais pour combien de temps ?`:"Les autres stratèges semblent impuissants."} ${c.coop>55?"Une hégémonie fondée sur la confiance.":"Une tyrannie froide et méthodique."}`,
+    (e,c)=>`C'est un rouleau compresseur. ${c.p1} écrase tout sur son passage. ${c.p2?`${c.p2} est relégué à ${c.p2Pct}% — il faut un miracle.`:""} À ${c.coopPct}% de coop, le ton est donné.`,
+    (e,c)=>`Domination absolue de ${c.p1}. La question n'est plus "qui va gagner ?" mais "qui va résister le plus longtemps ?" ${c.p3?`${c.p3} joue sa survie.`:""}`,
+    (e,c)=>`${c.p1} impose sa loi à la génération ${c.gen}. ${c.coop<35?"La trahison systématique porte ses fruits — redoutable.":"La coopération comme arme absolue — élégant."} Les challengers devront se réinventer.`,
+  ],
+  lead:[
+    (e,c)=>`Changement de tête ! ${c.p1} arrache le leadership — ${c.leadPct}% contre ${c.p2Pct||"?"}% pour ${c.p2||"le second"}. Personne n'avait anticipé ce retournement.`,
+    (e,c)=>`${c.p1} prend les commandes à la génération ${c.gen}. ${c.coop>55?"Atmosphère coopérative favorable.":"Le chaos lui profite."} Le classement est plus ouvert que jamais.`,
+    (e,c)=>`Nouveau leader ! ${c.p1} détrône ${c.p2||"l'ancien patron"}. ${c.coopPct}% de coopération — ${c.coop>60?"un signal fort.":"une tension palpable."}`,
+    (e,c)=>`${c.p1} s'empare du sommet. ${c.p2?`${c.p2} devra riposter vite — l'écart se creuse.`:"La hiérarchie est rebattue."} Génération ${c.gen}, tout reste à jouer.`,
+  ],
+  collapse:[
+    (e,c)=>`L'effondrement coopératif. Le taux dégringole à ${c.coopPct}% — une spirale de méfiance qui emportera les plus fragiles. ${c.p1} saura-t-il naviguer dans ce chaos ?`,
+    (e,c)=>`La confiance s'est brisée en quelques générations. ${c.p1} tient la tête, mais dans une guerre de tous contre tous, aucun avantage n'est définitif.`,
+    (e,c)=>`${c.coopPct}% de coopération — les chiffres sont impitoyables. La trahison est devenue endémique. Qui sera assez cynique pour en profiter ? ${c.p1} en pole position.`,
+    (e,c)=>`Effondrement. En quelques générations, ce tournoi a basculé dans l'anarchie. La sélection naturelle va s'accélérer — seuls les plus adaptables survivront à cet hiver de la coopération.`,
+  ],
+  phase:[
+    (e,c)=>`Fin de la manche ${c.phase} sur ${c.maxPhases}. ${c.p1} domine avec ${c.leadPct}% de population${c.p2?`, devant ${c.p2} à ${c.p2Pct}%`:""}.${c.phase<c.maxPhases?" La prochaine manche sera décisive.":""} Coopération globale : ${c.coopPct}%.`,
+    (e,c)=>{const coop=c.coop>65?" Un tournoi remarquablement coopératif.":c.coop<35?" La trahison a régné.":"L'équilibre reste fragile.";const ev=c.milestoneCount>0?` ${c.milestoneCount} moment${c.milestoneCount>1?"s":""} fort${c.milestoneCount>1?"s":""}.`:"";return`Manche ${c.phase}/${c.maxPhases} — rideau. ${c.p1} en tête${c.p2?`, ${c.p2} à la chasse`:""}${c.p3?`, ${c.p3} en embuscade`:""}.${coop}${ev}`;},
+    (e,c)=>`Arrêt sur image. Après ${c.gen} générations, ${c.p1} commande. ${c.trend==="up"?`Sa progression est fulgurante — +${c.trendPct}% sur cette manche.`:c.trend==="down"?`Mais attention — ${c.p1} perd du terrain, ${c.p2||"un challenger"} revient fort.`:"La domination reste stable."} ${c.coopPct}% de coop globale.`,
+    (e,c)=>`Manche terminée. ${c.p1} est en tête, mais ${c.p2?`${c.p2} n'est qu'à ${Math.abs((c.leadPct||0)-(c.p2Pct||0))}% derrière`:""} — un écart qui peut fondre en quelques générations. Mode ${c.mode} : chaque manche rebat les cartes.`,
+    (e,c)=>`Bilan de la manche ${c.phase}. Leader : ${c.p1} (${c.leadPct}%). ${c.coop>60?`Le camp coopérateur a brillé — ${c.coopPct}% de coopération moyenne.`:c.coop<35?`La trahison a fait la loi — ${c.coopPct}% de coop seulement.`:`Équilibre instable à ${c.coopPct}% de coop.`}${c.milestoneCount>2?` Ce fut une manche épique.`:""}`,
+  ],
+  win:[
+    (e,c)=>`${c.p1} remporte ce tournoi en mode ${c.mode} ! ${c.gen} générations, ${c.coopPct}% de coopération moyenne. ${c.coop>65?"Une victoire bâtie sur la confiance — la preuve que coopérer paye sur la durée.":c.coop<35?"Une victoire arrachée dans la boue — la trahison a finalement triomphé.":"Un triomphe équilibré, entre alliances et calculs froids. Le dilemme du prisonnier n'a pas livré tous ses secrets."}`,
+    (e,c)=>`Rideau ! ${c.p1} s'impose comme le grand vainqueur. ${c.p2?`${c.p2} termine second — honorable mais insuffisant.`:""} ${c.gen} générations de lutte. La théorie des jeux a parlé.`,
+    (e,c)=>`${c.p1} — champion ! Coopération à ${c.coopPct}%, ${c.gen} générations. ${c.milestoneCount} moment${c.milestoneCount>1?"s":""} fort${c.milestoneCount>1?"s":""} ont marqué ce tournoi. ${c.coop>60?"La confiance, arme suprême.":"La trahison, art de vivre."} Chapeau bas.`,
+    (e,c)=>`C'est terminé. ${c.p1} écrase la concurrence pour s'adjuger la victoire en ${c.gen} générations. ${c.p2?`${c.p2} et ${c.p3||"les autres"} devront revoir leur stratégie.`:""} Ce tournoi restera gravé dans les annales.`,
+    (e,c)=>`Victoire de ${c.p1} ! En mode ${c.mode}, avec ${c.coopPct}% de coopération, ${c.p1} a dominé ${c.gen} générations d'évolution impitoyable. ${c.leadPct}% de population finale — une suprématie écrasante.`,
+  ],
+  elim:[
+    (e,c)=>`Élimination ! Le champ de bataille se réduit encore. ${c.p1} consolide son avance pendant que les plus faibles disparaissent un à un.`,
+    (e,c)=>`Encore une victime de la sélection. La nature est impitoyable — dans l'arène du dilemme du prisonnier, la moindre faiblesse se paie cher.`,
+  ],
+  default:[
+    (e,c)=>`Le tournoi se poursuit. ${c.p1} mène à la génération ${c.gen}${c.p2?`, talonné par ${c.p2} à ${c.p2Pct}%`:""}.`,
+    (e,c)=>`${c.coopPct}% de coopération globale. ${c.p1} en tête — ${c.coop>55?"l'équilibre coopératif tient bon.":"la méfiance s'est installée."}`,
+    (e,c)=>`Génération ${c.gen}. ${c.p1} domine avec ${c.leadPct}%. ${c.coop>55?"L'esprit de coopération reste vivace.":"La méfiance s'est installée durablement."}`,
+  ]
+};
+const WORLD_EVENTS=[
+  {id:"revolution",icon:"🔥",title:"RÉVOLUTION",category:"CRISE POLITIQUE",
+   desc:"Le leader est renversé. Sa population est divisée par deux et redistribuée aux opprimés.",
+   effect:"Leader -50% · Bottom 30% +80%",col:"var(--red)",
+   apply(pay){
+     const total=T.strats.reduce((s,x)=>s+x.pop,0)||1;
+     const sorted=[...Array(T.N).keys()].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
+     const leader=sorted[0];const bottom=sorted.slice(-Math.ceil(T.N*0.3));
+     const taken=T.strats[leader].pop*0.5;T.strats[leader].pop-=taken;
+     const share=taken/bottom.length;bottom.forEach(i=>T.strats[i].pop+=share);
+     addEvt("ek2",`🔥 RÉVOLUTION ! ${T.strats[leader].e}${T.strats[leader].name} renversé !`);
+     T.milestones.push({gen:T.gen,txt:`🔥 Révolution ! ${T.strats[leader].name} renversé`,type:"dom"});
+   },duration:0},
+  {id:"amnistie",icon:"🕊",title:"GRANDE AMNISTIE",category:"DIPLOMATIE",
+   desc:"Toutes les rancunes sont oubliées. Toutes les stratégies reprennent leurs décisions sur une ardoise vierge.",
+   effect:"Reset mémoire · Coop boost +15%",col:"var(--teal)",
+   apply(pay){
+     T.strats.forEach(s=>{s.st={};s.coopRate=Math.min(1,s.coopRate+0.15);});
+     if(T.vendettaMatrix)T.vendettaMatrix=Array.from({length:T.N},()=>new Float64Array(T.N));
+     addEvt("ea",`🕊 Amnistie générale ! Toutes les rancunes effacées.`);
+     T.milestones.push({gen:T.gen,txt:"🕊 Grande Amnistie — ardoise vierge",type:"lead"});
+   },duration:0},
+  {id:"famine",icon:"💀",title:"GRANDE FAMINE",category:"CATASTROPHE",
+   desc:"Les ressources s'effondrent. Toutes les populations perdent 30%. Les forts survivent moins bien.",
+   effect:"Toutes pops -30% · Renormalisé",col:"var(--amber)",
+   apply(pay){
+     T.strats.forEach(s=>{s.pop*=0.7;});
+     addEvt("ek",`💀 Grande Famine ! Toutes les populations s'effondrent.`);
+     T.milestones.push({gen:T.gen,txt:"💀 Grande Famine — effondrement populaire",type:"collapse"});
+   },duration:0},
+  {id:"choc_eco",icon:"📉",title:"CHOC ÉCONOMIQUE",category:"ÉCONOMIE",
+   desc:"Crise mondiale. Les gains de la trahison s'effondrent pendant 40 générations.",
+   effect:"Payoff trahison ×0.5 pendant 40 gens",col:"var(--purple)",
+   apply(pay){
+     const modded=pay.map(r=>r.map((v,ci)=>ci>0?v*0.5:v));
+     T.worldEventPayMod={original:pay,modded};
+     return modded;
+   },duration:40},
+  {id:"diplomatie",icon:"🌍",title:"ÈRE DE PAIX",category:"DIPLOMATIE",
+   desc:"Traités internationaux. La coopération rapporte davantage pendant 50 générations.",
+   effect:"Payoff coop ×1.4 pendant 50 gens",col:"var(--green)",
+   apply(pay){
+     const modded=pay.map((r,ri)=>r.map((v,ci)=>ri===0&&ci===0?v*1.4:v));
+     T.worldEventPayMod={original:pay,modded};
+     return modded;
+   },duration:50},
+  {id:"pandémie",icon:"🦠",title:"PANDÉMIE",category:"CATASTROPHE",
+   desc:"Un virus de méfiance se propage. Les stratégies coopératives deviennent temporairement plus méfiantes.",
+   effect:"CoopRate des allC -30% · Trahisseurs boostés",col:"var(--pink)",
+   apply(pay){
+     T.strats.forEach(s=>{if((s.coopRate||0.5)>0.6){s.coopRate=Math.max(0.2,s.coopRate-0.3);}else{s.pop*=1.1;}});
+     addEvt("ek",`🦠 Pandémie de méfiance ! Les coopérateurs vacillent.`);
+     T.milestones.push({gen:T.gen,txt:"🦠 Pandémie — méfiance généralisée",type:"collapse"});
+   },duration:0},
+  {id:"renaissance",icon:"⭐",title:"RENAISSANCE",category:"ESPOIR",
+   desc:"Les outsiders se révoltent. Les 3 derniers voient leur population doubler instantanément.",
+   effect:"Bottom 3 pop ×2 · Surprise garantie",col:"var(--gold)",
+   apply(pay){
+     const sorted=[...Array(T.N).keys()].filter(i=>T.strats[i].pop>0).sort((a,b)=>T.strats[a].pop-T.strats[b].pop);
+     sorted.slice(0,3).forEach(i=>{T.strats[i].pop*=2;spawnDomination&&spawnDomination(i);});
+     addEvt("ea",`⭐ Renaissance ! Les outsiders se relèvent !`);
+     T.milestones.push({gen:T.gen,txt:"⭐ Renaissance des outsiders",type:"phoenix"});
+   },duration:0},
+  {id:"trahison_sys",icon:"🗡",title:"TRAHISON SYSTÉMIQUE",category:"CHAOS",
+   desc:"Quelque chose empoisonne l'air. Toutes les stratégies trahissent davantage pendant 25 générations.",
+   effect:"CoopRate -25% global · 25 gens",col:"var(--red)",
+   apply(pay){
+     T.strats.forEach(s=>{s.coopRate=Math.max(0.05,s.coopRate-0.25);});
+     addEvt("ek2",`🗡 Trahison systémique ! La confiance s'effondre partout.`);
+     T.milestones.push({gen:T.gen,txt:"🗡 Trahison systémique — chaos total",type:"collapse"});
+   },duration:25},
+];
+const ACHIEVEMENTS=[
+  {id:"first_blood",icon:"🩸",name:"Premier Sang",desc:"Première élimination d'un tournoi"},
+  {id:"allc_win",icon:"🕊",name:"Pacifiste",desc:"Gagner un tournoi avec une stratégie AllC"},
+  {id:"alld_win",icon:"💀",name:"Tyran",desc:"Gagner un tournoi avec AllD ou similaire"},
+  {id:"phoenix",icon:"🦅",name:"Phénix",desc:"Remonter de <5% à >50% de population"},
+  {id:"coop80",icon:"🌈",name:"Utopie",desc:"Maintenir coop >80% pendant 100 générations"},
+  {id:"collapse",icon:"💥",name:"Apocalypse",desc:"Effondrement total (coop <10%)"},
+  {id:"goat_win",icon:"🐐",name:"GOAT",desc:"Gagner en mode GOAT"},
+  {id:"invasion_ok",icon:"🦠",name:"Conquistador",desc:"Invasion réussie (5%→50%)"},
+  {id:"mutation_win",icon:"🧬",name:"Darwin",desc:"Gagner avec un stratège muté"},
+  {id:"domination",icon:"☢️",name:"Omnipotent",desc:"Atteindre 90% de population"},
+  {id:"custom_win",icon:"🔧",name:"Architecte",desc:"Gagner avec votre stratège personnalisé"},
+  {id:"campaign_end",icon:"🎖",name:"Le Général",desc:"Terminer toutes les missions de la campagne"},
+];
+const CIV_FACTIONS=[
+  {id:"pacifistes", name:"Pacifistes",    icon:"🕊", color:"#5bdfb4", coopThresh:0.60},
+  {id:"guerriers",  name:"Guerriers",     icon:"⚔️", color:"#ff5f5f", coopThresh:0.30},
+  {id:"stratèges",  name:"Stratèges",     icon:"🧠", color:"#7eb8ff", coopThresh:0.50},
+  {id:"opportunistes",name:"Opportunistes",icon:"🎭", color:"#f5c842", coopThresh:0.45},
+];
+const OBS_VARIANTS=[
+  {label:"Standard",     noiseBonus:0,    alphaBonus:0,   payMod:1.0},
+  {label:"Bruit élevé",  noiseBonus:0.15, alphaBonus:0,   payMod:1.0},
+  {label:"Évolution rapide",noiseBonus:0, alphaBonus:0.04,payMod:1.0},
+  {label:"Haute trahison",noiseBonus:0,   alphaBonus:0,   payMod:1.3, tMod:1.5},
+  {label:"Coopération forcée",noiseBonus:0,alphaBonus:0,  payMod:0.7, tMod:0.6},
+  {label:"Chaos pur",    noiseBonus:0.25, alphaBonus:0.05,payMod:1.0},
+];
+const CHAPTER_NAMES=[
+  "L'Aube du Tournoi","La Montée en Puissance","L'Ère des Trahisons","La Grande Guerre",
+  "L'Équilibre Fragile","Le Temps des Champions","Le Crépuscule","L'Âge d'Or",
+  "La Chute","La Renaissance","L'Ère Nouvelle","Le Dernier Acte"
+];
+const RIVALRY_ADJ=["Grande","Éternelle","Légendaire","Sanglante","Secrète","Épique","Silencieuse","Infernale","Titanesque","Fatale"];
+const RIVALRY_NOUN=["Guerre","Rivalité","Bataille","Lutte","Confrontation","Duel","Querelle","Vendetta","Saga","Guerre Froide"];
