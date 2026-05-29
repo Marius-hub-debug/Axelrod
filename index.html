@@ -1589,6 +1589,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    <div class="sl">⚔️ Rivalité</div>
    <div id="rivalry-inner"></div>
   </div>
+  <div id="reseau-section" style="display:none">
+   <div class="sl">🕸️ Réseau d'Influence</div>
+   <div class="netgraph-wrap" style="height:210px; margin-bottom:10px;">
+    <canvas id="net-cv" style="width:100%; height:100%; border-radius:6px; background:linear-gradient(180deg, rgba(184,84,255,0.06), rgba(0,0,0,0.5)); border:1px solid rgba(184,84,255,0.2); box-shadow: 0 4px 20px rgba(0,0,0,0.4) inset;"></canvas>
+  </div>
+  </div>
   <div id="chronique-section" style="display:none">
    <div class="sl">📖 Chronique</div>
    <div class="chron-wrap" id="chron-inner"></div>
@@ -2675,6 +2681,8 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
   const liveMs=document.getElementById("live-match-section");if(liveMs)liveMs.style.display="none";
   const sw=document.getElementById("scrubber-wrap");if(sw)sw.classList.remove("visible");
   const pb=document.getElementById("btn-pause");if(pb){pb.classList.remove("visible","paused");pb.textContent="⏸ Pause";}
+  const resSect = document.getElementById("reseau-section");
+  if(resSect) resSect.style.display = (p.structure === "reseau") ? "block" : "none";
 // Activation des bannières selon la config
   if(p.matrix === "chaos") document.getElementById("chaos-banner").style.display="";
   if(p.matrix === "goat") document.getElementById("goat-banner").style.display="";
@@ -3050,7 +3058,11 @@ function runPhase(){
       const gen=T.gen;
 
       // Charts always (capped at 300pts by getChartHistory)
-      if(T.scrubIdx===null){drawChart();drawCoopChart();}
+      if(T.scrubIdx===null){
+        drawChart();
+        drawCoopChart();
+        if (T.structure === "reseau") drawNetGraph(); // <--- AJOUTE CETTE LIGNE
+      }
 
       // Ranking every frame (lightweight string build)
       updateRanking();
@@ -3496,7 +3508,6 @@ function renderSide(){
   if(T.structure === "bracket") renderBracket(el);
   if(T.structure === "duel" || T.structure === "duel2") renderDuel(el);
   if(T.structure === "territoire") renderTerritoire(el);
-  if(T.structure === "reseau") renderReseau(el);
   if(T.structure === "nexus") renderNexus(el);
   if(T.structure === "observatoire") renderObservatoire(el);
 
@@ -4410,95 +4421,119 @@ function reseauStep(pay){
   const total = newPop.reduce((a,b)=>a+b, 0) || 1;
   T.strats.forEach((s,i) => { s.pop = newPop[i] / total * T.POP; });
 }
-
-function renderReseau(el) {
-  if (!T || !T.graph) return;
-  // Prépare le conteneur HTML pour le canvas
-  el.innerHTML = `
-    <div class="reseau-banner" style="margin-bottom:6px; justify-content:center;">🕸️ Graphe "Small-World"</div>
-    <div class="netgraph-wrap"><canvas id="net-cv"></canvas></div>
-    <div style="font-size:7px; color:var(--muted); margin-top:4px; text-align:center; margin-bottom:8px;">Taille du nœud = Population actuelle</div>
-  `;
-  // Laisse le temps au DOM de créer le canvas avant de le dessiner
-  setTimeout(drawNetGraph, 20);
-}
-
+/* ══════════════════════════════════════════════════
+   VISUALISATION DU RÉSEAU (MOTEUR PHYSIQUE FLUIDE)
+══════════════════════════════════════════════════ */
 function drawNetGraph() {
   const cv = document.getElementById("net-cv");
   if (!cv || !T || !T.graph) return;
   
-  const W = cv.offsetWidth || 280, H = cv.offsetHeight || 130;
-  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  // Haute résolution pour écrans Retina
+  const W = cv.offsetWidth || 280, H = cv.offsetHeight || 210;
+  if (cv.width !== W * 2 || cv.height !== H * 2) { 
+      cv.width = W * 2; cv.height = H * 2; 
+  }
   const ctx = cv.getContext("2d");
+  ctx.save();
+  ctx.scale(2, 2);
   ctx.clearRect(0, 0, W, H);
   
-  // 1. Initialisation spatiale du graphe avec un algorithme de force (exécuté une seule fois par partie)
+  // 1. Initialisation spatiale (exécutée 1 fois par partie)
   if (!T.nodesPos) {
-    T.nodesPos = [];
-    // Placement initial aléatoire
+    T.nodesPos = []; T.nodesVel = [];
     for (let i=0; i<T.N; i++) {
       T.nodesPos.push({ x: W/2 + (Math.random()-0.5)*W*0.5, y: H/2 + (Math.random()-0.5)*H*0.5 });
+      T.nodesVel.push({ x: 0, y: 0 });
     }
-    
-    // Algorithme de simulation physique (100 étapes)
-    for (let step=0; step<100; step++) {
-      for (let i=0; i<T.N; i++) {
-        for (let j=i+1; j<T.N; j++) {
-           let dx = T.nodesPos[j].x - T.nodesPos[i].x;
-           let dy = T.nodesPos[j].y - T.nodesPos[i].y;
-           let dist = Math.sqrt(dx*dx + dy*dy) || 1;
-           
-           // Répulsion globale (tous les nœuds se repoussent)
-           let force = -150 / (dist*dist); 
-           // Attraction locale (les voisins s'attirent)
-           if (T.graph[i].includes(j)) force += 0.06 * (dist - 40); 
-           
-           let fx = (dx/dist)*force, fy = (dy/dist)*force;
-           T.nodesPos[i].x += fx; T.nodesPos[i].y += fy;
-           T.nodesPos[j].x -= fx; T.nodesPos[j].y -= fy;
-        }
+  }
+
+  // 2. Moteur Physique Continu (Répulsion / Attraction)
+  for (let step=0; step<2; step++) { 
+    for (let i=0; i<T.N; i++) {
+      let fx = 0, fy = 0;
+      // Gravité centrale légère
+      fx += (W/2 - T.nodesPos[i].x) * 0.003;
+      fy += (H/2 - T.nodesPos[i].y) * 0.003;
+
+      for (let j=0; j<T.N; j++) {
+         if (i === j) continue;
+         let dx = T.nodesPos[j].x - T.nodesPos[i].x;
+         let dy = T.nodesPos[j].y - T.nodesPos[i].y;
+         let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+         
+         let force = -50 / (dist*dist); // Les nœuds se repoussent
+         if (T.graph[i].includes(j)) force += 0.015 * (dist - 50); // Les amis s'attirent
+         
+         fx += (dx/dist)*force; fy += (dy/dist)*force;
       }
+      T.nodesVel[i].x = (T.nodesVel[i].x + fx) * 0.82; // Friction
+      T.nodesVel[i].y = (T.nodesVel[i].y + fy) * 0.82;
     }
-    
-    // Centrage et mise à l'échelle finale pour que le graphe tienne bien dans le canvas
-    let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
-    T.nodesPos.forEach(p => { minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x); minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y); });
-    let scale = Math.min((W-30)/(maxX-minX||1), (H-30)/(maxY-minY||1));
-    let cx = (minX+maxX)/2, cy = (minY+maxY)/2;
-    T.nodesPos.forEach(p => { p.x = W/2 + (p.x-cx)*scale; p.y = H/2 + (p.y-cy)*scale; });
+    for (let i=0; i<T.N; i++) { T.nodesPos[i].x += T.nodesVel[i].x; T.nodesPos[i].y += T.nodesVel[i].y; }
   }
   
-  // 2. Dessin des liens (Edges)
-  ctx.lineWidth = 1;
+  // 3. Cadrage dynamique de la caméra
+  let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+  T.nodesPos.forEach(p => { minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x); minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y); });
+  let scale = Math.min((W-50)/(maxX-minX||1), (H-50)/(maxY-minY||1));
+  if (scale > 1.3) scale = 1.3; 
+  let cx = (minX+maxX)/2, cy = (minY+maxY)/2;
+  
+  // 4. Dessin des Connexions
+  ctx.lineWidth = 1.2;
   for (let i=0; i<T.N; i++) {
+    if(T.strats[i].pop / T.POP < 0.005) continue; // Cacher les liens des morts
     T.graph[i].forEach(n => {
-      if (n > i) { // Pour ne pas dessiner la ligne 2 fois
-        ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
-        ctx.beginPath(); 
-        ctx.moveTo(T.nodesPos[i].x, T.nodesPos[i].y); 
-        ctx.lineTo(T.nodesPos[n].x, T.nodesPos[n].y); 
-        ctx.stroke();
+      if (n > i && T.strats[n].pop / T.POP >= 0.005) { 
+        let px1 = W/2 + (T.nodesPos[i].x - cx) * scale;
+        let py1 = H/2 + (T.nodesPos[i].y - cy) * scale;
+        let px2 = W/2 + (T.nodesPos[n].x - cx) * scale;
+        let py2 = H/2 + (T.nodesPos[n].y - cy) * scale;
+        
+        ctx.strokeStyle = "rgba(184, 84, 255, 0.15)";
+        ctx.beginPath(); ctx.moveTo(px1, py1); ctx.lineTo(px2, py2); ctx.stroke();
       }
     });
   }
   
-  // 3. Dessin des nœuds (Nodes)
+  // 5. Dessin des Stratèges (Nœuds)
   for (let i=0; i<T.N; i++) {
-    const p = T.nodesPos[i];
     const s = T.strats[i];
-    
-    // Le rayon du nœud dépend dynamiquement de sa population en temps réel
     const popPct = s.pop / T.POP;
-    const radius = 2 + (popPct * 18); 
+    if (popPct < 0.005) continue; // Les éliminés disparaissent du graphe
+
+    let px = W/2 + (T.nodesPos[i].x - cx) * scale;
+    let py = H/2 + (T.nodesPos[i].y - cy) * scale;
+    const radius = 6 + (popPct * 26); // Taille vivante !
     
-    ctx.beginPath(); 
-    ctx.arc(p.x, p.y, radius, 0, Math.PI*2);
-    ctx.fillStyle = s.color; 
-    ctx.fill();
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)"; 
-    ctx.lineWidth = 1; 
-    ctx.stroke();
+    // Halo coloré
+    ctx.shadowColor = s.color;
+    ctx.shadowBlur = 12;
+    
+    // Bulle principale
+    ctx.beginPath(); ctx.arc(px, py, radius, 0, Math.PI*2);
+    ctx.fillStyle = "rgba(10, 10, 20, 0.95)"; ctx.fill();
+    ctx.lineWidth = 2; ctx.strokeStyle = s.color; ctx.stroke();
+    
+    ctx.shadowBlur = 0; // Coupe le halo pour le texte
+
+    // Emoji au centre
+    ctx.font = `${Math.max(9, radius * 1.1)}px Arial`;
+    ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText(s.e, px, py + 1); 
+    
+    // Étiquettes CSS-like si la stratégie domine un peu
+    if (popPct > 0.04) {
+      ctx.fillStyle = s.color;
+      ctx.font = `bold 9px 'DM Mono', monospace`;
+      ctx.fillText(s.name.toUpperCase(), px, py + radius + 10);
+      
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      ctx.font = `8px monospace`;
+      ctx.fillText(Math.round(popPct*100) + "%", px, py + radius + 20);
+    }
   }
+  ctx.restore();
 }
 /* ══════════════════════════════════════════════════
    MUTATION
