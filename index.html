@@ -21,8 +21,6 @@ html{background:var(--ink);color:var(--text);font-family:'DM Mono',monospace;fon
 body{min-height:100vh;overflow-x:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;opacity:.12;
   background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E") center/200px}
-
-/* BUTTONS */
 .btn{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.07em;border:none;border-radius:7px;
   padding:7px 14px;cursor:pointer;transition:all .14s;display:inline-flex;align-items:center;gap:5px;white-space:nowrap;line-height:1;user-select:none}
 .bg{background:var(--gold);color:#000;font-weight:500;box-shadow:0 0 18px rgba(245,200,66,.18)}
@@ -37,8 +35,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:9998;
 .bgoat:hover{background:linear-gradient(135deg,rgba(245,200,66,.28),rgba(255,140,0,.28));box-shadow:0 0 30px rgba(245,200,66,.25)}
 .bsm{padding:4px 9px;font-size:8px}
 .bxl{padding:11px 26px;font-size:11px;letter-spacing:.1em}
-
-/* UI ATOMS */
 .sl{font-size:8px;letter-spacing:.26em;color:var(--muted);text-transform:uppercase;margin-bottom:7px;
   display:flex;align-items:center;gap:6px}
 .sl::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -62,8 +58,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .rpo input:checked+label{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,.08)}
 .fl label{display:block;font-size:7px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;margin-bottom:4px}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px}
-
-/* ANIMATIONS */
 @keyframes fi{from{opacity:0}to{opacity:1}}
 @keyframes su{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
 @keyframes bp{0%,100%{background:rgba(245,200,66,.02)}50%{background:rgba(245,200,66,.1)}}
@@ -74,8 +68,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 @keyframes pulse-goat{0%,100%{box-shadow:0 0 0 0 rgba(245,200,66,0),inset 0 0 30px rgba(245,200,66,.04)}
   50%{box-shadow:0 0 30px rgba(245,200,66,.2),inset 0 0 30px rgba(245,200,66,.1)}}
 @keyframes royale-shake{0%,100%{transform:none}25%{transform:translateX(-2px)}75%{transform:translateX(2px)}}
-
-/* SETUP */
 #setup{position:fixed;inset:0;background:var(--ink);z-index:300;overflow-y:auto}
 #setup.hidden{display:none}
 .setup-inner{max-width:1120px;margin:0 auto;padding:22px 22px 44px}
@@ -88,8 +80,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .setup-body{display:grid;grid-template-columns:1fr 340px;gap:16px}
 .setup-left{display:flex;flex-direction:column;gap:14px}
 .setup-right{display:flex;flex-direction:column;gap:12px}
-
-/* MODE GRID */
 .mode-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
 .mcard{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:7px;
   padding:10px 8px;cursor:pointer;transition:all .16s;text-align:center;user-select:none;
@@ -106,8 +96,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .mcard-badge{position:absolute;top:4px;right:4px;font-size:6px;padding:1px 4px;border-radius:2px;
   background:rgba(255,140,0,.18);color:var(--amber);border:1px solid rgba(255,140,0,.28);letter-spacing:.08em}
 .mcard-badge.goat-badge{background:rgba(245,200,66,.2);color:var(--gold);border-color:rgba(245,200,66,.4)}
-
-/* PLAYER COUNT */
 .n-select{display:flex;gap:6px;margin-bottom:2px}
 .ncard{flex:1;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:7px;
   padding:10px;cursor:pointer;text-align:center;transition:all .14s;user-select:none}
@@ -116,8 +104,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .ncard-n{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;margin-bottom:2px}
 .ncard.sel .ncard-n{color:var(--teal)}
 .ncard-lbl{font-size:8px;color:var(--muted)}
-
-/* CHAR GRID */
 .char-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
 .cblock{background:rgba(0,0,0,.28);border:1px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .16s}
 .cblock.has-sel{border-color:rgba(255,255,255,.14)}
@@ -141,8 +127,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   border-radius:3px;color:var(--muted);font-size:7px;cursor:pointer;display:flex;align-items:center;
   justify-content:center;font-family:'DM Mono',monospace;transition:all .12s}
 .sc-wiki:hover{background:rgba(0,229,200,.1);color:var(--teal);border-color:rgba(0,229,200,.22)}
-
-/* DRAFT BAR */
 .draft-bar{display:flex;align-items:center;gap:5px;padding:8px 0 2px;flex-wrap:wrap}
 .dslot{width:30px;height:30px;border-radius:5px;border:1px dashed rgba(255,255,255,.14);
   display:flex;align-items:center;justify-content:center;font-size:.95rem;cursor:pointer;transition:all .15s;flex-shrink:0}
@@ -150,8 +134,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .dslot.me-slot{border-color:rgba(0,229,200,.5);background:rgba(0,229,200,.08);box-shadow:0 0 8px rgba(0,229,200,.12)}
 .draft-hint{font-size:8px;color:var(--muted);margin-left:4px}
 .me-display{font-size:8px;color:var(--teal);margin-left:6px}
-
-/* PARAMS */
 .ccrow{display:flex;align-items:center;gap:8px;font-size:9px;margin-bottom:5px}
 .ccrow>span{white-space:nowrap;color:var(--muted);min-width:96px}
 .pval{color:var(--gold);min-width:32px;text-align:right;font-size:9px}
@@ -167,8 +149,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .summary-row{display:flex;justify-content:space-between;font-size:8px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .summary-row:last-child{border-bottom:none}
 .summary-k{color:var(--muted)}.summary-v{color:var(--text);text-align:right}
-
-/* WIKI */
 #wiki-bg{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:600;display:none;
   align-items:flex-start;justify-content:center;backdrop-filter:blur(14px);padding:16px;overflow-y:auto}
 #wiki-bg.open{display:flex;animation:fi .18s ease}
@@ -226,8 +206,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .wgoat-name{font-size:10px;font-weight:500;color:var(--text);margin-bottom:3px}
 .wgoat-year{font-size:7px;color:var(--amber);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px}
 .wgoat-desc{font-size:9px;line-height:1.65;color:rgba(255,255,255,.55)}
-
-/* GAME SHELL */
 #shell{display:grid;grid-template-columns:1fr 300px;grid-template-rows:52px 1fr 33px;min-height:100vh}
 #hdr{grid-column:1/-1;border-bottom:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-between;padding:0 18px;gap:10px;
@@ -247,8 +225,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .sdot.wait{background:var(--amber);box-shadow:0 0 6px var(--amber)}
 .phase-badge{font-size:7px;letter-spacing:.1em;padding:2px 7px;border-radius:10px;
   background:rgba(245,200,66,.1);border:1px solid rgba(245,200,66,.2);color:var(--gold);text-transform:uppercase}
-
-/* CHART */
 .chart-wrap{position:relative;height:240px;
   background:linear-gradient(180deg,#08081a,#040410);
   border-radius:var(--r);overflow:hidden;border:1px solid var(--border)}
@@ -260,8 +236,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .li{display:flex;align-items:center;gap:3px;font-size:8px;opacity:.82;transition:opacity .3s;cursor:pointer}
 .li:hover{opacity:1}.li.dim{opacity:.16}.li.hi{opacity:1;font-weight:500}
 .ld{width:5px;height:5px;border-radius:50%;flex-shrink:0}
-
-/* BRACKET */
 .brds{display:flex;align-items:flex-start;gap:0;overflow-x:auto}
 .brd{display:flex;flex-direction:column;min-width:86px;flex-shrink:0}
 .brdl{font-size:7px;letter-spacing:.13em;color:var(--muted);text-transform:uppercase;
@@ -273,8 +247,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .brs.win{background:rgba(245,200,66,.08);color:var(--gold)}.brs.los{opacity:.2;text-decoration:line-through}
 .brs.act{animation:bp 1.4s ease-in-out infinite}
 .brd-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
-
-/* POINTS TABLE */
 .ptbl{width:100%;border-collapse:collapse;font-size:9px}
 .ptbl th{font-size:7px;letter-spacing:.11em;color:var(--muted);text-transform:uppercase;
   padding:4px 5px;text-align:right;border-bottom:1px solid var(--border);white-space:nowrap}
@@ -286,8 +258,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .ptbl .r1 td:last-child{color:var(--gold);font-weight:500}
 .ptbl .isMe td{color:var(--teal)}
 .pe{color:var(--gold)}
-
-/* LIVE RANKING */
 .rrow{display:flex;align-items:center;gap:5px;padding:3px 5px;border-radius:5px;transition:background .13s;margin-bottom:1px}
 .rrow:hover{background:rgba(255,255,255,.025)}
 .rn{font-family:'Bebas Neue',sans-serif;font-size:.88rem;color:var(--muted);width:13px;text-align:center;line-height:1}
@@ -301,24 +271,18 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .rrow.t1 .rn{color:var(--gold)}.rrow.t2 .rn{color:#a0a0a0}.rrow.t3 .rn{color:#c87d32}
 .rrow.eliminated{opacity:.2;filter:saturate(0)}
 .gsep{font-size:7px;letter-spacing:.12em;color:var(--muted);text-transform:uppercase;padding:3px 5px 1px;margin-top:2px}
-
-/* SURVIVAL */
 .surv-row{display:flex;align-items:center;gap:5px;padding:4px 6px;
   background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:5px;margin-bottom:3px}
 .surv-row.alive{border-color:rgba(0,229,200,.14)}
 .surv-row.dead{opacity:.2;filter:saturate(0)}
 .surv-hp-bg{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .surv-hp-fill{height:100%;border-radius:2px;transition:width .3s ease}
-
-/* KOH */
 .koh-throne{text-align:center;padding:12px 10px;
   background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.12);
   border-radius:var(--r);margin-bottom:7px;animation:kp 3s ease-in-out infinite}
 .koh-crown{font-size:1.75rem;display:block;animation:glow 3s ease-in-out infinite}
 .koh-king{font-size:.88rem;color:var(--gold);margin-top:3px}
 .koh-reign{font-size:7px;color:var(--muted);margin-top:2px}
-
-/* BANNERS */
 .chaos-banner{background:rgba(255,48,96,.05);border:1px solid rgba(255,48,96,.18);
   border-radius:6px;padding:6px 9px;font-size:8px;color:var(--red);display:flex;align-items:center;gap:6px}
 .alliance-banner{background:rgba(0,229,200,.04);border:1px solid rgba(0,229,200,.2);
@@ -327,37 +291,25 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   border-radius:6px;padding:6px 9px;font-size:8px;color:var(--gold);display:flex;align-items:center;gap:6px}
 .arms-banner{background:rgba(255,140,0,.05);border:1px solid rgba(255,140,0,.22);
   border-radius:6px;padding:6px 9px;font-size:8px;color:var(--amber);display:flex;align-items:center;gap:6px}
-
-/* EVENTS */
 #evts{max-height:90px;overflow-y:auto;display:flex;flex-direction:column;gap:2px}
 .evt{font-size:8px;color:var(--muted);line-height:1.5;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .evt.ek{color:var(--red)}.evt.ek2{color:var(--gold)}.evt.ec{color:var(--amber)}.evt.ea{color:var(--teal)}
-
-/* ROYALE */
 .royale-tracker{padding:6px;background:rgba(255,48,96,.03);border:1px solid rgba(255,48,96,.1);border-radius:6px;margin-bottom:6px}
 .royale-title{font-size:7px;letter-spacing:.15em;color:var(--red);text-transform:uppercase;margin-bottom:5px}
 .royale-elim{display:flex;align-items:center;gap:4px;font-size:8px;margin-bottom:2px;color:rgba(255,255,255,.3)}
 .royale-elim span{color:var(--red);font-size:7px}
 .royale-alive{color:var(--green);font-size:7px;letter-spacing:.1em;margin-top:3px}
-
-/* ARMS */
 .arms-status{padding:8px;background:rgba(255,140,0,.04);border:1px solid rgba(255,140,0,.14);border-radius:6px;margin-bottom:6px}
 .arms-t-bar{display:flex;align-items:center;gap:6px;font-size:8px;margin-top:4px}
 .arms-fill-bg{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .arms-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--amber),var(--red));transition:width .4s ease}
-
-/* DIPLOMACY */
 .diplo-status{padding:8px;background:rgba(0,229,200,.04);border:1px solid rgba(0,229,200,.14);border-radius:6px;margin-bottom:6px}
 .diplo-dominant{font-size:9px;color:var(--red);margin-bottom:4px}
 .diplo-alliance{font-size:8px;color:var(--teal)}
-
-/* GOAT SIDE */
 .goat-score-panel{padding:8px;background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.16);border-radius:6px;margin-bottom:6px}
 .goat-hist-row{display:flex;justify-content:space-between;font-size:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.03)}
 .goat-hist-row:last-child{border-bottom:none}
 .goat-hist-name{color:var(--muted)}.goat-hist-val{color:var(--gold)}
-
-/* MODAL */
 #mbg{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:700;display:none;
   align-items:center;justify-content:center;backdrop-filter:blur(14px);padding:14px}
 #mbg.open{display:flex;animation:fi .18s ease}
@@ -379,12 +331,8 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .mtag.w{border-color:rgba(255,48,96,.4);color:var(--red)}.mtag.ok{border-color:rgba(0,229,200,.3);color:var(--teal)}
 .mtag.goat{border-color:rgba(245,200,66,.5);color:var(--gold);background:rgba(245,200,66,.08)}
 .mft{display:flex;justify-content:flex-end;gap:5px}
-
-/* FINAL */
 #final{display:none}
 #final.show{display:block}
-
-/* ── CINEMATIC SPLASH ── */
 .final-splash{position:relative;border-radius:12px;overflow:hidden;margin-bottom:12px;
   background:linear-gradient(135deg,rgba(245,200,66,.04) 0%,rgba(0,0,0,.6) 50%,rgba(91,164,247,.04) 100%);
   border:1px solid rgba(245,200,66,.18);min-height:200px;
@@ -411,8 +359,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:6px;padding:6px 8px}
 .fw-stat-val{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;line-height:1}
 .fw-stat-lbl{font-size:6px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-
-/* ── PODIUM ANIMATED ── */
 .pod{display:flex;align-items:flex-end;justify-content:center;gap:10px;height:110px;margin:10px 0}
 .pc{display:flex;flex-direction:column;align-items:center;gap:3px}
 .pe2{font-size:1.15rem}
@@ -425,8 +371,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .pb.g2{height:54px;background:linear-gradient(180deg,#c8c8c8,#555);color:#000;animation-delay:.3s}
 .pb.g3{height:40px;background:linear-gradient(180deg,#cd7f32,#7a4820);color:#fff;animation-delay:.5s}
 @keyframes bar-rise{from{transform:scaleY(0);opacity:0}to{transform:scaleY(1);opacity:1}}
-
-/* ── POST-GAME ANALYSIS ── */
 #post-analysis{margin-top:12px}
 .pg-section{margin-bottom:14px}
 .pg-section-title{font-size:7px;letter-spacing:.18em;color:var(--muted);text-transform:uppercase;
@@ -441,14 +385,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   padding:8px 6px;text-align:center}
 .pg-kpi-val{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:.04em;line-height:1}
 .pg-kpi-lbl{font-size:6px;color:var(--muted);letter-spacing:.1em;margin-top:2px}
-/* Dynasty chart */
 .dynasty-wrap{height:36px;border-radius:5px;overflow:hidden;position:relative;margin-bottom:4px;
   border:1px solid var(--border)}
 #dynasty-cv{display:block;width:100%;height:100%}
 .dynasty-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
 .dynasty-item{display:flex;align-items:center;gap:3px;font-size:6.5px;color:var(--muted)}
 .dynasty-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-/* Strategy DNA */
 .dna-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin-bottom:10px}
 .dna-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:7px;padding:9px 10px}
 .dna-card-header{display:flex;align-items:center;gap:5px;margin-bottom:7px}
@@ -460,50 +402,36 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .dna-bar-bg{flex:1;height:4px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .dna-bar-fill{height:100%;border-radius:2px;transition:width .8s cubic-bezier(.22,1,.36,1)}
 .dna-pct{font-size:6px;color:var(--muted);width:22px;text-align:right;flex-shrink:0}
-/* Milestone timeline */
 .ms-row{display:flex;gap:7px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);
   font-size:8px;align-items:flex-start}
 .ms-gen{font-size:6.5px;color:var(--dim);white-space:nowrap;min-width:36px;padding-top:2px}
 .ms-txt{color:rgba(255,255,255,.6);line-height:1.5;flex:1}
-/* Coop bars */
 .pg-coop-row{display:flex;align-items:center;gap:6px;margin-bottom:4px}
 .pg-coop-name{font-size:7px;color:var(--muted);width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
 .pg-coop-bg{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .pg-coop-fill{height:100%;border-radius:2px}
 .pg-coop-pct{font-size:7px;color:var(--muted);width:24px;text-align:right;flex-shrink:0}
-
-/* ── EXTINCTION MODE ── */
 .ext-survivor{display:flex;align-items:center;gap:5px;padding:4px 0;font-size:8px}
 .ext-wave{font-size:7px;color:var(--red);letter-spacing:.1em;text-align:center;padding:5px;
   background:rgba(255,48,96,.06);border:1px solid rgba(255,48,96,.18);border-radius:5px;margin-bottom:6px}
 .ext-elim{font-size:7px;color:rgba(255,48,96,.5);text-decoration:line-through;opacity:.5}
-
-/* ── RANK TREND ── */
 .rtrd{font-size:9px;min-width:10px;text-align:center;transition:color .3s}
-
-/* COOP RATE CHART */
 .coop-chart-wrap{height:56px;position:relative;margin-top:6px;
   background:linear-gradient(180deg,rgba(0,229,200,.03),rgba(0,0,0,.2));
   border-radius:6px;overflow:hidden;border:1px solid var(--border)}
 #coop-cv{position:absolute;inset:0;width:100%;height:100%}
 .coop-clabel{position:absolute;top:3px;left:6px;font-size:7px;color:var(--muted);z-index:2;pointer-events:none}
 .coop-rval{position:absolute;top:3px;right:6px;font-size:8px;font-family:'Bebas Neue',sans-serif;z-index:2;pointer-events:none}
-
-/* STATS BAR */
 .stats-bar{display:flex;gap:10px;font-size:8px;color:var(--muted);padding:4px 2px;flex-wrap:wrap;align-items:center}
 .sb-item{display:flex;gap:3px;align-items:center}
 .sb-val{color:var(--text)}
 .sb-event{font-size:7px;color:var(--amber);animation:fi .4s ease;max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-
-/* LIVE MATCH TICKER */
 .lm-wrap{padding:6px 7px;background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:6px;margin-bottom:5px}
 .lm-versus{font-size:7px;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between}
 .lm-moves{display:flex;gap:2px;flex-wrap:nowrap;overflow:hidden;margin-bottom:3px}
 .lm-dot{width:9px;height:9px;border-radius:2px;flex-shrink:0}
 .lm-dot.c{background:rgba(0,229,200,.7)}.lm-dot.d{background:rgba(255,48,96,.7)}
 .lm-score{font-size:7px;color:var(--muted);letter-spacing:.06em;margin-top:1px}
-
-/* POST-GAME ANALYSIS */
 .analysis-sect{margin-top:10px;padding-top:10px;border-top:1px solid var(--border)}
 .analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:9px}
 .analysis-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:6px;padding:8px}
@@ -518,26 +446,18 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .timeline-evt{display:flex;gap:6px;padding:4px 0;border-bottom:1px solid rgba(255,255,255,.03);font-size:8px}
 .te-gen{font-size:7px;color:var(--dim);white-space:nowrap;min-width:36px}
 .te-txt{color:rgba(255,255,255,.6);line-height:1.45}
-
-/* INVASION */
 .invasion-prog{padding:8px;background:rgba(0,229,200,.04);border:1px solid rgba(0,229,200,.14);border-radius:6px;margin-bottom:6px}
 .invasion-bar-bg{height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;margin-top:5px}
 .invasion-fill{height:100%;border-radius:3px;transition:width .4s;background:linear-gradient(90deg,var(--teal),var(--blue))}
-
-/* ECO */
 .eco-panel{padding:8px;background:rgba(61,232,122,.04);border:1px solid rgba(61,232,122,.14);border-radius:6px;margin-bottom:6px}
 .eco-gauge{display:flex;align-items:center;gap:5px;margin-top:5px}
 .eco-fill-bg{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .eco-fill{height:100%;border-radius:2px;transition:width .4s,background .6s}
 .eco-matrix-tag{font-size:7px;padding:1px 5px;border-radius:3px;border:1px solid rgba(61,232,122,.2);
   color:rgba(61,232,122,.7);display:inline-block;margin-top:4px}
-
-/* MIRROR */
 .mirror-panel{padding:8px;background:rgba(180,127,255,.04);border:1px solid rgba(180,127,255,.14);border-radius:6px;margin-bottom:6px}
 .mirror-row{display:flex;justify-content:space-between;font-size:8px;padding:2px 0}
 .mirror-self{font-size:7px;color:rgba(180,127,255,.8)}
-
-/* WIKI GUIDE & MATCHUP TABS */
 .guide-mode{margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)}
 .guide-mode-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
 .guide-mode-icon{font-size:1.2rem}
@@ -554,24 +474,18 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .mu-table td:first-child{text-align:left;font-size:7px;color:var(--muted)}
 .mu-vp{font-weight:500}.mu-vp.pp{color:var(--teal)}.mu-vp.p{color:rgba(0,229,200,.55)}
 .mu-vp.n{color:rgba(255,48,96,.55)}.mu-vp.nn{color:var(--red)}.mu-vp.e{color:var(--muted)}
-
-/* SCRUBBER */
 .scrubber-wrap{display:none;align-items:center;gap:7px;padding:4px 2px;margin-top:2px}
 .scrubber-wrap.visible{display:flex}
 #scrubber{flex:1;accent-color:var(--gold);cursor:pointer;height:3px}
 .scrub-lbl{font-size:7px;color:var(--muted);white-space:nowrap;min-width:50px;text-align:right}
 .scrub-mode{font-size:7px;padding:1px 6px;border-radius:3px;background:rgba(245,200,66,.12);
   color:var(--gold);border:1px solid rgba(245,200,66,.25);white-space:nowrap}
-
-/* PAUSE BUTTON */
 .btn-pause{background:rgba(255,255,255,.06);border:1px solid var(--border);color:var(--text);
   font-family:'DM Mono',monospace;font-size:9px;padding:4px 10px;border-radius:6px;cursor:pointer;
   transition:all .14s;display:none;align-items:center;gap:4px;letter-spacing:.05em}
 .btn-pause.visible{display:inline-flex}
 .btn-pause.paused{background:rgba(245,200,66,.12);border-color:rgba(245,200,66,.3);color:var(--gold)}
 .btn-pause:hover{background:rgba(255,255,255,.12)}
-
-/* STRATEGY DETAIL MODAL */
 #strat-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:500;
   display:none;align-items:center;justify-content:center}
 #strat-modal-bg.open{display:flex}
@@ -593,8 +507,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .sm-coop-fill{height:100%;border-radius:3px;transition:width .5s ease}
 .sm-tag-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px}
 .sm-desc{font-size:8px;line-height:1.7;color:rgba(255,255,255,.55);border-top:1px solid var(--border);padding-top:8px}
-
-/* TERRITOIRE MAP GRID — isolation complète */
 .terr-map-outer{overflow:hidden;border-radius:5px;border:1px solid var(--border);max-width:100%;margin:6px 0}
 .terr-map-grid{display:grid !important;gap:1px !important;padding:3px !important;
   background:rgba(0,0,0,.4) !important;width:fit-content !important;max-width:100% !important;
@@ -611,16 +523,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .terr-banner{padding:8px;background:rgba(91,164,247,.05);border:1px solid rgba(91,164,247,.18);
   border-radius:6px;margin-bottom:6px;font-size:8px;color:var(--blue)}
 .terr-stats{font-size:7px;color:var(--muted);margin-top:4px;display:flex;gap:8px;flex-wrap:wrap}
-
-/* MUTATION */
 .mut-list{margin-top:4px}
 .mut-row{display:flex;align-items:center;gap:5px;font-size:8px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04)}
 .mut-badge{font-size:6px;padding:1px 4px;border-radius:2px;background:rgba(180,127,255,.15);
   border:1px solid rgba(180,127,255,.3);color:var(--purple);white-space:nowrap}
 .mut-arrow{color:var(--muted);font-size:.6rem}
 .mut-banner{padding:8px;background:rgba(180,127,255,.05);border:1px solid rgba(180,127,255,.2);border-radius:6px}
-
-/* POST-GAME ANALYSIS */
 .pg-section{margin-bottom:14px}
 .pg-title{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:7px;
   display:flex;align-items:center;gap:6px}
@@ -645,15 +553,11 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .pg-evt.collapse::before{background:var(--amber)}
 .pg-evt-gen{font-size:6px;color:var(--muted);margin-bottom:1px}
 .pg-evt-txt{font-size:8px;line-height:1.4;color:rgba(255,255,255,.65)}
-
-/* LEXIQUE */
 .lex-entry{margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid rgba(255,255,255,.04)}
 .lex-term{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--gold);margin-bottom:3px}
 .lex-def{font-size:8px;line-height:1.7;color:rgba(255,255,255,.6)}
 .lex-also{font-size:7px;color:var(--blue);margin-top:2px}
 .lex-cols{columns:2;column-gap:20px}
-
-/* CHART HOVER TOOLTIP */
 .chart-tooltip{position:absolute;background:rgba(10,10,20,.92);border:1px solid var(--border2);
   border-radius:6px;padding:6px 8px;font-size:7px;pointer-events:none;z-index:10;display:none;
   min-width:100px;box-shadow:0 4px 20px rgba(0,0,0,.5)}
@@ -661,12 +565,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .ct-row{display:flex;align-items:center;gap:4px;margin-bottom:2px}
 .ct-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 
-/* UPGOAT ══════════════════════════════════════════ */
-
-/* PARTICLE CANVAS */
 #particle-cv{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:5}
-
-/* AI COMMENTATOR */
 .commentator-wrap{background:rgba(0,0,0,.35);border:1px solid rgba(245,200,66,.18);border-radius:8px;
   padding:9px 11px;margin-bottom:8px;min-height:52px;position:relative;overflow:hidden}
 .commentator-wrap::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(245,200,66,.03),rgba(180,127,255,.03));pointer-events:none}
@@ -678,14 +577,10 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   animation:sp .6s ease-in-out infinite;vertical-align:text-bottom;margin-left:1px}
 @keyframes comm-slide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 .commentator-new{animation:comm-slide .4s ease}
-
-/* SOUND BUTTON */
 .btn-sound{background:rgba(255,255,255,.04);border:1px solid var(--border);border-radius:6px;
   padding:4px 8px;cursor:pointer;font-size:9px;color:var(--muted);transition:all .14s;font-family:'DM Mono',monospace}
 .btn-sound:hover{background:rgba(255,255,255,.09);color:var(--text)}
 .btn-sound.active{background:rgba(0,229,200,.08);border-color:rgba(0,229,200,.25);color:var(--teal)}
-
-/* ACHIEVEMENTS */
 .btn-ach{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);border-radius:6px;
   padding:4px 9px;cursor:pointer;font-size:9px;color:var(--gold);font-family:'DM Mono',monospace;transition:all .14s}
 .btn-ach:hover{background:rgba(245,200,66,.16);box-shadow:0 0 12px rgba(245,200,66,.2)}
@@ -717,8 +612,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   animation:sup .4s ease}
 .ach-unlock-toast.show{display:flex;align-items:center;gap:8px}
 .ach-total{font-size:8px;color:var(--muted);margin-top:12px;text-align:center;border-top:1px solid var(--border);padding-top:10px}
-
-/* CUSTOM STRATEGY BUILDER */
 #builder-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;display:none;align-items:center;justify-content:center}
 #builder-modal-bg.open{display:flex}
 #builder-modal{background:var(--card);border:1px solid var(--border2);border-radius:14px;padding:20px;
@@ -734,8 +627,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .bld-name-input{width:100%;background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:6px;
   color:var(--text);font-family:'DM Mono',monospace;font-size:10px;padding:7px 9px;margin-bottom:12px}
 .bld-name-input:focus{outline:none;border-color:rgba(0,229,200,.4)}
-
-/* CAMPAIGN */
 .campaign-wrap{margin-top:14px}
 .campaign-title{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.1em;color:var(--amber);margin-bottom:8px;
   display:flex;align-items:center;gap:8px}
@@ -751,8 +642,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .mission-name{font-family:'Bebas Neue',sans-serif;font-size:.9rem;letter-spacing:.06em;color:var(--text);margin-bottom:4px;line-height:1.2}
 .mission-obj{font-size:6.5px;color:rgba(255,255,255,.4);line-height:1.5}
 .mission-boss{font-size:7px;color:var(--amber);margin-top:4px}
-
-/* CAMPAIGN BRIEFING MODAL */
 #mission-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:700;display:none;align-items:center;justify-content:center}
 #mission-modal-bg.open{display:flex}
 #mission-modal{background:var(--card);border:1px solid rgba(255,140,0,.3);border-radius:14px;padding:22px;
@@ -765,21 +654,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .mm-tag.objective{border-color:rgba(0,229,200,.3);color:var(--teal);background:rgba(0,229,200,.06)}
 .mm-tag.boss{border-color:rgba(255,48,96,.3);color:var(--red);background:rgba(255,48,96,.05)}
 .mm-setup{font-size:7.5px;line-height:1.7;color:rgba(255,255,255,.5);background:rgba(0,0,0,.3);border-radius:6px;padding:8px;margin-bottom:14px}
-
-/* NETWORK VIZ */
 .netgraph-wrap{position:relative;height:130px;margin-top:4px}
 #net-cv{width:100%;height:100%;border-radius:6px;background:rgba(0,0,0,.25);border:1px solid var(--border)}
-
-/* UPGOAT BORDER PULSE when commentator active */
 @keyframes upgoat-pulse{0%,100%{box-shadow:0 0 0 0 rgba(245,200,66,0)}50%{box-shadow:0 0 0 2px rgba(245,200,66,.15)}}
 .commentating #shell{animation:upgoat-pulse 3s ease-in-out infinite}
-
-/* FOOTER */
 #ftr span:last-child{opacity:.14}
 
-/* ══ v15 ══════════════════════════════════════════ */
-
-/* TOGGLE SWITCH */
 .toggle-sw{position:relative;display:inline-flex;align-items:center;cursor:pointer;height:16px;width:30px}
 .toggle-sw input{opacity:0;width:0;height:0}
 .toggle-track{position:absolute;inset:0;background:rgba(255,255,255,.1);border-radius:8px;transition:.2s;
@@ -788,7 +668,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .toggle-track::after{content:'';position:absolute;top:2px;left:2px;width:10px;height:10px;
   background:#fff;border-radius:50%;transition:.2s}
 .toggle-sw input:checked+.toggle-track::after{transform:translateX(14px)}
-/* ── DIDACTICIEL INTERACTIF ── */
 #tut-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.8);
   z-index: 9999; display: none; transition: opacity 0.3s;
@@ -807,14 +686,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   font-size: 10px; color: rgba(255,255,255,0.85); line-height: 1.6; margin-bottom: 15px;
 }
 .tut-btns { display: flex; justify-content: space-between; }
-/* Classe ajoutée dynamiquement pour mettre en valeur l'élément ciblé */
 .tut-highlight {
   position: relative !important; z-index: 10000 !important;
   background: rgba(20,20,40,1) !important;
   box-shadow: 0 0 0 4px rgba(245,200,66,0.4), 0 0 20px rgba(245,200,66,0.6) !important;
   border-radius: 8px; pointer-events: none;
 }
-/* WORLD EVENT TOAST (non-bloquant) */
 .we-overlay{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:9000;
   pointer-events:none;width:min(420px,92vw)}
 .we-inner{text-align:center;padding:14px 20px 12px;
@@ -834,8 +711,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .we-progress{height:2px;background:rgba(255,255,255,.08);border-radius:1px;margin-top:10px;overflow:hidden}
 .we-progress-fill{height:100%;border-radius:1px;animation:we-drain 4s linear forwards}
 @keyframes we-drain{from{width:100%}to{width:0%}}
-
-/* COALITION MODE */
 .coalition-wrap{padding:8px;border-radius:7px;border:1px solid var(--border);margin-bottom:6px}
 .coalition-header{font-size:7px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:7px}
 .fac-card{padding:7px 8px;border-radius:6px;margin-bottom:5px;border:1px solid transparent;transition:border .3s}
@@ -849,8 +724,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   background:rgba(255,48,96,.15);color:var(--red);border:1px solid rgba(255,48,96,.3);margin-left:auto}
 .fac-peace-badge{font-size:6.5px;padding:1px 6px;border-radius:3px;
   background:rgba(0,229,200,.08);color:var(--teal);border:1px solid rgba(0,229,200,.2);margin-left:auto}
-
-/* TSUNAMI MODE */
 .tsunami-next{height:4px;border-radius:2px;background:rgba(91,164,247,.1);border:1px solid rgba(91,164,247,.2);
   overflow:hidden;margin-bottom:8px;position:relative}
 .tsunami-fill{height:100%;border-radius:2px;background:linear-gradient(90deg,var(--blue),var(--purple));
@@ -863,15 +736,11 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .tsunami-entry.eliminated{opacity:.35;text-decoration:line-through;filter:grayscale(.8)}
 .ts-wave-badge{font-size:6.5px;padding:1px 6px;border-radius:3px;margin-left:auto}
 .ts-pool-dot{width:5px;height:5px;border-radius:50%;display:inline-block;margin:0 1px}
-
-/* CHART MODE SWITCHER */
 .chart-mode-btns{display:flex;gap:4px;margin-bottom:4px;align-items:center}
 .cm-btn{font-family:'DM Mono',monospace;font-size:7px;padding:3px 8px;border-radius:4px;cursor:pointer;
   border:1px solid var(--border);background:rgba(0,0,0,.3);color:var(--muted);transition:all .14s;letter-spacing:.05em}
 .cm-btn:hover{background:rgba(255,255,255,.07);color:var(--text)}
 .cm-btn.active{background:rgba(245,200,66,.1);border-color:rgba(245,200,66,.3);color:var(--gold)}
-
-/* FAST FORWARD */
 .btn-ff{background:rgba(255,140,0,.07);border:1px solid rgba(255,140,0,.2);border-radius:6px;
   padding:4px 9px;cursor:pointer;font-size:9px;color:var(--amber);font-family:'DM Mono',monospace;
   transition:all .14s;display:none;align-items:center;gap:4px}
@@ -879,8 +748,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .btn-ff.active{background:rgba(255,140,0,.2);border-color:rgba(255,140,0,.5);
   box-shadow:0 0 12px rgba(255,140,0,.3);animation:ff-pulse .7s ease-in-out infinite alternate}
 @keyframes ff-pulse{from{box-shadow:0 0 6px rgba(255,140,0,.2)}to{box-shadow:0 0 18px rgba(255,140,0,.5)}}
-
-/* HALL OF FAME */
 #hof-modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:600;display:none;
   align-items:center;justify-content:center}
 #hof-modal-bg.open{display:flex}
@@ -900,8 +767,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .btn-hof{background:rgba(245,200,66,.08);border:1px solid rgba(245,200,66,.2);border-radius:6px;
   padding:4px 9px;cursor:pointer;font-size:9px;color:var(--gold);font-family:'DM Mono',monospace;transition:all .14s}
 .btn-hof:hover{background:rgba(245,200,66,.16)}
-
-/* HEATMAP */
 .heatmap-wrap{position:relative;margin-top:4px}
 .heatmap-title{font-size:7px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
   margin-bottom:4px;display:flex;align-items:center;justify-content:space-between}
@@ -909,8 +774,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .heatmap-tooltip{position:absolute;background:rgba(10,10,20,.95);border:1px solid var(--border2);
   border-radius:5px;padding:5px 8px;font-size:7px;pointer-events:none;z-index:20;display:none;
   min-width:120px;line-height:1.6}
-
-/* NEXUS MODE */
 .nexus-panel{padding:8px;background:rgba(180,127,255,.04);border:1px solid rgba(180,127,255,.2);
   border-radius:6px;margin-bottom:6px}
 .nexus-progress{display:flex;gap:6px;align-items:center;margin-top:5px}
@@ -918,21 +781,13 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .nexus-dot.done{background:var(--green);box-shadow:0 0 8px var(--green)}
 .nexus-dot.active{background:var(--gold);box-shadow:0 0 12px var(--gold);animation:sp .8s ease-in-out infinite}
 .nexus-score-row{display:flex;align-items:center;gap:6px;padding:3px 0;font-size:8px}
-
-/* CHART AMBIENT BACKGROUND */
 .chart-ambient{position:absolute;inset:0;pointer-events:none;z-index:0;border-radius:6px;
   transition:background 2s ease}
-
-/* EXPORT BUTTON */
 .btn-export{background:rgba(91,164,247,.07);border:1px solid rgba(91,164,247,.2);border-radius:6px;
   padding:5px 12px;cursor:pointer;font-size:8.5px;color:var(--blue);font-family:'DM Mono',monospace;
   transition:all .14s;display:flex;align-items:center;gap:5px}
 .btn-export:hover{background:rgba(91,164,247,.16);box-shadow:0 0 12px rgba(91,164,247,.2)}
-
-/* STACKED AREA CLIP */
 .chart-wrap{overflow:hidden}
-
-/* DUEL BRACKET */
 .duel-bracket{display:flex;gap:8px;overflow-x:auto;padding:4px 0}
 .duel-round{display:flex;flex-direction:column;gap:6px;min-width:90px;flex-shrink:0}
 .duel-round-lbl{font-size:6px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;text-align:center}
@@ -960,13 +815,8 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .bracket-track{font-size:6px;padding:1px 5px;border-radius:3px;margin-right:4px;flex-shrink:0}
 .bracket-track.winners{background:rgba(61,232,122,.12);color:var(--green);border:1px solid rgba(61,232,122,.25)}
 .bracket-track.consolation{background:rgba(255,140,0,.1);color:var(--amber);border:1px solid rgba(255,140,0,.2)}
-
-/* ═══════════════════════════ V17 ═══════════════════════════ */
-/* SPARKLINES */
 .rrow{position:relative}
 .sparkline-cv{display:inline-block;vertical-align:middle;opacity:.85}
-
-/* RIVALITÉS */
 .rivalry-panel{background:linear-gradient(135deg,rgba(255,48,96,.06),rgba(180,127,255,.06));
   border:1px solid rgba(255,48,96,.25);border-radius:8px;padding:8px 10px;margin-bottom:6px;
   animation:rv-glow 2.5s ease-in-out infinite alternate}
@@ -984,8 +834,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .rivalry-stats{display:flex;gap:8px;margin-top:5px;font-size:7px;color:var(--muted)}
 .rv-stat{display:flex;flex-direction:column;align-items:center;gap:1px}
 .rv-stat b{font-size:9px;color:rgba(255,255,255,.7)}
-
-/* CHRONIQUE */
 .chron-wrap{max-height:240px;overflow-y:auto;padding-right:2px}
 .chron-wrap::-webkit-scrollbar{width:2px}
 .chron-wrap::-webkit-scrollbar-thumb{background:rgba(255,255,255,.1);border-radius:1px}
@@ -1004,8 +852,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .chron-beat-gen{font-size:6.5px;color:var(--muted);margin-right:4px}
 .chron-new{animation:chron-fade .5s ease}
 @keyframes chron-fade{from{opacity:0;transform:translateX(-4px)}to{opacity:1;transform:none}}
-
-/* COEVO MODE */
 .coevo-strat{display:flex;align-items:center;gap:6px;padding:3px 0}
 .coevo-gen-badge{font-size:6px;padding:1px 5px;border-radius:3px;background:rgba(180,127,255,.15);
   color:var(--purple);border:1px solid rgba(180,127,255,.25);flex-shrink:0;font-family:'Bebas Neue',sans-serif}
@@ -1017,8 +863,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .coevo-tree-row{display:flex;align-items:center;gap:5px;font-size:7.5px}
 .coevo-tree-line{width:12px;height:1px;background:rgba(180,127,255,.3)}
 .coevo-tree-child{color:var(--purple)}
-
-/* v17 — ELO BADGES */
 .elo-badge{display:inline-flex;align-items:center;gap:2px;font-size:6px;
   padding:1px 4px;border-radius:3px;font-family:'Bebas Neue',sans-serif;
   letter-spacing:.06em;flex-shrink:0}
@@ -1032,8 +876,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 .elo-rank-num{width:14px;text-align:right;color:var(--muted);font-size:6.5px}
 .elo-bar-wrap{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .elo-bar-fill{height:100%;border-radius:2px;transition:width .4s}
-
-/* v17 — CIVILISATIONS */
 .civ-banner{font-size:7px;padding:5px 8px;border-radius:5px;letter-spacing:.06em;
   border:1px solid rgba(255,165,0,.25);background:rgba(255,165,0,.04);margin-bottom:6px}
 .civ-faction{padding:6px 8px;border-radius:6px;margin-bottom:5px;border:1px solid transparent;
@@ -1054,8 +896,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   color:var(--green);border:1px solid rgba(91,223,180,.3);margin-left:auto}
 .civ-territory-map{height:10px;border-radius:5px;overflow:hidden;display:flex;margin-bottom:8px;
   border:1px solid rgba(255,255,255,.1)}
-
-/* v17 — OBSERVATOIRE */
 .obs-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:8px}
 .obs-arena{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:6px;
   padding:5px;cursor:pointer;transition:all .2s;position:relative}
@@ -1069,13 +909,10 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   border-bottom:1px solid rgba(255,255,255,.04)}
 .obs-win-bar{flex:1;height:3px;background:rgba(255,255,255,.06);border-radius:2px;overflow:hidden}
 .obs-win-fill{height:100%;border-radius:2px;background:var(--gold)}
-
-/* RANKING SPARKLINES */
 .rrow{display:flex;align-items:center;gap:4px;padding:2px 6px;cursor:pointer;
   border-radius:4px;transition:background .15s}
 .rrow:hover{background:rgba(255,255,255,.04)}
 .r-spark{flex-shrink:0;opacity:.8}
-
 @media (max-width: 900px) {
   #shell{grid-template-columns:1fr;grid-template-rows:50px auto auto 32px}
   #main{padding:9px 10px;gap:9px}
@@ -1087,21 +924,16 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   .setup-inner{padding:14px 14px 30px}
   .wiki-2col{grid-template-columns:1fr}
 }
-
-/* NOUVELLES BANNIÈRES */
 .reseau-banner { background:rgba(184,84,255,.05); border:1px solid rgba(184,84,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#b854ff; display:flex; align-items:center; gap:6px; }
 .quantique-banner { background:rgba(0,255,255,.05); border:1px solid rgba(0,255,255,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:#00ffff; display:flex; align-items:center; gap:6px; }
 .temp-banner { background:linear-gradient(90deg, rgba(255,140,0,.05), rgba(255,48,96,.15)); border:1px solid rgba(255,48,96,.3); border-radius:6px; padding:6px 9px; font-size:8px; color:var(--red); display:flex; align-items:center; gap:6px; }
 .propaganda-banner { background:rgba(245,200,66,.05); border:1px solid rgba(245,200,66,.2); border-radius:6px; padding:6px 9px; font-size:8px; color:var(--gold); display:flex; align-items:center; gap:6px; }
-
-/* RECHAUFFEMENT CLIMATIQUE */
 .temp-bar-bg { flex:1; height:4px; background:rgba(255,255,255,.06); border-radius:2px; overflow:hidden; }
 .temp-bar-fill { height:100%; border-radius:2px; background:linear-gradient(90deg, var(--amber), var(--red)); transition:width .4s ease; }
 </style>
 </head>
 <body>
 
-<!-- SETUP -->
 <div id="setup">
  <div class="setup-inner">
   <div class="setup-topbar">
@@ -1117,7 +949,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
     <button class="btn bg bxl" onclick="launchTournament()">▶ LANCER</button>
    </div>
   </div>
-
   <div class="setup-body">
    <div class="setup-left">
 <div>
@@ -1150,7 +981,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
       </div>
      </div>
     </div>
-
     <div>
      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;flex-wrap:wrap;gap:7px">
       <div class="sl" style="margin-bottom:0;flex:1">
@@ -1170,9 +1000,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
       <span class="me-display" id="me-display"></span>
      </div>
     </div>
-
    </div>
-
    <div class="setup-right">
     <div class="card">
      <div class="sl">Conditions</div>
@@ -1251,24 +1079,20 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
       </div>
      </div>
     </div>
-
     <div class="card">
      <div class="sl">Résumé</div>
      <div id="summary"></div>
     </div>
-
     <div class="card">
      <div class="campaign-title">🎮 CAMPAGNE</div>
      <div class="mission-grid" id="mission-grid"></div>
     </div>
-
     <div id="launch-err" style="font-size:8px;color:var(--red);min-height:16px"></div>
    </div>
   </div>
  </div>
 </div>
 
-<!-- WIKI MODAL -->
 <div id="wiki-bg">
  <div id="wiki-box">
   <div class="wiki-header">
@@ -1296,7 +1120,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </div>
 </div>
 
-<!-- STRATEGY DETAIL MODAL -->
 <div id="strat-modal-bg">
  <div id="strat-modal">
   <div class="sm-header">
@@ -1311,7 +1134,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </div>
 </div>
 
-<!-- ACHIEVEMENTS MODAL -->
 <div id="ach-modal-bg">
  <div id="ach-modal">
   <div class="ach-title">🏅 ACHIEVEMENTS</div>
@@ -1325,7 +1147,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
 </div>
 <div class="ach-unlock-toast" id="ach-toast"></div>
 
-<!-- WORLD EVENT TOAST -->
 <div id="world-event-overlay" class="we-overlay" style="display:none">
  <div class="we-inner">
   <div style="display:flex;align-items:center;gap:10px;text-align:left">
@@ -1341,7 +1162,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </div>
 </div>
 
-<!-- CUSTOM STRATEGY BUILDER -->
 <div id="builder-modal-bg">
  <div id="builder-modal">
   <div class="bld-title">🔧 Mon Stratège</div>
@@ -1370,7 +1190,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </div>
 </div>
 
-<!-- CAMPAIGN MISSION BRIEFING -->
 <div id="mission-modal-bg">
  <div id="mission-modal">
   <div class="mm-num" id="mm-num"></div>
@@ -1385,7 +1204,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </div>
 </div>
 
-<!-- HALL OF FAME -->
 <div id="hof-modal-bg">
  <div id="hof-modal">
   <div class="hof-title">🏆 HALL OF FAME</div>
@@ -1402,10 +1220,8 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   </div>
  </div>
 </div>
-
 <div class="heatmap-tooltip" id="heatmap-tooltip"></div>
 
-<!-- GAME SHELL -->
 <div id="shell">
  <header id="hdr">
   <div class="logo">AXELROD <em>ARENA</em></div>
@@ -1420,7 +1236,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    <button class="btn bg bsm" onclick="initTournament()" id="btn-replay" style="display:none">↺ Rejouer</button>
   </div>
  </header>
-
  <div id="main">
   <div>
    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:4px">
@@ -1464,7 +1279,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    </div>
    <div id="legend"></div>
   </div>
-
   <div class="chaos-banner" id="chaos-banner" style="display:none">
    ⚡ <b>CHAOS</b> — La matrice de gains change toutes les 80 générations !
    <span id="chaos-next" style="margin-left:auto;opacity:.7"></span>
@@ -1532,14 +1346,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
   <div class="propaganda-banner" id="propaganda-banner" style="display:none">
    📢 <b>PROPAGANDE</b> — Le leader actuel convertit passivement les faibles à sa cause.
   </div>
-
   <div id="pts-main" style="display:none">
    <div class="sl" id="pts-lbl">Classement</div>
    <div class="card" style="padding:7px 0"><div id="pts-inner"></div></div>
   </div>
-
   <div id="final">
-   <!-- Cinematic winner splash -->
+   
    <div id="final-splash" class="final-splash" style="display:none">
     <canvas id="confetti-cv" class="confetti-cv"></canvas>
     <div class="final-splash-inner">
@@ -1550,7 +1362,7 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
      <div class="final-reveal-bars" id="fw-bars"></div>
     </div>
    </div>
-   <!-- Main results -->
+   
    <div id="final-body" style="display:none">
     <div class="sl" style="margin-top:0">🏆 Résultat final</div>
     <div class="card">
@@ -1585,7 +1397,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    🔭 <b>OBSERVATOIRE</b> — <span id="obs-gen-span" style="color:#00d4ff">6 arènes</span> en cours · Méta-leader : <span id="obs-meta-leader" style="color:var(--gold)">—</span>
   </div>
  </div>
-
  <div id="side">
   <div id="rivalry-section" style="display:none">
    <div class="sl">⚔️ Rivalité</div>
@@ -1635,7 +1446,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
    <div id="evts"></div>
   </div>
  </div>
-
  <footer id="ftr">
   <div class="sdot" id="sdot2"></div>
   <span id="stxt2">—</span>
@@ -1643,7 +1453,6 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
  </footer>
 </div>
 
-<!-- MATRIX MODAL -->
 <div id="mbg">
  <div id="mbox">
   <h2 id="mt"></h2>
@@ -1669,18 +1478,12 @@ input[type=range]{width:100%;accent-color:var(--gold);cursor:pointer}
     </div>
   </div>
 </div>
-
 <script>
 "use strict";
-
-/* Canvas refs — declared early to avoid TDZ errors */
 const canvas=document.getElementById("cv");
 const ctx=canvas.getContext("2d");
 const coopCanvas=document.getElementById("coop-cv");
 const coopCtx=coopCanvas?coopCanvas.getContext("2d"):null;
-/* ══════════════════════════════════════════════════
-   8 CHARACTERS × 4 STRATEGIES = 32 TOTAL
-══════════════════════════════════════════════════ */
 const CHARS=[
   {id:"nick",  name:"Nick",  e:"🐀",color:"#f5c842",strats:[
     {sid:"nick_a",  name:"Le Trompeur",      tag:"Perfide",     tc:"chaos",
@@ -2120,7 +1923,6 @@ const CHARS=[
      }},
   ]},
 ];
-
 const ALL_STRATS=CHARS.flatMap(c=>c.strats.map(s=>({...s,charId:c.id,charName:c.name,e:c.e,color:c.color})));
 const PTMAP4=[4,3,2,1];
 const PTMAP8=[8,7,6,5,4,3,2,1];
@@ -2128,50 +1930,40 @@ const PTMAP16=[16,14,13,12,11,10,9,8,7,6,5,4,3,2,1,0];
 const PTMAP32=Array.from({length:32},(_,i)=>Math.max(0,32-i));
 function getPtMap(n){if(n<=4)return PTMAP4;if(n<=8)return PTMAP8;if(n<=16)return PTMAP16;return PTMAP32;}
 const HARD_CAP=2000;
-// BATCH_MAP: spdVal (ms interval) → gens per tick
-// Low spdVal = fast speed → more gens batched per tick to reduce timer overhead
 const BATCH_MAP={1:8,5:4,20:2,70:1};
-
-/* ══════════════════════════════════════════════════
-   SETUP STATE
-══════════════════════════════════════════════════ */
-  // --- SANDBOX STATE ---
+  
 let sandboxConfig = {
   structure: "bracket",
   matrix: "standard",
   eol: [],
   modifiers: []
 };
-
 const CONFIG_STRUCTURE = [
   {id:"rrobin", icon:"🔄", name:"Round Robin", desc:"Chacun contre tous"},
   {id:"bracket", icon:"🏆", name:"Bracket", desc:"Phases éliminatoires"},
   {id:"duel2", icon:"🔄", name:"Double Élim", desc:"1v1, deux défaites = out"},
   {id:"swiss", icon:"🇨🇭", name:"Swiss", desc:"Appariement équitable"},
   {id:"territoire", icon:"🗺", name:"Territoire", desc:"Jeu spatial sur grille"},
-  {id:"reseau", icon:"🕸️", name:"Réseau", desc:"Graphe social (Hubs & Isolés)"}, // <-- NOUVEAU
+  {id:"reseau", icon:"🕸️", name:"Réseau", desc:"Graphe social (Hubs & Isolés)"}, 
   {id:"nexus", icon:"🌐", name:"Nexus", desc:"3 tournois enchaînés"},
   {id:"observatoire", icon:"🔭", name:"Observatoire", desc:"6 arènes parallèles"}
 ];
-
 const CONFIG_MATRIX = [
   {id:"standard", icon:"🎲", name:"Standard", desc:"Générée aléatoirement"},
   {id:"goat", icon:"🐐", name:"GOAT Mode", desc:"Canonique T=5 R=3 P=1 S=0"},
-  {id:"custom_mat", icon:"🎛️", name:"Sur Mesure", desc:"Définissez T, R, P, S"}, // <-- NOUVEAU
-  {id:"quantique", icon:"🌌", name:"Quantique", desc:"Payoffs fluctuants"}, // <-- NOUVEAU
+  {id:"custom_mat", icon:"🎛️", name:"Sur Mesure", desc:"Définissez T, R, P, S"}, 
+  {id:"quantique", icon:"🌌", name:"Quantique", desc:"Payoffs fluctuants"}, 
   {id:"chaos", icon:"⚡", name:"Chaos", desc:"Change toutes les 80 gens"},
   {id:"eco", icon:"🌿", name:"Écologie", desc:"S'adapte au taux de coop"},
   {id:"arms", icon:"🚀", name:"Arms Race", desc:"Tentation T monte à chaque manche"}
 ];
-
 const CONFIG_EOL = [
   {id:"survival", icon:"💀", name:"Survie", desc:"Éliminé si pop < 5%"},
-  {id:"rechauffement", icon:"🌡️", name:"Réchauffement", desc:"Seuil de survie croissant"}, // <-- NOUVEAU
+  {id:"rechauffement", icon:"🌡️", name:"Réchauffement", desc:"Seuil de survie croissant"}, 
   {id:"extinction", icon:"☄️", name:"Extinction", desc:"Les 20% faibles balayés (50g)"},
   {id:"royale", icon:"💥", name:"Battle Royale", desc:"Le dernier exécuté (60g)"},
   {id:"tsunami", icon:"🌊", name:"Tsunami", desc:"Remplacement par des challengers"}
 ];
-
 const CONFIG_MODIFIERS = [
   {id:"invasion", icon:"🦠", name:"Invasion", desc:"Vous commencez à 5%"},
   {id:"gauntlet", icon:"⚔", name:"Gauntlet", desc:"Vous commencez avec pop x2"},
@@ -2188,7 +1980,6 @@ const CONFIG_MODIFIERS = [
 ];
 let nPlayers=8;
 let draft={sel:[],me:null};
-
 (function boot(){
   buildSandboxGrids();buildCharGrid();buildWikiAll();randomDraft();
   document.querySelectorAll('input[name="cond"]').forEach(r=>r.addEventListener("change",()=>{
@@ -2204,13 +1995,11 @@ function buildSandboxGrids() {
       <div class="mcard-name">${m.name}</div>
       <div class="mcard-desc">${m.desc}</div>
     </div>`;
-
   document.getElementById("grid-structure").innerHTML = CONFIG_STRUCTURE.map(m => renderCard(m, sandboxConfig.structure === m.id, 'setStructure')).join("");
   document.getElementById("grid-matrix").innerHTML = CONFIG_MATRIX.map(m => renderCard(m, sandboxConfig.matrix === m.id, 'setMatrix')).join("");
   document.getElementById("grid-eol").innerHTML = CONFIG_EOL.map(m => renderCard(m, sandboxConfig.eol.includes(m.id), 'toggleEol')).join("");
   document.getElementById("grid-modifiers").innerHTML = CONFIG_MODIFIERS.map(m => renderCard(m, sandboxConfig.modifiers.includes(m.id), 'toggleModifier')).join("");
 }
-
 function setStructure(id) { sandboxConfig.structure = id; buildSandboxGrids(); updateSummary(); }
 function setMatrix(id) { 
   sandboxConfig.matrix = id; 
@@ -2228,7 +2017,6 @@ function toggleModifier(id) {
   if(idx > -1) sandboxConfig.modifiers.splice(idx, 1); else sandboxConfig.modifiers.push(id);
   buildSandboxGrids(); updateSummary(); 
 }
-
 function setN(n){
   nPlayers=n;
   [4,8,16,32].forEach(x=>{
@@ -2319,7 +2107,6 @@ function updateSummary(){
     <div class="summary-row"><span class="summary-k">Stratèges</span><span class="summary-v">${draft.sel.length}</span></div>
     <div class="summary-row"><span class="summary-k">Vous</span><span class="summary-v" style="color:var(--teal)">${draft.me?ALL_STRATS.find(x=>x.sid===draft.me)?.name||"—":"—"}</span></div>`;
 }
-
 function launchTournament(){
   const err=document.getElementById("launch-err");
   if(draft.sel.length<nPlayers){err.textContent=`⚠ Sélectionnez ${nPlayers} stratèges`;return;}
@@ -2344,13 +2131,6 @@ function goSetup(){
   const weO=document.getElementById("world-event-overlay");if(weO){clearTimeout(worldEventOverlayTimeout);weO.style.display="none";}
   setSt("idle","—");
 }
-
-/* ══════════════════════════════════════════════════
-   WIKI
-══════════════════════════════════════════════════ */
-/* ══════════════════════════════════════════════════
-   WIKI ENCYCLOPÉDIQUE (V17 SANDBOX EDITION)
-══════════════════════════════════════════════════ */
 function wikiStratHTML(c, s) {
   return `<div class="we" id="we_${s.sid}">
     <div class="we-head">
@@ -2364,15 +2144,13 @@ function wikiStratHTML(c, s) {
     <div class="we-vs">${s.vs}</div>
   </div>`;
 }
-
 function buildWikiAll() {
-  // 1. STRATÈGES (Colonnes dynamiques)
+  
   const half = Math.ceil(CHARS.length / 2);
   document.getElementById("wiki-strats-content").innerHTML =
     `<div>${CHARS.slice(0, half).map(c => c.strats.map(s => wikiStratHTML(c, s)).join("")).join("")}</div>` +
     `<div>${CHARS.slice(half).map(c => c.strats.map(s => wikiStratHTML(c, s)).join("")).join("")}</div>`;
-
-  // 2. MODES (Adapté au Sandbox avec le lore complet)
+  
   const sandboxLore = [
     { cat: "1. STRUCTURES DE RENCONTRE", desc: "Définit comment les stratèges s'affrontent et le système de points.", items: [
       { i: "🔄", n: "Round Robin", b: "Classique", d: "Chacun affronte tous les autres. Le format le plus équitable pour évaluer la force brute d'une stratégie sur l'ensemble de l'écosystème." },
@@ -2415,7 +2193,6 @@ function buildWikiAll() {
       { i: "🏛", n: "Civilisations", b: "Géopolitique", d: "4 super-puissances prédéfinies. Le but est la conquête territoriale (60%) plutôt que la survie individuelle." }
     ]}
   ];
-
   document.getElementById("wp-modes").innerHTML = sandboxLore.map(cat => `
     <div style="margin-bottom:20px;">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:2px;border-bottom:1px solid var(--border);padding-bottom:4px;">${cat.cat}</div>
@@ -2429,8 +2206,7 @@ function buildWikiAll() {
           <div class="wm-desc">${m.d}</div>
         </div>`).join("")}
     </div>`).join("");
-
-  // 3. THÉORIE & CONCEPTS
+  
   document.getElementById("wp-concepts").innerHTML = [
     { t: "Le Dilemme du Prisonnier", b: "Deux joueurs choisissent simultanément <b>Coopérer (C)</b> ou <b>Trahir (T)</b>. La tension : trahir est individuellement rationnel mais collectivement destructeur.", f: "T > R > P > S  (Tentation > Récompense > Punition > Naïf)", n: null },
     { t: "Les Tournois d'Axelrod (1984)", b: "Robert Axelrod organisa des tournois computationnels où des stratégies s'affrontaient en round robin. Gagnant surprenant : <b>Tit-for-Tat</b> de Rapoport — seulement 5 lignes de code.", f: null, n: "TFT n'est jamais premier à trahir, punit immédiatement, pardonne dès que l'adversaire recoopère." },
@@ -2440,8 +2216,7 @@ function buildWikiAll() {
     { t: "Réciprocité Directe", b: "La coopération émerge si les interactions sont répétées. La probabilité d'une prochaine interaction (w) doit être suffisante pour dissuader la trahison.", f: "w > (T−R) / (T−P)", n: "Plus T est tentant, plus il faut de tours pour stabiliser la coop." },
     { t: "Écosystèmes SandBox", b: "Dans Arena X, la survie dépend des autres. AllD gagne contre AllC, mais si les AllC meurent, AllD s'effondre contre TFT. C'est l'essence de l'évolution interdépendante.", f: null, n: "Aucune stratégie n'est absolue. Tout dépend du pool de départ." }
   ].map(c => `<div class="wc"><div class="wc-title">${c.t}</div><div class="wc-body">${c.b}${c.f ? `<span class="wc-formula">${c.f}</span>` : ""}</div>${c.n ? `<div class="wc-note">💡 ${c.n}</div>` : ""}</div>`).join("");
-
-  // 4. MODE GOAT (Historique)
+  
   document.getElementById("wp-goat").innerHTML = `
     <div style="margin-bottom:14px;padding:10px;background:rgba(245,200,66,.04);border:1px solid rgba(245,200,66,.15);border-radius:8px">
       <div style="font-family:'Bebas Neue',sans-serif;font-size:1.3rem;color:var(--gold);letter-spacing:.1em;margin-bottom:5px">🐐 Hall of Fame — Les Légendes d'Axelrod</div>
@@ -2462,8 +2237,7 @@ function buildWikiAll() {
       <div class="wgoat-year">${g.year} · ${g.score} (moyenne)</div>
       <div class="wgoat-desc">${g.desc}</div>
     </div>`).join("")}`;
-
-  // 5. GUIDE D'UTILISATION (SANDBOX)
+  
   document.getElementById("wp-guide").innerHTML = `
     <div style="font-size:9px;line-height:1.65;color:rgba(255,255,255,.5);margin-bottom:12px">Conseils de survie selon les options Sandbox. <span class="guide-pick good" style="display:inline">✓ Picks recommandés</span> <span class="guide-pick bad" style="display:inline">✗ À éviter</span></div>
     ${[
@@ -2477,8 +2251,7 @@ function buildWikiAll() {
       <div class="guide-picks">${g.goods.map(x => `<span class="guide-pick good">✓ ${x}</span>`).join("")}${g.bads.map(x => `<span class="guide-pick bad">✗ ${x}</span>`).join("")}</div>
       <div class="guide-tip">${g.tip}</div>
     </div>`).join("")}`;
-
-  // 6. MATCHUPS MATRIX
+  
   const archs = ["AllC", "TFT", "Graduel", "TF2T", "GTFT", "Pavlov", "AllD", "Grudger", "Chaos"];
   const outcomes = {
     "AllC": { AllC: "++", TFT: "++", Graduel: "++", TF2T: "++", GTFT: "++", Pavlov: "+", AllD: "--", Grudger: "++", Chaos: "+" },
@@ -2507,8 +2280,7 @@ function buildWikiAll() {
     <div style="margin-top:12px;font-size:8px;line-height:1.7;color:rgba(255,255,255,.45)">
     <b style="color:var(--gold)">Note :</b> En Sandbox multicorps (Round Robin), ces interactions s'entremêlent. Écraser un AllC en 1v1 ne vous fera pas gagner si les TFT vous détruisent en parallèle !
     </div>`;
-
-  // 7. LEXIQUE
+  
   document.getElementById("wp-lexique").innerHTML = `
     <div style="font-size:8px;line-height:1.6;color:rgba(255,255,255,.4);margin-bottom:12px">Glossaire technique de l'Arena X.</div>
     <div class="lex-cols">
@@ -2552,14 +2324,9 @@ function wikiTab(tab){
 }
 function openWikiStrat(sid){openWiki("strats");setTimeout(()=>document.getElementById("we_"+sid)?.scrollIntoView({behavior:"smooth",block:"start"}),80);}
 document.getElementById("wiki-bg").addEventListener("click",e=>{if(e.target===document.getElementById("wiki-bg"))closeWiki();});
-
-/* ══════════════════════════════════════════════════
-   TOURNAMENT ENGINE
-══════════════════════════════════════════════════ */
 let T=null;
 let hlIdx=null;
 let prevPops=null;
-
 function getParams(){
   const cond=document.querySelector('input[name="cond"]:checked')?.value||"gen";
   return{
@@ -2580,7 +2347,6 @@ function getParams(){
     worldEvents: document.getElementById("p-worldevents")?.checked||false,
   };
 }
-
 function initTournament(){
   if(T?.interval){clearInterval(T.interval);T.interval=null;}
   if(draft.sel.length<nPlayers){goSetup();return;}
@@ -2596,7 +2362,6 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
     (p.eol.includes("royale") || p.modifiers.includes("invasion") || p.modifiers.includes("mirror") || p.structure === "territoire" || p.modifiers.includes("mutation") || p.eol.includes("extinction") || p.eol.includes("tsunami") || p.modifiers.includes("coalition") || p.modifiers.includes("coevo") || p.modifiers.includes("civilisation") || p.structure === "observatoire") ? 1 :
     (p.structure === "duel" || p.structure === "duel2") ? Math.ceil(Math.log2(Math.max(p.N,2)))*2+2 :
     p.PHASES;
-
   T={
     ...p, strats, maxPhases,
     phase:0, history:[], interval:null, pendingPayoff:null,
@@ -2635,7 +2400,6 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
     obsArenas:null, obsWins:null, obsGens:0,
     tempSeuil: 0 
   };
-
   if(p.structure === "bracket"){
     T.bracket=[[{group:[...Array(p.N).keys()],done:false,ranked:[],track:"all"}],[],[]];
     if(p.N===16) T.bracket.push([]);
@@ -2660,7 +2424,6 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
   if(p.modifiers.includes("coevo")){T.strats.forEach(s=>{s._origFn=s.fn;s._mutRate=0;s._mutParent=null;});}
   if(p.modifiers.includes("civilisation")) initCivilisation();
   if(p.structure === "observatoire") initObservatoire();
-
   hlIdx=null; prevPops=null;
   document.getElementById("pts-main").style.display="none";
   document.getElementById("final").classList.remove("show");
@@ -2685,27 +2448,22 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
   const pb=document.getElementById("btn-pause");if(pb){pb.classList.remove("visible","paused");pb.textContent="⏸ Pause";}
   const resSect = document.getElementById("reseau-section");
   if(resSect) resSect.style.display = (p.structure === "reseau") ? "block" : "none";
-// Activation des bannières selon la config
   if(p.matrix === "chaos") document.getElementById("chaos-banner").style.display="";
   if(p.matrix === "goat") document.getElementById("goat-banner").style.display="";
   if(p.matrix === "arms") document.getElementById("arms-banner").style.display="";
   if(p.matrix === "eco") document.getElementById("eco-banner").style.display="";
-
-  // Dans la liste existante des "banner.style.display="
+  
   if(p.matrix === "quantique") document.getElementById("quantique-banner").style.display="";
   if(p.structure === "reseau") document.getElementById("reseau-banner").style.display="";
   if(p.eol.includes("rechauffement")) document.getElementById("temp-banner").style.display="";
   if(p.modifiers.includes("propaganda")) document.getElementById("propaganda-banner").style.display="";
-
   if(p.structure === "territoire") document.getElementById("territoire-banner").style.display="";
   if(p.structure === "nexus") document.getElementById("nexus-banner").style.display="";
   if(p.structure === "duel") document.getElementById("duel-banner").style.display="";
   if(p.structure === "duel2") document.getElementById("duel2-banner").style.display="";
   if(p.structure === "observatoire") document.getElementById("observatoire-banner").style.display="";
-
   if(p.eol.includes("extinction")) { const eb=document.getElementById("extinction-banner"); if(eb) eb.style.display=""; }
   if(p.eol.includes("tsunami")) { const tb=document.getElementById("tsunami-banner"); if(tb) tb.style.display=""; }
-
   if(p.modifiers.includes("diplomacy")) document.getElementById("diplo-banner").style.display="";
   if(p.modifiers.includes("invasion")) document.getElementById("invasion-banner").style.display="";
   if(p.modifiers.includes("mirror")) document.getElementById("mirror-banner").style.display="";
@@ -2719,7 +2477,6 @@ const maxPhases = p.structure === "swiss" ? Math.min(p.PHASES+1, 6) :
   const bff=document.getElementById("btn-ff");if(bff)bff.classList.add("visible");
   clearCanvas();clearCoopCanvas();updateLegend();openModal();
 }
-
 function getGroups(){
   const {structure, eol, modifiers, phase, N, bracket} = T;
   if(structure==="bracket") return (bracket[phase]||[]).map(g=>g.group).filter(g=>g.length>0);
@@ -2737,7 +2494,6 @@ function getGroups(){
   return [[...Array(N).keys()]];
 }
 function nMove(m){return T.NOISE>0&&Math.random()<T.NOISE?(m==="coop"?"betray":"coop"):m;}
-
 function playMatch(A,B,pay){
   A.st.ml=A.st.ml||"coop";B.st.ml=B.st.ml||"coop";
   let hA=[],hB=[],scA=0,coopsA=0,coopsB=0;
@@ -2755,28 +2511,26 @@ function playMatch(A,B,pay){
   T.genTotalMoves+=T.RMATCH*2;
   A.coopRate=A.coopRate*0.92+coopsA/T.RMATCH*0.08;
   B.coopRate=B.coopRate*0.92+coopsB/T.RMATCH*0.08;
-  // Sample live match (1 in 40)
+  
   if(Math.random()<0.025){
     T.liveMatch={An:A.name,Ae:A.e,Ac:A.color,Bn:B.name,Be:B.e,Bc:B.color,
       ma:hA.slice(-18),mb:hB.slice(-18),sa:coopsA/T.RMATCH,sb:coopsB/T.RMATCH};
   }
-  // Track heatmap
+  
   if(T.heatmapMatrix&&A.idx!==undefined&&B.idx!==undefined){
     T.heatmapMatrix[A.idx][B.idx]=(T.heatmapMatrix[A.idx][B.idx]*(T.heatmapCount[A.idx][B.idx])+scA/T.RMATCH)/(T.heatmapCount[A.idx][B.idx]+1);
     T.heatmapCount[A.idx][B.idx]++;
   }
   return scA/T.RMATCH;
 }
-
 function simGroup(idxs,pay){
   const ss=idxs.map(i=>T.strats[i]);
   if(ss.length<2)return;
   ss.forEach(s=>{s.st.ml="coop";});
   const fit=new Float64Array(ss.length);
   const totalAll=T.strats.reduce((a,x)=>a+x.pop,0)||1;
-
-  // ECO: adapt matrix based on coop rate
- // ECO: adapt matrix based on coop rate
+  
+ 
   let activePay=pay;
   if(T.matrix==="eco" && T.coopHistory.length>0){
     const cr=T.coopHistory[T.coopHistory.length-1];
@@ -2791,7 +2545,6 @@ function simGroup(idxs,pay){
     const infoEl=document.getElementById("eco-info");
     if(infoEl)infoEl.textContent=`Coop ${(cr*100).toFixed(0)}% · T=${activePay.T.toFixed(1)} R=${activePay.R.toFixed(1)}`;
   }
-
   for(let i=0;i<ss.length;i++){
     for(let j=0;j<ss.length;j++){
       if(i===j)continue;
@@ -2849,7 +2602,6 @@ function simGroup(idxs,pay){
       }
     }
   }
-
   if(T.modifiers.includes("epidemie") && T.epidemicAggro){
     ss.forEach((s,i)=>{
       const gi=idxs[i];
@@ -2863,7 +2615,6 @@ function simGroup(idxs,pay){
     const infoEl=document.getElementById("epidemie-info");
     if(infoEl)infoEl.textContent=`Agression moy: ${avgAggro}`;
   }
-
   if(T.modifiers.includes("vendetta") && T.vendettaMatrix){
     let maxGrudge=0,mostHatedIdx=0;
     for(let i=0;i<T.N;i++){
@@ -2873,7 +2624,6 @@ function simGroup(idxs,pay){
     const infoEl=document.getElementById("vendetta-info");
     if(infoEl&&T.strats[mostHatedIdx])infoEl.textContent=`Plus détesté: ${T.strats[mostHatedIdx].e}${T.strats[mostHatedIdx].name}`;
   }
-
   const tot=ss.reduce((a,x)=>a+x.pop,0)||1;
   const avg=ss.reduce((a,x,i)=>a+fit[i]*x.pop,0)/tot;
   ss.forEach((s,i)=>{
@@ -2883,7 +2633,6 @@ function simGroup(idxs,pay){
   });
   const sum=ss.reduce((a,x)=>a+x.pop,0)||1;
   ss.forEach(s=>{s.pop=s.pop/sum*T.POP;if(s.pop>s.peakPop)s.peakPop=s.pop;});
-
   if(T.eol.includes("survival")){
     ss.forEach((s,i)=>{
       if(s.pop/T.POP<0.05){
@@ -2936,7 +2685,6 @@ function simGroup(idxs,pay){
     }
   }
 }
-/* ROYALE ELIMINATION */
 function checkRoyaleElim(){
   if(!T.eol.includes("royale") || T.gen===0 || T.gen%60!==0) return;
   const alive=[...Array(T.N).keys()].filter(i=>T.strats[i].pop>0.5);
@@ -2948,7 +2696,6 @@ function checkRoyaleElim(){
   const ptmap=getPtMap(T.N);
   T.points[loser]+=(ptmap[T.N-T.royaleElims.length]||0);
 }
-
 function mkMatrix(boostT=1.0){
   const R=1.4+Math.random()*1.8,Tv=(R+0.6+Math.random()*2)*boostT,P=0.1+Math.random()*1.0,S=Math.random()*0.6;
   return{R,T:Tv,P,S,coop:{coop:[R,R],betray:[S,Tv]},betray:{coop:[Tv,S],betray:[P,P]}};
@@ -2959,9 +2706,6 @@ function addEvt(cls,txt){
   const d=document.createElement("div");d.className=`evt ${cls}`;d.innerHTML=txt;
   el.prepend(d);while(el.children.length>10)el.removeChild(el.lastChild);
 }
-
-/* MODAL */
-/* MODAL */
 function openModal(){
   let pay;
   if(T.matrix==="goat"){
@@ -3009,11 +2753,9 @@ function openModal(){
     (isGoat?`<span class="mtag goat">🐐 GOAT CANONICAL</span>`:"");
   document.getElementById("mbg").classList.add("open");
 }
-
 function closeModal(){document.getElementById("mbg").classList.remove("open");}
 function confirmRun(){closeModal();runPhase();}
 document.getElementById("mbg").addEventListener("click",e=>{if(e.target===document.getElementById("mbg"))closeModal();});
-/* RUN PHASE */
 function runPhase(){
   const phase=T.phase;
   T.history=[];T.gen=0;prevPops=null;T.coopHistory=[];
@@ -3050,7 +2792,6 @@ function runPhase(){
   let rafId=null;
   let renderDirty=false;
   let _lastSideRender=0,_lastStatsRender=0;
-
   function scheduleRender(){
     if(rafId!==null)return;
     rafId=requestAnimationFrame(()=>{
@@ -3058,28 +2799,23 @@ function runPhase(){
       if(!T||!renderDirty)return;
       renderDirty=false;
       const gen=T.gen;
-
-      // Charts always (capped at 300pts by getChartHistory)
+      
       if(T.scrubIdx===null){
         drawChart();
         drawCoopChart();
-        if (T.structure === "reseau") drawNetGraph(); // <--- AJOUTE CETTE LIGNE
+        if (T.structure === "reseau") drawNetGraph(); 
       }
-
-      // Ranking every frame (lightweight string build)
+      
       updateRanking();
-
-      // Side panel: max every 5 gens (bracket trees, KOH bars etc.)
+      
       if(gen-_lastSideRender>=5){renderSide();renderLiveMatch();_lastSideRender=gen;}
-
-      // Stats + ambient: max every 10 gens
+      
       if(gen-_lastStatsRender>=10){
         const cr=T.coopHistory[T.coopHistory.length-1]||0.5;
         updateStatsBar(cr);updateChartAmbient(cr);drawHeatmap();
         _lastStatsRender=gen;
       }
-
-      // Cheap DOM updates
+      
       document.getElementById("gen-lbl").textContent=`Gén. ${gen}`;
       const scrEl=document.getElementById("scrubber");
       if(scrEl&&T.scrubIdx===null){
@@ -3088,7 +2824,6 @@ function runPhase(){
       }
     });
   }
-
   T.interval=setInterval(()=>{
     if(T.paused)return;
     const effectiveBatch=T.ffActive?Math.min(50,batch*10):batch;
@@ -3105,7 +2840,7 @@ function runPhase(){
       if(T.structure==="territoire"){ terrStep(currentPay); }
       else if(T.structure==="reseau"){ reseauStep(currentPay); }
       else{ 
-          // Si mode quantique, on passe un flag pour que simGroup recalcule les payoffs
+          
           getGroups().forEach(g=>simGroup(g, currentPay)); 
       }
       if(T.modifiers.includes("mutation") && T.gen>0 && T.gen%70===0){checkMutation(currentPay);}
@@ -3132,25 +2867,23 @@ function runPhase(){
           if(cntEl)cntEl.textContent=`EXTINCTION dans 50`;
         }
       }
-
       if(T.modifiers.includes("propaganda") && T.gen > 10){
           const sorted = [...Array(T.N).keys()].filter(i=>T.strats[i].pop>0).sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
           if(sorted.length >= 4) {
              const leader = sorted[0];
-             const bottoms = sorted.slice(-3); // Les 3 derniers
+             const bottoms = sorted.slice(-3); 
              bottoms.forEach(b => {
-                 let stole = T.strats[b].pop * 0.05; // vole 5% de la pop des faibles
+                 let stole = T.strats[b].pop * 0.05; 
                  T.strats[b].pop -= stole;
                  T.strats[leader].pop += stole;
              });
           }
       }
-
-      // A ajouter dans le setInterval (avec T.eol.includes("extinction"))
+      
       if(T.eol.includes("rechauffement")){
-          if(T.gen % 10 === 0) T.tempSeuil += 0.005; // +0.5% tous les 10 tours
+          if(T.gen % 10 === 0) T.tempSeuil += 0.005; 
           document.getElementById("temp-val").textContent = (T.tempSeuil*100).toFixed(1) + "%";
-          document.getElementById("temp-fill").style.width = Math.min(100, T.tempSeuil*200) + "%"; // visuel bar
+          document.getElementById("temp-fill").style.width = Math.min(100, T.tempSeuil*200) + "%"; 
           
           T.strats.forEach((s,i) => {
               if(s.pop > 0 && s.pop / T.POP < T.tempSeuil) {
@@ -3189,11 +2922,9 @@ function runPhase(){
           if(tc)tc.textContent="60";
         }
       }
-
       if(T.modifiers.includes("coalition") && T.gen>0 && T.gen%30===0){
         updateCoalitions();
       }
-
       if(T.modifiers.includes("coevo") && T.gen>0){
         T.coevoCountdown--;
         const cc=document.getElementById("coevo-countdown");if(cc)cc.textContent=T.coevoCountdown;
@@ -3220,7 +2951,6 @@ function runPhase(){
           });
         }
       }
-
       if(T.modifiers.includes("civilisation") && T.gen>0){
         T.civUpdateIn--;
         if(T.civUpdateIn<=0){
@@ -3228,11 +2958,9 @@ function runPhase(){
           updateCivilisation();
         }
       }
-
       if(T.structure==="observatoire" && T.obsArenas){
         tickObservatoire();
       }
-
       if(T.worldEventsEnabled && T.gen>0){
         T.worldEventNext--;
         if(T.worldEventNext<=0){
@@ -3251,7 +2979,6 @@ function runPhase(){
           }
         }
       }
-
       T.sparkSampleIn--;
       if(T.sparkSampleIn<=0){
         T.sparkSampleIn=5;
@@ -3261,33 +2988,25 @@ function runPhase(){
           if(T.sparkHistory[i].length>40)T.sparkHistory[i].shift();
         });
       }
-
       T.rivalryCheckIn--;
       if(T.rivalryCheckIn<=0){
         T.rivalryCheckIn=15;
         updateRivalries();
       }
-
       T.chronicleChapterIn--;
       if(T.chronicleChapterIn<=0){
         T.chronicleChapterIn=180+Math.floor(Math.random()*80);
         autoChronicleChapter();
       }
-
       T.gen++;
     }
-
     const cr=T.genTotalMoves>0?T.genCoopMoves/T.genTotalMoves:0.5;
     T.coopHistory.push(cr);
-
     if(T.gen%10===0)checkMilestones();
-
     const gs=getGroups();
     T.history.push({groups:gs.map(g=>({idxs:[...g],pops:g.map(i=>T.strats[i].pop)}))});
-
     renderDirty=true;
     scheduleRender();
-
     let stop=false;
     if(T.condType==="gen"){stop=T.gen>=T.condVal;}
     else{
@@ -3326,12 +3045,9 @@ function runPhase(){
     }
   },T.spdVal);
 }
-
-/* END PHASE */
 function endPhase(phase){
   let grank;
-
-  /* ─── DUEL: advance winners, eliminate/route losers ─── */
+  
   if(T.structure==="duel" || T.structure==="duel2"){
     const wbWinners=[],wbLosers=[];
     T.duelPairs.forEach(pair=>{
@@ -3343,7 +3059,6 @@ function endPhase(phase){
       T.duelResults.push({round:T.duelRound,a,b,winner,loser});
       addEvt("ek2",`⚔️ <b>${T.strats[winner].name}</b> bat <b>${T.strats[loser].name}</b>`);
     });
-
     if(T.structure==="duel"){
       T.duelElim.unshift(...wbLosers.reverse());
     } else {
@@ -3363,15 +3078,12 @@ function endPhase(phase){
       for(let i=0;i<newLBPool.length-1;i+=2)T.duelLBPairs.push([newLBPool[i],newLBPool[i+1]]);
       if(newLBPool.length%2===1)T.duelLBPairs.push([newLBPool[newLBPool.length-1],-1]);
     }
-
     T.duelPairs=[];
     for(let i=0;i<wbWinners.length-1;i+=2)T.duelPairs.push([wbWinners[i],wbWinners[i+1]]);
     if(wbWinners.length%2===1)T.duelPairs.push([wbWinners[wbWinners.length-1],-1]);
     T.duelRound++;
-
     const remaining=wbWinners.concat(T.duelLBPairs?.flatMap(p=>p.filter(x=>x>=0))||[]);
     grank=[...remaining,...T.duelElim];
-
     const totalActive=T.duelPairs.filter(p=>p[1]>=0).length+(T.structure==="duel2"?T.duelLBPairs.filter(p=>p[1]>=0).length:0);
     if(totalActive===0){
       const winner=wbWinners[0]??T.duelLBPairs[0]?.[0];
@@ -3383,7 +3095,6 @@ function endPhase(phase){
       T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.points[b]-T.points[a]);
       showFinal();return;
     }
-
     renderSide();
     T.phase=phase+1;
     setSt("wait",`Round ${T.duelRound-1} terminé — cliquez ▶`);
@@ -3391,8 +3102,7 @@ function endPhase(phase){
     document.getElementById("pbadge").style.display="none";
     return;
   }
-
-  /* ─── BRACKET with consolation ─── */
+  
   if(T.structure==="bracket"){
     T.bracket[phase].forEach(g=>{
       g.ranked=[...g.group].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
@@ -3415,7 +3125,6 @@ function endPhase(phase){
   } else {
     grank=[...Array(T.N).keys()].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
   }
-
   const noPts=["bracket","duel","duel2"].includes(T.structure);
   if(!noPts){
     const PTMAP=getPtMap(T.N);
@@ -3426,7 +3135,6 @@ function endPhase(phase){
     updatePtsTable();
     document.getElementById("pts-main").style.display="";
   }
-
   if(phase<T.maxPhases-1){
     T.phase=phase+1;
     if(T.modifiers.includes("koh")){T.kohPts=Array(T.N).fill(0);}
@@ -3441,7 +3149,6 @@ function endPhase(phase){
     showFinal();
   }
 }
-
 function interleave(groups){
   const maxL=Math.max(...groups.map(g=>g.ranked?.length||0));
   const res=[];
@@ -3453,7 +3160,7 @@ function buildNextBracket(phase){
   const N=T.N;
   const next=[];
   if(phase===0){
-    // Phase 0: one big group → split winners track / consolation track
+    
     const r=T.bracket[0][0].ranked;
     const half=Math.ceil(N/2);
     next.push({group:r.slice(0,half),done:false,ranked:[],track:"winners"});
@@ -3466,16 +3173,16 @@ function buildNextBracket(phase){
       if(top.length>0){
         if(g.track==="winners"||g.track==="all"){
           next.push({group:top,done:false,ranked:[],track:"winners"});
-          // Losers of winners bracket go to consolation
+          
           if(bot.length>0)next.push({group:bot,done:false,ranked:[],track:"consolation"});
         } else {
-          // Consolation track: top stays, bottom eliminated (add to consolElim)
+          
           next.push({group:top,done:false,ranked:[],track:"consolation"});
           if(bot.length>0)T.consolElim.push(...bot.reverse());
         }
       }
     });
-    // Merge all consolation groups into one to keep it clean
+    
     const winGroups=next.filter(g=>g.track==="winners");
     const consPlayers=next.filter(g=>g.track==="consolation").flatMap(g=>g.group);
     T.bracket[phase+1]=[...winGroups];
@@ -3485,7 +3192,7 @@ function buildNextBracket(phase){
   T.bracket[phase+1]=next;
 }
 function buildBracketRanking(){
-  // Winners bracket first, then consolation, then eliminated
+  
   const allPhases=T.bracket.filter(r=>r.length);
   const lastPhase=allPhases[allPhases.length-1]||[];
   const winPhase=lastPhase.filter(g=>g.track==="winners");
@@ -3493,42 +3200,35 @@ function buildBracketRanking(){
   const winRanked=interleave(winPhase.length?winPhase:lastPhase);
   const consRanked=interleave(consPhase);
   const eliminated=T.consolElim||[];
-  // Combine: winners → consolation → eliminated
+  
   const combined=[...winRanked,...consRanked.filter(x=>!winRanked.includes(x)),...eliminated.filter(x=>!winRanked.includes(x)&&!consRanked.includes(x))];
-  // Fill any missing
+  
   [...Array(T.N).keys()].forEach(i=>{if(!combined.includes(i))combined.push(i);});
   return combined;
 }
-
-/* RENDER SIDE */
 function renderSide(){
   if(!T) return;
   const el = document.getElementById("side-inner");
-  el.innerHTML = ""; // On vide avant d'empiler
-
-  // --- 1. Topologie / Structure ---
+  el.innerHTML = ""; 
+  
   if(T.structure === "bracket") renderBracket(el);
   if(T.structure === "duel" || T.structure === "duel2") renderDuel(el);
   if(T.structure === "territoire") renderTerritoire(el);
   if(T.structure === "nexus") renderNexus(el);
   if(T.structure === "observatoire") renderObservatoire(el);
-
-  // Création d'un div conteneur temporaire pour accumuler le HTML des modules
+  
   let tempHtml = "";
   const appendModule = (htmlStr) => { if(htmlStr) tempHtml += htmlStr; };
-
-  // --- 2. Matrice ---
+  
   if(T.matrix === "arms") { const d=document.createElement('div'); renderArms(d); appendModule(d.innerHTML); }
   if(T.matrix === "eco") { const d=document.createElement('div'); renderEco(d); appendModule(d.innerHTML); }
   if(T.matrix === "goat") { const d=document.createElement('div'); renderGoat(d); appendModule(d.innerHTML); }
-
-  // --- 3. EOL ---
+  
   if(T.eol.includes("survival")) { const d=document.createElement('div'); renderSurvival(d); appendModule(d.innerHTML); }
   if(T.eol.includes("royale")) { const d=document.createElement('div'); renderRoyale(d); appendModule(d.innerHTML); }
   if(T.eol.includes("extinction")) { const d=document.createElement('div'); renderExtinction(d); appendModule(d.innerHTML); }
   if(T.eol.includes("tsunami")) { const d=document.createElement('div'); renderTsunami(d); appendModule(d.innerHTML); }
-
-  // --- 4. Modificateurs ---
+  
   if(T.modifiers.includes("koh") || T.modifiers.includes("gauntlet")) { const d=document.createElement('div'); renderKoH(d); appendModule(d.innerHTML); }
   if(T.modifiers.includes("diplomacy")) { const d=document.createElement('div'); renderDiplo(d); appendModule(d.innerHTML); }
   if(T.modifiers.includes("invasion")) { const d=document.createElement('div'); renderInvasion(d); appendModule(d.innerHTML); }
@@ -3539,8 +3239,7 @@ function renderSide(){
   if(T.modifiers.includes("coalition")) { const d=document.createElement('div'); renderCoalition(d); appendModule(d.innerHTML); }
   if(T.modifiers.includes("coevo")) { const d=document.createElement('div'); renderCoevo(d); appendModule(d.innerHTML); }
   if(T.modifiers.includes("civilisation")) { const d=document.createElement('div'); renderCivilisation(d); appendModule(d.innerHTML); }
-
-  // On injecte les modules additionnels à la suite du bracket/territoire
+  
   el.innerHTML += tempHtml;
 }
 function renderBracket(el){
@@ -3585,7 +3284,7 @@ function renderSurvival(el){
 }
 function renderKoH(el){
   const king=T.strats[T.kohKing];if(!king)return;
-  // For KOH: sort by kohPts; for gauntlet: by pop
+  
   const sorted=T.modifiers.includes("koh")
     ?[...Array(T.N).keys()].sort((a,b)=>T.kohPts[b]-T.kohPts[a])
     :[T.kohKing,...[...Array(T.N).keys()].filter(i=>i!==T.kohKing).sort((a,b)=>T.strats[b].pop-T.strats[a].pop)];
@@ -3612,19 +3311,17 @@ function renderKoH(el){
 }
 function renderDuel(el){
   if(!T.duelResults&&!T.duelPairs)return;
-  // Group results by round
+  
   const rounds={};
   T.duelResults.forEach(r=>{
     if(!rounds[r.round])rounds[r.round]=[];
     rounds[r.round].push(r);
   });
-  // Current active pairs
+  
   const activePairs=T.duelPairs.filter(p=>p[1]>=0);
   const totalPts=T.kohPts||[];
-
   let h=`<div class="duel-bracket">`;
-
-  // Past rounds
+  
   Object.keys(rounds).sort((a,b)=>+a-+b).forEach(rn=>{
     h+=`<div class="duel-round"><div class="duel-round-lbl">Round ${rn}</div>`;
     rounds[rn].forEach(m=>{
@@ -3647,8 +3344,7 @@ function renderDuel(el){
     });
     h+=`</div>`;
   });
-
-  // Current round (live matches)
+  
   if(activePairs.length>0){
     h+=`<div class="duel-round"><div class="duel-round-lbl" style="color:var(--gold)">⚡ Round ${T.duelRound}</div>`;
     activePairs.forEach(pair=>{
@@ -3674,8 +3370,7 @@ function renderDuel(el){
     });
     h+=`</div>`;
   }
-
-  // LB (double elim)
+  
   if(T.structure==="duel2"&&T.duelLBPairs.length>0){
     h+=`<div class="duel-round">`;
     h+=`<div class="duel-lb-title">Losers</div>`;
@@ -3697,24 +3392,18 @@ function renderDuel(el){
     });
     h+=`</div>`;
   }
-
   h+=`</div>`;
-
-  // Eliminated list
+  
   if(T.duelElim.length>0){
     h+=`<div style="margin-top:8px;font-size:7px;color:var(--muted);letter-spacing:.1em">ÉLIMINÉS</div>`;
     h+=T.duelElim.map(i=>{const s=T.strats[i];return`<div class="rrow" style="opacity:.4"><div class="rdot" style="background:${s.color}"></div><div class="rname" style="text-decoration:line-through">${s.e} ${s.name}</div></div>`;}).join("");
   }
-
   el.innerHTML=h;
 }
-/* ══════════════════════════════════════════════════
-   COALITION MODE
-══════════════════════════════════════════════════ */
 function updateCoalitions(){
   if(!T||T.N<2)return;
   const allIdxs=[...Array(T.N).keys()].filter(i=>T.strats[i].pop>0);
-  // Group by coopRate similarity — cluster with threshold 0.2
+  
   const factions=[];
   const assigned=new Set();
   const sorted=[...allIdxs].sort((a,b)=>(T.strats[b].coopRate||0.5)-(T.strats[a].coopRate||0.5));
@@ -3730,7 +3419,7 @@ function updateCoalitions(){
     factions.push(faction);
   }
   T.coalitions=factions;
-  // Detect wars: factions with very different coopRates declare war
+  
   T.coalitionWars=[];
   for(let a=0;a<factions.length;a++){
     for(let b=a+1;b<factions.length;b++){
@@ -3742,7 +3431,7 @@ function updateCoalitions(){
       }
     }
   }
-  // Update banner info
+  
   const infoEl=document.getElementById("coalition-info");
   if(infoEl)infoEl.textContent=`${factions.length} faction${factions.length>1?"s":""} · ${T.coalitionWars.length} guerre${T.coalitionWars.length>1?"s":""}`;
 }
@@ -3754,7 +3443,7 @@ function renderCoalition(el){
     const avgCoop=faction.reduce((s,i)=>s+(T.strats[i].coopRate||0.5),0)/faction.length;
     const totalPop=faction.reduce((s,i)=>s+T.strats[i].pop,0);
     const pct=(totalPop/total*100).toFixed(0);
-    // Faction color: mix of member colors
+    
     const col=avgCoop>0.6?"var(--teal)":avgCoop>0.4?"var(--amber)":"var(--red)";
     const label=avgCoop>0.62?"🕊 Coopérateurs":avgCoop<0.38?"🗡 Traîtres":"⚖️ Opportunistes";
     return`<div class="fac-card ${inWar?"at-war":""}" style="background:rgba(0,0,0,.25);border-color:${col}22">
@@ -3769,10 +3458,6 @@ function renderCoalition(el){
     </div>`;
   }).join("");
 }
-
-/* ══════════════════════════════════════════════════
-   TSUNAMI MODE
-══════════════════════════════════════════════════ */
 function renderTsunami(el){
   if(!T)return;
   const total=T.POP||1;
@@ -3807,10 +3492,6 @@ function renderTsunami(el){
     }).join("")}`:""}
   `;
 }
-
-/* ══════════════════════════════════════════════════
-   WORLD EVENTS SYSTEM
-══════════════════════════════════════════════════ */
 const WORLD_EVENTS=[
   {id:"revolution",icon:"🔥",title:"RÉVOLUTION",category:"CRISE POLITIQUE",
    desc:"Le leader est renversé. Sa population est divisée par deux et redistribuée aux opprimés.",
@@ -3883,7 +3564,6 @@ const WORLD_EVENTS=[
      T.milestones.push({gen:T.gen,txt:"🗡 Trahison systémique — chaos total",type:"collapse"});
    },duration:25},
 ];
-
 let worldEventOverlayTimeout=null;
 function pickWorldEvent(){
   return WORLD_EVENTS[Math.floor(Math.random()*WORLD_EVENTS.length)];
@@ -3904,7 +3584,7 @@ function fireWorldEvent(ev,currentPay){
   const effEl=document.getElementById("we-effect");
   effEl.textContent=ev.effect;
   effEl.style.background=ev.col+"22";effEl.style.color=ev.col;effEl.style.border=`1px solid ${ev.col}44`;
-  // Restart progress bar animation
+  
   const pf=document.getElementById("we-progress-fill");
   if(pf){pf.style.background=ev.col;pf.style.animation="none";requestAnimationFrame(()=>{pf.style.animation="we-drain 4s linear forwards";});}
   overlay.classList.remove("hiding");
@@ -3916,7 +3596,6 @@ function fireWorldEvent(ev,currentPay){
   },4000);
   playSoundEvent&&playSoundEvent("phase");
 }
-
 function renderExtinction(el){
   const alive=T.extinctionAlive;const total=T.POP||1;
   const sorted=[...alive].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
@@ -4054,19 +3733,17 @@ function renderMirror(el){
     }).join("")}
   </div>`;
 }
-
-/* MILESTONE DETECTION */
 function checkMilestones(){
   if(!T||T.history.length<2)return;
   const allIdxs=[...Array(T.N).keys()];
   const total=T.strats.reduce((s,x)=>s+x.pop,0)||1;
-  // Detect new leader
+  
   const leader=allIdxs.reduce((b,i)=>T.strats[i].pop>T.strats[b].pop?i:b,0);
   if(leader!==T.lastLeader&&T.gen>5){
     T.milestones.push({gen:T.gen,txt:`👑 ${T.strats[leader].name} prend la tête !`,type:"lead"});
     T.lastLeader=leader;
   }
-  // Detect domination (>70%)
+  
   allIdxs.forEach(i=>{
     const pct=T.strats[i].pop/total;
     if(pct>0.7){
@@ -4075,7 +3752,7 @@ function checkMilestones(){
       T.milestones.push({gen:T.gen,txt:`☢️ ${T.strats[i].name} domine à ${(pct*100).toFixed(0)}%`,type:"dom"});}
     } else {if(T[`dom_${i}`])delete T[`dom_${i}`];}
   });
-  // Detect phoenix (comeback from <5% to >20%)
+  
   if(T.history.length>30){
     const old=T.history[T.history.length-30];
     allIdxs.forEach(i=>{
@@ -4088,7 +3765,7 @@ function checkMilestones(){
       } else {if(T[`ph_${i}`]&&newPct<0.1)delete T[`ph_${i}`];}
     });
   }
-  // Detect fierce rivalry (top-2 within 3% of each other)
+  
   if(T.N>=2&&T.gen%20===0){
     const sorted2=[...allIdxs].sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
     const p0=T.strats[sorted2[0]].pop/total,p1=T.strats[sorted2[1]].pop/total;
@@ -4100,7 +3777,7 @@ function checkMilestones(){
       const key=`rival_${sorted2[0]}_${sorted2[1]}`;if(T[key])delete T[key];
     }
   }
-  // Coop crash
+  
   if(T.coopHistory.length>10){
     const cr=T.coopHistory[T.coopHistory.length-1];
     const crOld=T.coopHistory[T.coopHistory.length-10];
@@ -4110,7 +3787,7 @@ function checkMilestones(){
       T.milestones.push({gen:T.gen,txt:`📉 Effondrement coopératif (${(crOld*100).toFixed(0)}%→${(cr*100).toFixed(0)}%)`,type:"collapse"});}
     } else if(cr>0.6){delete T["coopcr"];}
   }
-  // Coop surge
+  
   if(T.coopHistory.length>10){
     const cr=T.coopHistory[T.coopHistory.length-1];
     const crOld=T.coopHistory[T.coopHistory.length-10];
@@ -4121,15 +3798,13 @@ function checkMilestones(){
     } else if(cr<0.5){delete T["cooprise"];}
   }
 }
-
-/* STATS BAR */
 function updateStatsBar(cr){
   if(!T)return;
   const total=T.strats.reduce((s,x)=>s+x.pop,0)||1;
   const leader=T.strats.reduce((b,s)=>s.pop>b.pop?s:b,T.strats[0]);
   const crPct=Math.round(cr*100);
   const crColor=crPct>60?"var(--teal)":crPct>35?"var(--amber)":"var(--red)";
-  // Momentum: compare current leader vs 5 gens ago
+  
   let mom="~";
   if(T.history.length>5){
     const old5=T.history[T.history.length-6];
@@ -4142,7 +3817,7 @@ function updateStatsBar(cr){
   const sc=document.getElementById("sb-coop");if(sc)sc.textContent=crPct+"%",sc.style.color=crColor;
   const sl=document.getElementById("sb-lead");if(sl)sl.textContent=leader.e+" "+leader.name,sl.style.color=leader.color;
   const sm=document.getElementById("sb-mom");if(sm)sm.textContent=mom,sm.style.color=mom.startsWith("↑")?"var(--green)":mom.startsWith("↓")?"var(--red)":"var(--muted)";
-  // Show recent milestone as transient event
+  
   if(T.milestones.length>0){
     const latest=T.milestones[T.milestones.length-1];
     if(T.gen-latest.gen<15){
@@ -4150,8 +3825,6 @@ function updateStatsBar(cr){
     }
   }
 }
-
-/* COOP RATE CHART */
 function clearCoopCanvas(){
   if(!coopCanvas)return;
   coopCanvas.width=coopCanvas.offsetWidth||600;coopCanvas.height=coopCanvas.offsetHeight||56;
@@ -4162,7 +3835,7 @@ function drawCoopChart(){
   const W=coopCanvas.offsetWidth||600,H=coopCanvas.offsetHeight||56;
   if(coopCanvas.width!==W||coopCanvas.height!==H){coopCanvas.width=W;coopCanvas.height=H;}
   coopCtx.clearRect(0,0,W,H);
-  // Grid lines at 25%, 50%, 75%
+  
   [0.25,0.5,0.75].forEach(y=>{
     coopCtx.strokeStyle="rgba(255,255,255,.05)";coopCtx.lineWidth=1;
     coopCtx.beginPath();coopCtx.moveTo(0,H*(1-y));coopCtx.lineTo(W*0.88,H*(1-y));coopCtx.stroke();
@@ -4173,14 +3846,14 @@ function drawCoopChart(){
   const nP=data.length,xS=(W*0.88)/Math.max(nP-1,1);
   const pts=data.map((v,i)=>({x:i*xS,y:H-(v*0.88+0.06)*H}));
   if(pts.length<2)return;
-  // Gradient fill
+  
   coopCtx.beginPath();
   coopCtx.moveTo(pts[0].x,H);coopCtx.lineTo(pts[0].x,pts[0].y);
   for(let i=1;i<pts.length;i++){const cx=(pts[i-1].x+pts[i].x)/2,cy=(pts[i-1].y+pts[i].y)/2;coopCtx.quadraticCurveTo(pts[i-1].x,pts[i-1].y,cx,cy);}
   coopCtx.lineTo(pts[pts.length-1].x,pts[pts.length-1].y);coopCtx.lineTo(pts[pts.length-1].x,H);coopCtx.closePath();
   const gr=coopCtx.createLinearGradient(0,0,0,H);gr.addColorStop(0,"rgba(0,229,200,.18)");gr.addColorStop(1,"rgba(0,229,200,.01)");
   coopCtx.fillStyle=gr;coopCtx.fill();
-  // Line
+  
   const curCr=data[data.length-1];
   const lineColor=curCr>0.6?"#00e5c8":curCr>0.35?"#ff8c00":"#ff3060";
   coopCtx.beginPath();coopCtx.moveTo(pts[0].x,pts[0].y);
@@ -4188,11 +3861,9 @@ function drawCoopChart(){
   coopCtx.lineTo(pts[pts.length-1].x,pts[pts.length-1].y);
   coopCtx.strokeStyle=lineColor;coopCtx.lineWidth=1.5;coopCtx.shadowColor=lineColor;coopCtx.shadowBlur=6;coopCtx.stroke();
   coopCtx.shadowBlur=0;
-  // Update rval label
+  
   const rv=document.getElementById("coop-rval");if(rv){rv.textContent=(curCr*100).toFixed(0)+"%";rv.style.color=lineColor;}
 }
-
-/* LIVE MATCH VIEWER */
 function renderLiveMatch(){
   const el=document.getElementById("live-match-inner");
   if(!el||!T?.liveMatch)return;
@@ -4208,10 +3879,6 @@ function renderLiveMatch(){
     <div class="lm-score">Coop: ${m.An.split(" ")[0]} ${(m.sa*100).toFixed(0)}% · ${m.Bn.split(" ")[0]} ${(m.sb*100).toFixed(0)}% · <span style="color:rgba(0,229,200,.6)">■</span>=coop <span style="color:rgba(255,48,96,.6)">■</span>=trahison</div>
   </div>`;
 }
-
-/* ══════════════════════════════════════════════════
-   PAUSE & SCRUBBER
-══════════════════════════════════════════════════ */
 function togglePause(){
   if(!T)return;
   T.paused=!T.paused;
@@ -4282,8 +3949,6 @@ function drawChartAtSnap(snapIdx){
   ctx.save();ctx.strokeStyle="rgba(245,200,66,.4)";ctx.lineWidth=1;ctx.setLineDash([3,3]);
   ctx.beginPath();ctx.moveTo(scrubX,0);ctx.lineTo(scrubX,H);ctx.stroke();ctx.setLineDash([]);ctx.restore();
 }
-
-/* CHART TOOLTIP */
 canvas.addEventListener("mousemove",e=>{
   if(!T||!T.history.length)return;
   const rect=canvas.getBoundingClientRect();
@@ -4304,10 +3969,6 @@ canvas.addEventListener("mousemove",e=>{
   tt.style.left=Math.min(mx+12,W-115)+"px";tt.style.top="10px";
 });
 canvas.addEventListener("mouseleave",()=>{const tt=document.getElementById("chart-tooltip");if(tt)tt.style.display="none";});
-
-/* ══════════════════════════════════════════════════
-   TERRITOIRE
-══════════════════════════════════════════════════ */
 function initTerritoire(){
   const N=T.N,side=Math.max(8,Math.round(Math.sqrt(N*12)));
   T.terrSize=side;
@@ -4361,21 +4022,17 @@ function renderTerritoire(el){
     return`<div class="rrow ${s.isMe?"isMe":""}"><div class="rdot" style="background:${s.color}"></div><div class="rname">${s.e} ${s.name}</div><div class="rp">${pct.toFixed(0)}%</div></div>`;
   }).join("")}`;
 }
-
-/* ══════════════════════════════════════════════════
-   RESEAU
-══════════════════════════════════════════════════ */
 function initReseau(){
-  // Génère un graphe simple "Small World"
+  
   T.graph = [];
   for(let i=0; i<T.N; i++) T.graph[i] = new Set();
   
-  // Connecte en anneau
+  
   for(let i=0; i<T.N; i++){
     T.graph[i].add((i+1)%T.N);
     T.graph[(i+1)%T.N].add(i);
   }
-  // Ajoute des liens aléatoires (Hubs)
+  
   for(let i=0; i<T.N; i++){
     if(Math.random()<0.3) {
       let target = Math.floor(Math.random()*T.N);
@@ -4385,56 +4042,52 @@ function initReseau(){
       }
     }
   }
-  // Convertit les Sets en Arrays pour la facilité
+  
   T.graph = T.graph.map(set => Array.from(set));
 }
-
 function reseauStep(pay){
   const N = T.N;
   const scores = new Float64Array(N);
   
-  // Matchs locaux sur le graphe
+  
   for(let i=0; i<N; i++){
     let sc = 0;
     let neighbors = T.graph[i];
     neighbors.forEach(n => {
       let localPay = pay;
-      // MODE QUANTIQUE : Fluctuation de matrice
+      
       if(T.matrix === "quantique"){
-          localPay = mkMatrix(1.0); // Génère une mini variation
+          localPay = mkMatrix(1.0); 
       }
       sc += playMatch(T.strats[i], T.strats[n], localPay);
     });
     scores[i] = neighbors.length > 0 ? sc / neighbors.length : 0;
   }
   
-  // Dynamique du Réplicateur basée sur les scores locaux
+  
   const avgScore = scores.reduce((a,b)=>a+b, 0) / N;
   const totalPop = T.strats.reduce((a,x)=>a+x.pop, 0) || 1;
   
   T.strats.forEach((s,i) => {
-    // La stratégie croît si son score local est au-dessus de la moyenne
+    
     let np = s.pop * (1 + T.ALPHA * (scores[i] - avgScore));
-    // Ajout de la dérive (bruit naturel)
+    
     if(T.DRIFT > 0) np += (Math.random() * 2 - 1) * T.DRIFT * totalPop * 0.5;
     s.pop = Math.max(0.2, np);
   });
   
-  // Renormalisation globale
+  
   const newTotal = T.strats.reduce((a,x)=>a+x.pop, 0) || 1;
   T.strats.forEach(s => { 
     s.pop = (s.pop / newTotal) * T.POP; 
     if(s.pop > s.peakPop) s.peakPop = s.pop; 
   });
 }
-/* ══════════════════════════════════════════════════
-   VISUALISATION DU RÉSEAU (MOTEUR PHYSIQUE FLUIDE)
-══════════════════════════════════════════════════ */
 function drawNetGraph() {
   const cv = document.getElementById("net-cv");
   if (!cv || !T || !T.graph) return;
   
-  // Haute résolution pour écrans Retina
+  
   const W = cv.offsetWidth || 280, H = cv.offsetHeight || 210;
   if (cv.width !== W * 2 || cv.height !== H * 2) { 
       cv.width = W * 2; cv.height = H * 2; 
@@ -4444,7 +4097,7 @@ function drawNetGraph() {
   ctx.scale(2, 2);
   ctx.clearRect(0, 0, W, H);
   
-  // 1. Initialisation spatiale (exécutée 1 fois par partie)
+  
   if (!T.nodesPos) {
     T.nodesPos = []; T.nodesVel = [];
     for (let i=0; i<T.N; i++) {
@@ -4452,43 +4105,41 @@ function drawNetGraph() {
       T.nodesVel.push({ x: 0, y: 0 });
     }
   }
-
-  // 2. Moteur Physique Continu (Répulsion / Attraction)
+  
   for (let step=0; step<2; step++) { 
     for (let i=0; i<T.N; i++) {
       let fx = 0, fy = 0;
-      // Gravité centrale légère
+      
       fx += (W/2 - T.nodesPos[i].x) * 0.003;
       fy += (H/2 - T.nodesPos[i].y) * 0.003;
-
       for (let j=0; j<T.N; j++) {
          if (i === j) continue;
          let dx = T.nodesPos[j].x - T.nodesPos[i].x;
          let dy = T.nodesPos[j].y - T.nodesPos[i].y;
          let dist = Math.sqrt(dx*dx + dy*dy) || 1;
          
-         let force = -50 / (dist*dist); // Les nœuds se repoussent
-         if (T.graph[i].includes(j)) force += 0.015 * (dist - 50); // Les amis s'attirent
+         let force = -50 / (dist*dist); 
+         if (T.graph[i].includes(j)) force += 0.015 * (dist - 50); 
          
          fx += (dx/dist)*force; fy += (dy/dist)*force;
       }
-      T.nodesVel[i].x = (T.nodesVel[i].x + fx) * 0.82; // Friction
+      T.nodesVel[i].x = (T.nodesVel[i].x + fx) * 0.82; 
       T.nodesVel[i].y = (T.nodesVel[i].y + fy) * 0.82;
     }
     for (let i=0; i<T.N; i++) { T.nodesPos[i].x += T.nodesVel[i].x; T.nodesPos[i].y += T.nodesVel[i].y; }
   }
   
-  // 3. Cadrage dynamique de la caméra
+  
   let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
   T.nodesPos.forEach(p => { minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x); minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y); });
   let scale = Math.min((W-50)/(maxX-minX||1), (H-50)/(maxY-minY||1));
   if (scale > 1.3) scale = 1.3; 
   let cx = (minX+maxX)/2, cy = (minY+maxY)/2;
   
-  // 4. Dessin des Connexions
+  
   ctx.lineWidth = 1.2;
   for (let i=0; i<T.N; i++) {
-    if(T.strats[i].pop / T.POP < 0.005) continue; // Cacher les liens des morts
+    if(T.strats[i].pop / T.POP < 0.005) continue; 
     T.graph[i].forEach(n => {
       if (n > i && T.strats[n].pop / T.POP >= 0.005) { 
         let px1 = W/2 + (T.nodesPos[i].x - cx) * scale;
@@ -4502,33 +4153,31 @@ function drawNetGraph() {
     });
   }
   
-  // 5. Dessin des Stratèges (Nœuds)
+  
   for (let i=0; i<T.N; i++) {
     const s = T.strats[i];
     const popPct = s.pop / T.POP;
-    if (popPct < 0.005) continue; // Les éliminés disparaissent du graphe
-
+    if (popPct < 0.005) continue; 
     let px = W/2 + (T.nodesPos[i].x - cx) * scale;
     let py = H/2 + (T.nodesPos[i].y - cy) * scale;
-    const radius = 6 + (popPct * 26); // Taille vivante !
+    const radius = 6 + (popPct * 26); 
     
-    // Halo coloré
+    
     ctx.shadowColor = s.color;
     ctx.shadowBlur = 12;
     
-    // Bulle principale
+    
     ctx.beginPath(); ctx.arc(px, py, radius, 0, Math.PI*2);
     ctx.fillStyle = "rgba(10, 10, 20, 0.95)"; ctx.fill();
     ctx.lineWidth = 2; ctx.strokeStyle = s.color; ctx.stroke();
     
-    ctx.shadowBlur = 0; // Coupe le halo pour le texte
-
-    // Emoji au centre
+    ctx.shadowBlur = 0; 
+    
     ctx.font = `${Math.max(9, radius * 1.1)}px Arial`;
     ctx.textAlign = "center"; ctx.textBaseline = "middle";
     ctx.fillText(s.e, px, py + 1); 
     
-    // Étiquettes CSS-like si la stratégie domine un peu
+    
     if (popPct > 0.04) {
       ctx.fillStyle = s.color;
       ctx.font = `bold 9px 'DM Mono', monospace`;
@@ -4541,9 +4190,6 @@ function drawNetGraph() {
   }
   ctx.restore();
 }
-/* ══════════════════════════════════════════════════
-   MUTATION
-══════════════════════════════════════════════════ */
 function checkMutation(){
   const total=T.strats.reduce((s,x)=>s+x.pop,0)||1;
   const candidates=[...Array(T.N).keys()].filter(i=>T.strats[i].pop/total<0.03);
@@ -4585,10 +4231,6 @@ function renderMutation(el){
     <div class="rname" style="color:${s.name.includes("*")?"var(--purple)":""}">${s.e} ${s.name}</div><div class="rp">${pct.toFixed(0)}%</div></div>`;
   }).join("")}`;
 }
-
-/* ══════════════════════════════════════════════════
-   STRATEGY DETAIL MODAL
-══════════════════════════════════════════════════ */
 function openStratModal(idx){
   if(!T||idx===undefined)return;
   const s=T.strats[idx];if(!s)return;
@@ -4623,10 +4265,6 @@ function openStratModal(idx){
 }
 function closeStratModal(){document.getElementById("strat-modal-bg").classList.remove("open");}
 document.getElementById("strat-modal-bg").addEventListener("click",e=>{if(e.target===document.getElementById("strat-modal-bg"))closeStratModal();});
-
-/* ══════════════════════════════════════════════════
-   POST-GAME ANALYSIS
-══════════════════════════════════════════════════ */
 function buildPostGameAnalysis(){
   const el=document.getElementById("post-analysis");if(!el||!T)return;
   el.style.display="";
@@ -4636,7 +4274,6 @@ function buildPostGameAnalysis(){
   const avgCoop=T.coopHistory.length?T.coopHistory.reduce((a,x)=>a+x,0)/T.coopHistory.length:0.5;
   const maxCoop=T.coopHistory.length?Math.max(...T.coopHistory):0;
   const minCoop=T.coopHistory.length?Math.min(...T.coopHistory):0;
-
   function buildNarrative(){
     const phoenixes=(T.milestones||[]).filter(m=>m.type==="phoenix");
     const collapses=(T.milestones||[]).filter(m=>m.type==="collapse");
@@ -4650,7 +4287,6 @@ function buildPostGameAnalysis(){
     if(dominated.length)n+=` ${dominated[0].txt.replace(/<[^>]+>/g,"")}`;
     return n;
   }
-
   function buildDynastyCanvas(){
     if(!T.history.length)return"";
     const leaders=T.history.map(snap=>{
@@ -4672,7 +4308,6 @@ function buildPostGameAnalysis(){
     const legendItems=uniq.map(i=>{const s=T.strats[i];return`<div class="dynasty-item"><div class="dynasty-dot" style="background:${s.color}"></div>${s.e} ${s.name}</div>`;}).join("");
     return`<div class="dynasty-wrap"><canvas id="dynasty-cv"></canvas></div><div class="dynasty-legend">${legendItems}</div>`;
   }
-
   function buildDNA(){
     const top=r.slice(0,Math.min(3,T.N));
     const leaderCount=new Float64Array(T.N);
@@ -4695,10 +4330,8 @@ function buildPostGameAnalysis(){
       </div>`;
     }).join("")}</div>`;
   }
-
   const timeline=(T.milestones||[]).slice(-12).reverse().map(m=>`<div class="ms-row"><div class="ms-gen">g.${m.gen}</div><div class="ms-txt">${m.txt}</div></div>`).join("")
     ||`<div style="font-size:8px;color:var(--muted);padding:6px 0">Tournoi sans événement marquant</div>`;
-
   el.innerHTML=`
     <div class="pg-narrative">${buildNarrative()}</div>
     <div class="pg-kpi-row">
@@ -4720,7 +4353,6 @@ function buildPostGameAnalysis(){
       ${timeline}
     </div>`;
 }
-
 function renderVendetta(el){
   if(!T.vendettaMatrix){el.innerHTML="";return;}
   const rancune=Array.from({length:T.N},(_,i)=>({i,r:T.vendettaMatrix.reduce((s,row)=>s+row[i],0)}));
@@ -4754,12 +4386,10 @@ function renderEpidemie(el){
       </div>`;}).join("")}
   </div>`;
 }
-
-/* POINTS TABLE */
 function updatePtsTable(){
   const nP=T.phasePoints.length;
   const isNexus=T.structure==="nexus";
-  // For Nexus: sort by cumulative nexusScores + current points
+  
   const sorted=[...Array(T.N).keys()].sort((a,b)=>{
     if(isNexus)return(T.nexusScores[b]+T.points[b])-(T.nexusScores[a]+T.points[a]);
     return T.points[b]-T.points[a];
@@ -4796,8 +4426,6 @@ function updatePtsTable(){
   const structName = CONFIG_STRUCTURE.find(m => m.id === T.structure)?.name || "Classement";
   document.getElementById("pts-lbl").textContent = isNexus ? `🌐 Nexus — Tournoi ${T.nexusTourneyIdx+1}/3` : structName;
 }
-
-/* LIVE RANKING with trend */
 function drawSparkline(data,color,w=36,h=14){
   const cv=document.createElement("canvas");
   cv.width=w;cv.height=h;cv.className="r-spark";
@@ -4816,7 +4444,6 @@ function drawSparkline(data,color,w=36,h=14){
   cx.stroke();
   return cv;
 }
-
 function updateRanking(){
   const gs=getGroups();
   const curPops=T.strats.map(s=>s.pop);
@@ -4843,7 +4470,7 @@ function updateRanking(){
         <div class="rbg"><div class="rbf" style="width:${(s.pop/mx*100).toFixed(0)}%;background:${s.color}"></div></div>
         <div class="rtrd" style="color:${trdCol}">${trd}</div>
         <div class="rp">${pct.toFixed(0)}%</div>`;
-      // Sparkline
+      
       const spark=T.sparkHistory?.[idx];
       if(spark&&spark.length>=3){row.appendChild(drawSparkline(spark,s.color,34,12));}
       frag.appendChild(row);
@@ -4851,12 +4478,10 @@ function updateRanking(){
   });
   el.innerHTML="";el.appendChild(frag);
   if(T.gen%5===0)prevPops=curPops;
-  // Update rivalry & chronique panels
+  
   renderRivalryPanel();
   renderChroniquePanel();
 }
-
-/* LEGEND */
 function updateLegend(){
   if(!T)return;
   const active=new Set(getGroups().flat());
@@ -4866,15 +4491,10 @@ function updateLegend(){
     </div>`).join("");
 }
 function toggleHL(i){hlIdx=hlIdx===i?null:i;updateLegend();drawChart();}
-
-/* ══════════════════════════════════════════════════
-/* CHART — Bézier smooth, glow, area fill, labels
-══════════════════════════════════════════════════ */
 function clearCanvas(){
   canvas.width=canvas.offsetWidth||600;canvas.height=canvas.offsetHeight||240;
   ctx.clearRect(0,0,canvas.width,canvas.height);
 }
-// Cached allIdxs to avoid recomputing every frame
 let _chartIdxsCache=null,_chartIdxsCacheGen=-1;
 function getChartIdxs(){
   if(_chartIdxsCacheGen===T.gen)return _chartIdxsCache;
@@ -4882,14 +4502,13 @@ function getChartIdxs(){
   _chartIdxsCacheGen=T.gen;
   return _chartIdxsCache;
 }
-// Downsample history to at most MAX_CHART_PTS for smooth rendering
 const MAX_CHART_PTS=300;
 function getChartHistory(){
   const h=T.history;if(h.length<=MAX_CHART_PTS)return h;
   const step=h.length/MAX_CHART_PTS;
   const out=[];
   for(let i=0;i<MAX_CHART_PTS-1;i++)out.push(h[Math.round(i*step)]);
-  out.push(h[h.length-1]);// always include latest
+  out.push(h[h.length-1]);
   return out;
 }
 function drawChart(){
@@ -4909,7 +4528,7 @@ function drawChart(){
   drawOrder.forEach(idx=>{
     const s=T.strats[idx];if(!s)return;
     const isHi=hlIdx===idx,dim=dimAll&&!isHi;
-    // Build points from downsampled history
+    
     const pts=hist.map((snap,ti)=>{
       let pct=0;
       for(let gi=0;gi<snap.groups.length;gi++){
@@ -4920,24 +4539,24 @@ function drawChart(){
     });
     if(pts.length<2)return;
     ctx.save();ctx.globalAlpha=dim?0.08:(isHi?1:0.75);
-    // Area fill
+    
     ctx.beginPath();ctx.moveTo(pts[0].x,H);ctx.lineTo(pts[0].x,pts[0].y);
     for(let i=1;i<pts.length;i++){const cx=(pts[i-1].x+pts[i].x)/2,cy=(pts[i-1].y+pts[i].y)/2;ctx.quadraticCurveTo(pts[i-1].x,pts[i-1].y,cx,cy);}
     ctx.lineTo(pts[pts.length-1].x,pts[pts.length-1].y);ctx.lineTo(pts[pts.length-1].x,H);ctx.closePath();
     const gr=ctx.createLinearGradient(0,0,0,H);gr.addColorStop(0,s.color+(isHi?"28":"12"));gr.addColorStop(1,s.color+"02");
     ctx.fillStyle=gr;ctx.fill();
-    // Line
+    
     ctx.shadowColor=s.color;ctx.shadowBlur=isHi?16:7;
     ctx.beginPath();ctx.moveTo(pts[0].x,pts[0].y);
     for(let i=1;i<pts.length;i++){const cx=(pts[i-1].x+pts[i].x)/2,cy=(pts[i-1].y+pts[i].y)/2;ctx.quadraticCurveTo(pts[i-1].x,pts[i-1].y,cx,cy);}
     ctx.lineTo(pts[pts.length-1].x,pts[pts.length-1].y);
     ctx.strokeStyle=s.color;ctx.lineWidth=isHi?2.5:T.N>16?1.2:1.6;ctx.stroke();
-    // Dot
+    
     const last=pts[pts.length-1];
     ctx.shadowBlur=isHi?18:8;
     ctx.beginPath();ctx.arc(last.x,last.y,isHi?4:2.2,0,Math.PI*2);ctx.fillStyle=s.color;ctx.fill();
     ctx.restore();
-    // Label
+    
     if(!dim&&T.N<=16){
       const snap=T.history[T.history.length-1];let pct=0;
       snap.groups.forEach(g=>{const pos=g.idxs.indexOf(idx);if(pos>=0){const tot=g.pops.reduce((a,x)=>a+x,0)||1;pct=g.pops[pos]/tot*100;}});
@@ -4948,18 +4567,14 @@ function drawChart(){
     }
   });
 }
-
-/* FINAL — CINEMATIC REVEAL */
 function showFinal(){
   setSt("done","Tournoi terminé !");
   document.getElementById("btn-next").style.display="none";
   document.getElementById("btn-replay").style.display="";
   document.getElementById("pbadge").style.display="none";
-
   const noPts=["bracket","duel","duel2"].includes(T.structure);
   if(!noPts){updatePtsTable();document.getElementById("pts-main").style.display="";}
   else{document.getElementById("pts-main").style.display="none";}
-
   const r=T.finalRanking;if(!r||!r.length)return;
   const winner=T.strats[r[0]];
   const getPtLabel=(idx)=>{
@@ -4967,21 +4582,18 @@ function showFinal(){
     if(noPts) return "";
     return `${T.points[idx]} pts`;
   };
-
-  // ── Phase 1: Show #final immediately, splash first ──
+  
   document.getElementById("final").classList.add("show");
   const splash=document.getElementById("final-splash");
   const body=document.getElementById("final-body");
   splash.style.display="";
   body.style.display="none";
-
-  // Populate splash
+  
   document.getElementById("fw-emoji").textContent=winner.e;
   document.getElementById("fw-name").style.color=winner.color;
   document.getElementById("fw-name").textContent=winner.name;
   document.getElementById("fw-sub").textContent=`${winner.tag} · ${winner.desc?.slice(0,60)||""}…`;
-
-  // Winner stats
+  
   const avgCoop=T.coopHistory.length?T.coopHistory.reduce((a,x)=>a+x,0)/T.coopHistory.length:0.5;
   const wCoop=((winner.coopRate||0.5)*100).toFixed(0);
   const wPct=(T.POP>0?winner.pop/T.POP*100:0).toFixed(0);
@@ -4991,17 +4603,14 @@ function showFinal(){
     <div class="fw-stat"><div class="fw-stat-val" style="color:var(--gold)">${T.gen}</div><div class="fw-stat-lbl">Générations</div></div>
     ${!noPts&&getPtLabel(r[0])?`<div class="fw-stat"><div class="fw-stat-val" style="color:var(--gold)">${getPtLabel(r[0])}</div><div class="fw-stat-lbl">Score</div></div>`:""}
   `;
-
-  // Confetti
+  
   setTimeout(()=>spawnConfetti(document.getElementById("confetti-cv")),200);
   playSoundEvent("win");
-
-  // ── Phase 2: Reveal body after 2.4s ──
+  
   setTimeout(()=>{
     body.style.display="";
     body.style.animation="name-slide .5s ease";
-
-    // Podium
+    
     const top=r.slice(0,3);
     const po=top.length>=3?[top[1],top[0],top[2]]:top;
     const pc=["g2","g1","g3"],pn=["2","1","3"];
@@ -5014,8 +4623,7 @@ function showFinal(){
         <div class="pb ${pc[i]}">${pn[i]}</div>
       </div>`;
     }).join("");
-
-    // Full ranking list
+    
     document.getElementById("flist").innerHTML=`<div class="card" style="padding:8px 6px;margin-top:8px">`+r.map((idx,i)=>{
       const s=T.strats[idx];
       const medal=i===0?"🥇":i===1?"🥈":i===2?"🥉":"";
@@ -5028,31 +4636,24 @@ function showFinal(){
         ${getPtLabel(idx)?`<div style="margin-left:auto;font-size:9px;color:var(--gold)">${getPtLabel(idx)}</div>`:""}
       </div>`;
     }).join("")+`</div>`;
-
     buildPostGameAnalysis();
   },2400);
-
-  // Hook achievements, HOF, ELO, commentary, campaign
+  
   checkAchievements();
   recordHOF();
-  updateELO(r); // v17: update persistent ELO ratings
+  updateELO(r); 
   checkCampaignSuccess();
-  // Winner particles on chart canvas
+  
   if(winner&&canvas){
     setTimeout(()=>{spawnDomination(r[0]);for(let i=0;i<3;i++)setTimeout(()=>spawnParticles(canvas.offsetWidth/2,canvas.offsetHeight*.3,winner.color,20,"burst"),i*400);},300);
   }
   document.getElementById("commentator-section").style.display="";
   callCommentator(`Victoire finale de ${winner.name}`,``,`win`,true);
 }
-
-/* UTILS */
 function setSt(type,txt){
   ["sdot","sdot2"].forEach(id=>{const d=document.getElementById(id);if(d)d.className=`sdot ${type}`;});
   ["stxt","stxt2"].forEach(id=>{const d=document.getElementById(id);if(d)d.textContent=txt;});
 }
-/* ══════════════════════════════════════════════════
-   UPGOAT — PARTICLE ENGINE
-══════════════════════════════════════════════════ */
 const pCv=document.getElementById("particle-cv");
 const pCtx=pCv?pCv.getContext("2d"):null;
 let particles=[];
@@ -5066,7 +4667,6 @@ function spawnParticles(x,y,color,count,type="burst"){
       r:2+Math.random()*3,color,type});
   }
 }
-// Confetti for final screen — uses its own canvas overlay
 let confettiPieces=[];
 function spawnConfetti(cv){
   if(!cv)return;
@@ -5105,7 +4705,7 @@ function spawnPhoenix(stratIdx){
   if(!T||!canvas)return;
   const s=T.strats[stratIdx];
   const W=canvas.offsetWidth,H=canvas.offsetHeight;
-  // Multiple bursts along the bottom of the chart
+  
   for(let i=0;i<4;i++){
     setTimeout(()=>spawnParticles(W*.2+Math.random()*W*.6,H*.7+Math.random()*H*.2,s.color,12,"rise"),i*120);
   }
@@ -5142,10 +4742,6 @@ function tickParticles(){
   requestAnimationFrame(tickParticles);
 }
 tickParticles();
-
-/* ══════════════════════════════════════════════════
-   UPGOAT — SOUND ENGINE
-══════════════════════════════════════════════════ */
 let audioCtx=null,gainNode=null,osc1=null,osc2=null,soundOn=false;
 function initSound(){
   if(audioCtx)return;
@@ -5168,7 +4764,7 @@ function toggleSound(){
 }
 function updateSoundCoop(cr){
   if(!soundOn||!audioCtx||!osc1)return;
-  // 0% coop = dark low drone, 100% coop = bright high drone
+  
   const freq=80+cr*120;const freq2=freq*1.5;
   osc1.frequency.setTargetAtTime(freq,audioCtx.currentTime,1.5);
   osc2.frequency.setTargetAtTime(freq2,audioCtx.currentTime,1.5);
@@ -5185,10 +4781,6 @@ function playSoundEvent(type){
   else if(type==="win"){[440,550,660,880].forEach((f,i)=>{const o2=audioCtx.createOscillator(),g2=audioCtx.createGain();o2.connect(g2);g2.connect(audioCtx.destination);o2.frequency.value=f;o2.type="sine";g2.gain.setValueAtTime(0,t+i*.08);g2.gain.linearRampToValueAtTime(0.12,t+i*.08+.04);g2.gain.exponentialRampToValueAtTime(0.001,t+i*.08+.5);o2.start(t+i*.08);o2.stop(t+i*.08+.5);});}
   osc.start(t);osc.stop(t+1.5);
 }
-
-/* ══════════════════════════════════════════════════
-   UPGOAT — ACHIEVEMENTS
-══════════════════════════════════════════════════ */
 const ACHIEVEMENTS=[
   {id:"first_blood",icon:"🩸",name:"Premier Sang",desc:"Première élimination d'un tournoi"},
   {id:"allc_win",icon:"🕊",name:"Pacifiste",desc:"Gagner un tournoi avec une stratégie AllC"},
@@ -5235,7 +4827,7 @@ function checkAchievements(){
   if(maxPop>0.9)unlockAch("domination");
   if(winner?.tag?.toLowerCase().includes("coop")||winner?.name.includes("Pacifiste")||winner?.name.includes("AllC"))unlockAch("allc_win");
   if(winner?.name.includes("AllD")||winner?.name.includes("Despote")||winner?.name.includes("Implacable"))unlockAch("alld_win");
-  // Campaign check
+  
   const camps=loadCampaign();if(Object.keys(camps).length>=6)unlockAch("campaign_end");
 }
 function updateAchCount(){
@@ -5261,10 +4853,6 @@ function openAch(){
 }
 function closeAch(){document.getElementById("ach-modal-bg").classList.remove("open");}
 document.getElementById("ach-modal-bg").addEventListener("click",e=>{if(e.target===document.getElementById("ach-modal-bg"))closeAch();});
-
-/* ══════════════════════════════════════════════════
-   UPGOAT — CUSTOM STRATEGY BUILDER
-══════════════════════════════════════════════════ */
 let customStrategy=null;
 function openBuilder(){document.getElementById("builder-modal-bg").classList.add("open");updateBuilderPreview();}
 function closeBuilder(){document.getElementById("builder-modal-bg").classList.remove("open");}
@@ -5295,7 +4883,7 @@ function saveBuilder(){
   const rand=parseInt(document.getElementById("bld-rand").value)/100;
   const mem=parseInt(document.getElementById("bld-mem").value);
   const name=document.getElementById("bld-name").value.trim()||"Mon Stratège";
-  // Build the strategy function
+  
   const fn=(history,round,state,selfPop,groupPop)=>{
     if(Math.random()<rand)return Math.random()<0.5?"coop":"betray";
     if(round===0)return Math.random()<init?"coop":"betray";
@@ -5303,17 +4891,17 @@ function saveBuilder(){
     const betrayals=window.filter(h=>h==="betray").length;
     const betrayalRate=betrayals/window.length;
     if(betrayalRate>0){
-      // Punish based on retaliation threshold
+      
       const punish=betrayalRate*ret>Math.random();
       if(punish){
-        // But maybe forgive
+        
         if(Math.random()<forg)return "coop";
         return "betray";
       }
     }
     return "coop";
   };
-  // Create a custom strat entry
+  
   customStrategy={
     sid:"custom_"+Date.now(),name,e:"🔧",char:"Personnalisé",
     tag:"CUSTOM",color:"#a0f0e0",
@@ -5323,31 +4911,27 @@ function saveBuilder(){
     stats:{"Coop":(init*100).toFixed(0)+"%","Riposte":(ret*100).toFixed(0)+"%","Pardon":(forg*100).toFixed(0)+"%"},
     vs:"Variable selon l'adversaire",fn
   };
-  // Inject into ALL_STRATS and CHARS if not already there
+  
   const existingIdx=ALL_STRATS.findIndex(s=>s.sid===customStrategy.sid);
   if(existingIdx<0){
     ALL_STRATS.push(customStrategy);
-    // Add to a new custom char if needed
+    
     const customChar=CHARS.find(c=>c.name==="Personnalisé");
     if(customChar){customChar.strats.push(customStrategy);}
     else{CHARS.push({name:"Personnalisé",e:"🔧",color:"#a0f0e0",strats:[customStrategy]});}
     buildCharGrid();
   }
   closeBuilder();
-  // Auto-select it
+  
   if(!draft.sel.includes(customStrategy.sid)){
     if(draft.sel.length<nPlayers){draft.sel.push(customStrategy.sid);}
     else{draft.sel[draft.sel.length-1]=customStrategy.sid;}
     renderSlots();updateSummary();
   }
-  // Set as me
+  
   draft.me=customStrategy.sid;
   renderSlots();updateSummary();
 }
-
-/* ══════════════════════════════════════════════════
-   UPGOAT — CAMPAIGN MODE
-══════════════════════════════════════════════════ */
 const MISSIONS=[
   {id:"m1",n:"MISSION 01",name:"Les Origines",
    story:"Nous sommes en 1981. Axelrod vient de recevoir les résultats de son premier tournoi. Un inconnu nommé Rapoport a soumis le code le plus simple : 4 lignes. Vous jouez TFT. Prouvez qu'il méritait de gagner.",
@@ -5426,7 +5010,7 @@ function launchMission(){
   closeMission();
   setN(m.N);
   
-  // Appliquer la configuration du Sandbox pour la mission
+  
   sandboxConfig.structure = m.structure;
   sandboxConfig.matrix = m.matrix;
   sandboxConfig.eol = [...m.eol];
@@ -5448,13 +5032,7 @@ function launchMission(){
   if(phasesEl){phasesEl.value=3; document.getElementById("pv-phases").textContent="3";}
   launchTournament();
 }
-
-/* ══════════════════════════════════════════════════
-   COMMENTATEUR LOCAL — moteur de templates dramatiques
-══════════════════════════════════════════════════ */
 let commCooldown=0,commActive=false;
-
-// Templates par catégorie d'événement
 const COMM_TEMPLATES={
   phoenix:[
     (e,c)=>`Incroyable retournement ! ${c.p1} semblait condamné — et pourtant, le voilà qui surgit des décombres à la génération ${c.gen}. ${c.p2?`${c.p2} ferait bien de regarder derrière lui.`:""}`,
@@ -5505,14 +5083,13 @@ const COMM_TEMPLATES={
     (e,c)=>`Génération ${c.gen}. ${c.p1} domine avec ${c.leadPct}%. ${c.coop>55?"L'esprit de coopération reste vivace.":"La méfiance s'est installée durablement."}`,
   ]
 };
-
 function getCommContext(){
   if(!T||!T.strats)return{leader:"?",p1:"?",p2:"",p3:"",leadPct:0,p2Pct:0,coopPct:50,coop:50,gen:0,mode:"?",phase:1,maxPhases:1,milestoneCount:0,trend:"stable",trendPct:0};
   const sorted=[...T.strats].sort((a,b)=>b.pop-a.pop);
   const coopPct=T.coopHistory?.length?Math.round(T.coopHistory[T.coopHistory.length-1]*100):50;
   const leadPct=T.POP>0?Math.round(sorted[0].pop/T.POP*100):0;
   const p2Pct=T.POP>0&&sorted[1]?Math.round(sorted[1].pop/T.POP*100):0;
-  // Trend: compare leader pop vs 20 gens ago
+  
   let trend="stable",trendPct=0;
   if(T.history.length>20){
     const old=T.history[T.history.length-21];
@@ -5521,7 +5098,7 @@ function getCommContext(){
     trendPct=Math.round(leadPct-oldPct);
     if(trendPct>4)trend="up";else if(trendPct<-4)trend="down";
   }
-  // Phase milestones since last phase
+  
   const phaseMilestones=T.milestones?.filter(m=>m.gen>Math.max(0,T.gen-200))?.length||0;
   return{
     leader:`${sorted[0].e} ${sorted[0].name}`,
@@ -5536,13 +5113,10 @@ function getCommContext(){
     trend,trendPct:Math.abs(trendPct),
   };
 }
-
 function pickTemplate(category){
   const pool=COMM_TEMPLATES[category]||COMM_TEMPLATES.default;
   return pool[Math.floor(Math.random()*pool.length)];
 }
-
-// Used indexes per category to avoid immediate repeats
 const _commUsed={};
 function pickTemplateFresh(category){
   const pool=COMM_TEMPLATES[category]||COMM_TEMPLATES.default;
@@ -5553,10 +5127,9 @@ function pickTemplateFresh(category){
   _commUsed[category].push(idx);if(_commUsed[category].length>pool.length-1)_commUsed[category].shift();
   return pool[idx];
 }
-
 function callCommentator(eventText,contextStr,category="default",force=false){
   if(commActive&&!force)return;
-  if(commActive&&force){commActive=false;} // interrupt ongoing for forced
+  if(commActive&&force){commActive=false;} 
   commActive=true;
   const el=document.getElementById("commentator-text");
   const dot=document.getElementById("comm-dot");
@@ -5571,7 +5144,7 @@ function callCommentator(eventText,contextStr,category="default",force=false){
       el.classList.add("commentator-new");
       el.innerHTML="";
       let i=0;
-      // Faster for forced (phase end), normal for live events
+      
       const speed=force?12:16;
       const typeInterval=setInterval(()=>{
         if(i>=txt.length){clearInterval(typeInterval);commActive=false;el.classList.remove("commentator-new");}
@@ -5580,7 +5153,6 @@ function callCommentator(eventText,contextStr,category="default",force=false){
     } else {commActive=false;}
   },delay);
 }
-
 function triggerComment(event,ctx,category,force=false){
   const now=Date.now();
   if(!force&&now-commCooldown<8000)return;
@@ -5599,8 +5171,6 @@ function triggerComment(event,ctx,category,force=false){
   }
   callCommentator(event,ctx,category,force);
 }
-
-/* HOOK AI COMMENTATOR INTO MILESTONE DETECTION */
 const _origCheckMilestones=checkMilestones;
 checkMilestones=function(){
   const prevLen=(T?.milestones?.length||0);
@@ -5613,32 +5183,26 @@ checkMilestones=function(){
     else if(m.type==="lead"){playSoundEvent("milestone");triggerComment(m.txt,"Changement de tête !","lead");}
     else if(m.type==="collapse"){playSoundEvent("elim");triggerComment(m.txt,"Effondrement coopératif !","collapse");}
   });
-  // Update coop sound
+  
   if(T.coopHistory?.length)updateSoundCoop(T.coopHistory[T.coopHistory.length-1]);
 };
-
-/* HOOK INTO addEvt FOR PARTICLES */
 const _origAddEvt=addEvt;
 addEvt=function(cls,txt){
   _origAddEvt(cls,txt);
   if(cls==="ek"){
-    // Elimination
+    
     const s=T?.strats?.reduce((b,s)=>s.pop<b.pop?s:b,T?.strats[0]);
     if(s)spawnElimination(s.idx||0);
     playSoundEvent("elim");
   }
 };
-
-/* HOOK INTO endPhase FOR COMMENTATOR */
 const _origEndPhase=endPhase;
 endPhase=function(phase){
   _origEndPhase(phase);
-  // Toujours commenter la fin de manche, même si cooldown actif
+  
   document.getElementById("commentator-section").style.display="";
   callCommentator(`Fin manche ${phase+1}`,"",`phase`,true);
 };
-
-// Campaign check called from showFinal
 function checkCampaignSuccess(){
   const winner=T?.strats?.[T?.finalRanking?.[0]];
   if(!activeMission)return;
@@ -5655,11 +5219,7 @@ function checkCampaignSuccess(){
     playSoundEvent("win");activeMission=null;
   }
 }
-
-/* ══════════════════════════════════════════════════
-   v15 — CHART MODE SWITCHER
-══════════════════════════════════════════════════ */
-let chartMode="lines"; // lines | stacked | bars
+let chartMode="lines"; 
 function setChartMode(m){
   chartMode=m;
   ["lines","stacked","bars"].forEach(x=>{
@@ -5668,8 +5228,6 @@ function setChartMode(m){
   });
   if(T&&T.history.length)drawChart();
 }
-
-/* Override drawChart to support stacked + bars */
 const _origDrawChart=drawChart;
 drawChart=function(){
   if(chartMode==="lines"){_origDrawChart();return;}
@@ -5680,10 +5238,9 @@ drawChart=function(){
   ctx.strokeStyle="rgba(255,255,255,.018)";ctx.lineWidth=1;
   for(let y=H*.2;y<H;y+=H*.2){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();}
   const RPAD=T.N<=8?64:T.N<=16?72:80;const CW=W-4-RPAD;
-  const hist=getChartHistory(); // downsampled
+  const hist=getChartHistory(); 
   const nPts=hist.length;const xS=CW/Math.max(nPts-1,1);
   const sorted=[...Array(T.N).keys()].filter(i=>T.strats[i]&&T.strats[i].pop>0).sort((a,b)=>T.strats[b].pop-T.strats[a].pop);
-
   if(chartMode==="stacked"){
     for(let ti=0;ti<nPts;ti++){
       const snap=hist[ti];
@@ -5697,7 +5254,7 @@ drawChart=function(){
         cumY-=barH;
       });
     }
-    // Labels at end using real last snapshot
+    
     const lastSnap=T.history[T.history.length-1];
     const lastPcts={};
     lastSnap.groups.forEach(g=>{const tot=g.pops.reduce((a,x)=>a+x,0)||1;g.idxs.forEach((idx,pi)=>{lastPcts[idx]=g.pops[pi]/tot;});});
@@ -5724,13 +5281,9 @@ drawChart=function(){
     });
   }
 };
-
-/* ══════════════════════════════════════════════════
-   v15 — CHART AMBIENT BACKGROUND
-══════════════════════════════════════════════════ */
 function updateChartAmbient(cr){
   const el=document.getElementById("chart-ambient");if(!el)return;
-  // cr 0→1: deep crimson (war) → deep teal (peace)
+  
   if(cr>0.65){
     const t=(cr-0.65)/0.35;
     el.style.background=`radial-gradient(ellipse at 50% 100%, rgba(0,${Math.round(80+t*80)},${Math.round(80+t*100)},.${Math.round(8+t*6)}) 0%, transparent 70%)`;
@@ -5741,10 +5294,6 @@ function updateChartAmbient(cr){
     el.style.background="none";
   }
 }
-
-/* ══════════════════════════════════════════════════
-   v15 — FAST FORWARD
-══════════════════════════════════════════════════ */
 function toggleFF(){
   if(!T)return;
   T.ffActive=!T.ffActive;
@@ -5752,10 +5301,6 @@ function toggleFF(){
   if(btn)btn.classList.toggle("active",T.ffActive);
   if(btn)btn.textContent=T.ffActive?"⏩ x10 ON":"⏩ x10";
 }
-
-/* ══════════════════════════════════════════════════
-   v15 — LIVE HEATMAP
-══════════════════════════════════════════════════ */
 function drawHeatmap(){
   if(!T||T.N<2)return;
   const hcv=document.getElementById("heatmap-cv");if(!hcv)return;
@@ -5766,8 +5311,7 @@ function drawHeatmap(){
   if(hcv.width!==sz||hcv.height!==sz){hcv.width=sz;hcv.height=sz;}
   const hctx=hcv.getContext("2d");
   hctx.clearRect(0,0,sz,sz);
-
-  // Find range
+  
   let maxV=0,minV=Infinity;
   for(let i=0;i<N;i++)for(let j=0;j<N;j++){
     if(i===j)continue;
@@ -5775,7 +5319,6 @@ function drawHeatmap(){
     if(T.heatmapCount[i][j]>0){if(v>maxV)maxV=v;if(v<minV)minV=v;}
   }
   const range=maxV-minV||1;
-
   for(let i=0;i<N;i++){
     for(let j=0;j<N;j++){
       const x=j*cell,y=i*cell;
@@ -5786,19 +5329,19 @@ function drawHeatmap(){
         const v=T.heatmapMatrix[i][j];
         const cnt=T.heatmapCount[i][j];
         if(cnt===0){hctx.fillStyle="rgba(255,255,255,.03)";hctx.fillRect(x,y,cell,cell);continue;}
-        const t=(v-minV)/range; // 0=worst, 1=best
+        const t=(v-minV)/range; 
         let r,g,b;
         if(t<0.5){r=Math.round(180*(1-t*2));g=Math.round(20+t*30);b=Math.round(20+t*60);}
         else{r=Math.round(20*(2-t*2));g=Math.round(80+(t-0.5)*2*140);b=Math.round(80+(t-0.5)*2*140);}
         hctx.fillStyle=`rgb(${r},${g},${b})`;
         hctx.fillRect(x,y,cell,cell);
       }
-      // Thin separator
+      
       hctx.strokeStyle="rgba(0,0,0,.3)";hctx.lineWidth=.5;
       hctx.strokeRect(x,y,cell,cell);
     }
   }
-  // Row/col labels if cells big enough
+  
   if(cell>=10){
     hctx.font=`${Math.min(cell-2,9)}px monospace`;
     hctx.textBaseline="middle";hctx.textAlign="center";
@@ -5810,8 +5353,6 @@ function drawHeatmap(){
     hctx.globalAlpha=1;
   }
 }
-
-// Heatmap tooltip
 document.getElementById("heatmap-cv")?.addEventListener("mousemove",e=>{
   const hcv=document.getElementById("heatmap-cv");if(!hcv||!T)return;
   const rect=hcv.getBoundingClientRect();
@@ -5832,10 +5373,6 @@ document.getElementById("heatmap-cv")?.addEventListener("mousemove",e=>{
 document.getElementById("heatmap-cv")?.addEventListener("mouseleave",()=>{
   const tt=document.getElementById("heatmap-tooltip");if(tt)tt.style.display="none";
 });
-
-/* ══════════════════════════════════════════════════
-   v15 — HALL OF FAME
-══════════════════════════════════════════════════ */
 function loadHOF(){try{return JSON.parse(localStorage.getItem("axelrod_hof")||"[]");}catch{return[];}}
 function saveHOF(h){try{localStorage.setItem("axelrod_hof",JSON.stringify(h));}catch{}}
 function recordHOF(){
@@ -5843,13 +5380,13 @@ function recordHOF(){
   const winner=T.strats[T.finalRanking[0]];if(!winner)return;
   const score=T.points[T.finalRanking[0]]||Math.round(winner.pop/T.POP*100);
   
-  // Construire le nom du mode combiné
+  
   const sName = CONFIG_STRUCTURE.find(m=>m.id===T.structure)?.name || "Sandbox";
   const mName = CONFIG_MATRIX.find(m=>m.id===T.matrix)?.name || "Standard";
   
   const entry={
     name:winner.name,emoji:winner.e,color:winner.color,score,
-    mode: `${sName} + ${mName}`, // <-- Changement ici
+    mode: `${sName} + ${mName}`, 
     N:T.N,gen:T.gen,
     avgCoop:T.coopHistory.length?Math.round(T.coopHistory.reduce((a,b)=>a+b,0)/T.coopHistory.length*100):0,
     date:new Date().toLocaleDateString("fr-FR")
@@ -5890,10 +5427,6 @@ function openHOF(){
 function closeHOF(){document.getElementById("hof-modal-bg").classList.remove("open");}
 function clearHOF(){saveHOF([]);openHOF();}
 document.getElementById("hof-modal-bg").addEventListener("click",e=>{if(e.target===document.getElementById("hof-modal-bg"))closeHOF();});
-
-/* ══════════════════════════════════════════════════
-   v15 — NEXUS MODE
-══════════════════════════════════════════════════ */
 function renderNexus(el){
   if(!T.nexusScores){el.innerHTML="";return;}
   const sorted=[...Array(T.N).keys()].sort((a,b)=>T.nexusScores[b]-T.nexusScores[a]);
@@ -5918,15 +5451,11 @@ function renderNexus(el){
     </div>`;
   }).join("")}`;
 }
-
-/* ══════════════════════════════════════════════════
-   v15 — EXPORT RESULTS
-══════════════════════════════════════════════════ */
 function exportResults(){
   if(!T)return;
   const data={
     version:"v17_sandbox",date:new Date().toISOString(),
-    // On exporte les 4 dimensions :
+    
     structure:T.structure, matrix:T.matrix, eol:T.eol, modifiers:T.modifiers,
     N:T.N,generations:T.gen,
     matrixPayoffs:{T:T.pendingPayoff.T, R:T.pendingPayoff.R, P:T.pendingPayoff.P, S:T.pendingPayoff.S},
@@ -5946,14 +5475,10 @@ function exportResults(){
   a.href=url;a.download=`axelrod_sandbox_${new Date().toISOString().slice(0,10)}.json`;
   a.click();URL.revokeObjectURL(url);
 }
-
-/* ══════════════════════════════════════════════════
-   v15 — HOOK showFinal for Nexus chain
-══════════════════════════════════════════════════ */
 const _v15_showFinal=showFinal;
 showFinal=function(){
   _v15_showFinal();
-  // Nexus: accumulate scores and relaunch if not done yet
+  
     if(T.structure==="nexus"&&T.nexusTourneyIdx<2) {
     [...Array(T.N).keys()].forEach(i=>{T.nexusScores[i]+=T.points[i]||0;});
     T.nexusResults.push([...T.points]);
@@ -5963,12 +5488,12 @@ showFinal=function(){
     addEvt("ec",`🌐 Nexus: tournoi ${T.nexusTourneyIdx}/3 terminé ! Suivant dans 3s…`);
     setTimeout(()=>{
       if(!T||T.mode!=="nexus")return;
-      // Hide final screens
+      
       document.getElementById("final").classList.remove("show");
       const fs=document.getElementById("final-splash");if(fs)fs.style.display="none";
       const fb=document.getElementById("final-body");if(fb)fb.style.display="none";
       confettiPieces=[];
-      // Reset for next tournament
+      
       T.phase=0;T.history=[];T.gen=0;T.events=[];T.points=Array(T.N).fill(0);T.phasePoints=[];
       T.strats.forEach(s=>{s.pop=T.POP/T.N;s.st={};s.coopRate=0.5;});
       T.coopHistory=[];T.milestones=[];
@@ -5976,34 +5501,26 @@ showFinal=function(){
       runPhase();
     },3000);
   } else if(T.mode==="nexus"&&T.nexusTourneyIdx>=2){
-    // Final tournament done — accumulate and set final ranking by nexusScores
+    
     [...Array(T.N).keys()].forEach(i=>{T.nexusScores[i]+=T.points[i]||0;});
     T.nexusResults.push([...T.points]);
-    // Override final ranking to use cumulative nexus scores
+    
     T.finalRanking=[...Array(T.N).keys()].sort((a,b)=>T.nexusScores[b]-T.nexusScores[a]);
     const ni=document.getElementById("nexus-info");if(ni)ni.textContent="NEXUS TERMINÉ — Classement cumulé";
     addEvt("ea","🌐 NEXUS FINAL — Classement cumulé sur 3 tournois !");
     playSoundEvent?.("win");
   }
 };
-
-/* Init on load */
 updateAchCount();buildMissionGrid();
 new ResizeObserver(()=>{if(T&&T.history.length)drawChart();}).observe(canvas);
-
-/* ══════════════════════════════════════════════════
-   V17 — RIVALITÉS AUTOMATIQUES
-══════════════════════════════════════════════════ */
 const RIVALRY_ADJ=["Grande","Éternelle","Légendaire","Sanglante","Secrète","Épique","Silencieuse","Infernale","Titanesque","Fatale"];
 const RIVALRY_NOUN=["Guerre","Rivalité","Bataille","Lutte","Confrontation","Duel","Querelle","Vendetta","Saga","Guerre Froide"];
-
 function getRivalryName(a,b){
   const seed=(a.sid+b.sid).split("").reduce((n,c)=>n+c.charCodeAt(0),0);
   const adj=RIVALRY_ADJ[seed%RIVALRY_ADJ.length];
   const noun=RIVALRY_NOUN[(seed>>2)%RIVALRY_NOUN.length];
   return`La ${adj} ${noun}`;
 }
-
 function updateRivalries(){
   if(!T||T.N<2)return;
   const sorted=[...T.strats].sort((a,b)=>b.pop-a.pop);
@@ -6012,10 +5529,10 @@ function updateRivalries(){
   const key=`${Math.min(top1,top2)}_${Math.max(top1,top2)}`;
   if(T.rivalryMap[key]!==undefined){
     const rv=T.rivalries[T.rivalryMap[key]];
-    // Check if leadership swapped
+    
     if(rv.lastLeader!==undefined&&rv.lastLeader!==top1){
       rv.swaps++;
-      // Epic moment
+      
       if(rv.swaps===3){
         addEvt("ea",`⚔️ <b>RIVALITÉ DÉCLARÉE</b> — ${T.strats[rv.a].e}${T.strats[rv.a].name} vs ${T.strats[rv.b].e}${T.strats[rv.b].name} : « ${rv.name} »`);
         triggerComment(`Rivalité : ${rv.name}`,"","dom");
@@ -6025,20 +5542,19 @@ function updateRivalries(){
     rv.totalGens=(T.gen-rv.gen0);
     if(top1===rv.a)rv.winA++;else rv.winB++;
   } else {
-    // New potential rivalry
+    
     const rv={a:top1,b:top2,name:getRivalryName(T.strats[top1],T.strats[top2]),
       swaps:0,lastLeader:top1,gen0:T.gen,totalGens:0,winA:1,winB:0};
     T.rivalryMap[key]=T.rivalries.length;
     T.rivalries.push(rv);
   }
 }
-
 function renderRivalryPanel(){
   if(!T||!T.rivalries)return;
   const sect=document.getElementById("rivalry-section");
   const inner=document.getElementById("rivalry-inner");
   if(!sect||!inner)return;
-  // Show the hottest rivalry (most swaps)
+  
   const hot=T.rivalries.filter(r=>r.swaps>=2).sort((a,b)=>b.swaps-a.swaps)[0];
   if(!hot){sect.style.display="none";return;}
   sect.style.display="";
@@ -6070,16 +5586,11 @@ function renderRivalryPanel(){
     </div>
   </div>`;
 }
-
-/* ══════════════════════════════════════════════════
-   V17 — CHRONIQUE VIVANTE
-══════════════════════════════════════════════════ */
 const CHAPTER_NAMES=[
   "L'Aube du Tournoi","La Montée en Puissance","L'Ère des Trahisons","La Grande Guerre",
   "L'Équilibre Fragile","Le Temps des Champions","Le Crépuscule","L'Âge d'Or",
   "La Chute","La Renaissance","L'Ère Nouvelle","Le Dernier Acte"
 ];
-
 function autoChronicleChapter(){
   if(!T)return;
   const idx=T.chronicleChapters.length;
@@ -6087,22 +5598,20 @@ function autoChronicleChapter(){
   T.chronicleChapters.push({title:`Chapitre ${idx+1} : ${name}`,gen:T.gen});
   addChronicle(`Début du ${name.toLowerCase()}.`,"default",true);
 }
-
 function addChronicle(text,type="default",isChapter=false){
   if(!T||!T.chronicle)return;
   const chapterIdx=(T.chronicleChapters.length||1)-1;
   T.chronicle.push({gen:T.gen||0,text,type,chapterIdx,isChapter});
-  // Keep last 80 beats
+  
   if(T.chronicle.length>80)T.chronicle.shift();
 }
-
 function renderChroniquePanel(){
   if(!T||!T.chronicle||T.chronicle.length<2)return;
   const sect=document.getElementById("chronique-section");
   const inner=document.getElementById("chron-inner");
   if(!sect||!inner)return;
   sect.style.display="";
-  // Group by chapter
+  
   const chapters={};
   T.chronicle.forEach(b=>{
     if(!chapters[b.chapterIdx])chapters[b.chapterIdx]=[];
@@ -6119,21 +5628,13 @@ function renderChroniquePanel(){
       </div>`).join("")}
     </div>`;
   }).join("");
-  // Auto-scroll to top
+  
   inner.scrollTop=0;
 }
-
-/* ══════════════════════════════════════════════════
-   V17 — RENDERCOEVO
-══════════════════════════════════════════════════ */
-/* ══════════════════════════════════════════════════
-   v17 — ELO PERSISTANT
-══════════════════════════════════════════════════ */
 function loadELO(){try{return JSON.parse(localStorage.getItem("axelrod_elo")||"{}");}catch{return{};}}
 function saveELO(elo){try{localStorage.setItem("axelrod_elo",JSON.stringify(elo));}catch{}}
 function getELOClass(r){return r>=1500?"elo-s":r>=1300?"elo-a":"elo-b";}
 function getELOLabel(r){return r>=1500?"★ "+r:r>=1300?"▲ "+r:""+r;}
-
 function updateELO(ranking){
   const elo=loadELO();
   const K=24;
@@ -6142,7 +5643,7 @@ function updateELO(ranking){
     if(!elo[sid]){elo[sid]={rating:1200,games:0,wins:0,sid,name:T.strats[idx].name,e:T.strats[idx].e};}
     elo[sid].games++;
     if(rank===0)elo[sid].wins++;
-    // ELO vs each opponent in this tournament
+    
     ranking.forEach((opp,oppRank)=>{
       if(opp===idx)return;
       const oppSid=T.strats[opp]?.sid;if(!oppSid)return;
@@ -6154,7 +5655,6 @@ function updateELO(ranking){
   });
   saveELO(elo);
 }
-
 function renderELOBoard(){
   const elo=loadELO();
   const entries=Object.values(elo).sort((a,b)=>b.rating-a.rating).slice(0,12);
@@ -6168,19 +5668,13 @@ function renderELOBoard(){
     <span class="elo-badge ${getELOClass(e.rating)}" style="min-width:42px;justify-content:center">${getELOLabel(e.rating)}</span>
   </div>`).join("")}</div>`;
 }
-
 function resetELO(){saveELO({});if(document.getElementById("elo-board-inner"))document.getElementById("elo-board-inner").innerHTML=renderELOBoard();}
-
-/* ══════════════════════════════════════════════════
-   v17 — MODE CIVILISATIONS
-══════════════════════════════════════════════════ */
 const CIV_FACTIONS=[
   {id:"pacifistes", name:"Pacifistes",    icon:"🕊", color:"#5bdfb4", coopThresh:0.60},
   {id:"guerriers",  name:"Guerriers",     icon:"⚔️", color:"#ff5f5f", coopThresh:0.30},
   {id:"stratèges",  name:"Stratèges",     icon:"🧠", color:"#7eb8ff", coopThresh:0.50},
   {id:"opportunistes",name:"Opportunistes",icon:"🎭", color:"#f5c842", coopThresh:0.45},
 ];
-
 function initCivilisation(){
   const N=T.N;
   const perFac=Math.ceil(N/4);
@@ -6194,25 +5688,23 @@ function initCivilisation(){
   T.civWars=[];T.civAlliances=[];
   addEvt("ea","🏛 CIVILISATIONS — 4 factions fondées ! Que la géopolitique commence.");
 }
-
 function updateCivilisation(){
   if(!T.civFactions)return;
-  // Compute faction scores based on member populations
+  
   T.civFactions.forEach(f=>{
     f.score=f.members.reduce((s,i)=>s+(T.strats[i]?.pop||0),0)/T.POP*100;
     f.coopRate=f.members.length>0?f.members.reduce((s,i)=>s+(T.strats[i]?.coopRate||0.5),0)/f.members.length:0.5;
   });
   const total=T.civFactions.reduce((s,f)=>s+f.score,0)||100;
-  // Shift territory proportionally toward score
+  
   T.civFactions.forEach(f=>{
     const target=f.score/total*100;
     f.territory=f.territory*0.85+target*0.15;
   });
-  // Normalize territory to 100%
+  
   const tTotal=T.civFactions.reduce((s,f)=>s+f.territory,0);
   T.civFactions.forEach(f=>f.territory=f.territory/tTotal*100);
-
-  // Wars: declare if coop diff > 0.3 between two factions
+  
   T.civWars=[];T.civAlliances=[];
   for(let i=0;i<T.civFactions.length;i++){
     for(let j=i+1;j<T.civFactions.length;j++){
@@ -6226,13 +5718,13 @@ function updateCivilisation(){
       }
     }
   }
-  // Update banner
+  
   const leader=T.civFactions.reduce((a,b)=>b.territory>a.territory?b:a);
   const ls=document.getElementById("civ-leader-span");
   if(ls)ls.textContent=`${leader.icon} ${leader.name} (${leader.territory.toFixed(0)}%)`;
   const ws=document.getElementById("civ-war-span");
   if(ws)ws.textContent=`${T.civWars.length} guerre(s)`;
-  // Check victory: 60% territory
+  
   if(leader.territory>60){
     addEvt("ea",`🏛 VICTOIRE : ${leader.icon} ${leader.name} contrôle ${leader.territory.toFixed(0)}% du territoire !`);
     T.civFactions.forEach((f,fi)=>{
@@ -6240,10 +5732,9 @@ function updateCivilisation(){
     });
   }
 }
-
 function renderCivilisation(el){
   if(!T.civFactions){el.innerHTML="";return;}
-  // Territory map bar
+  
   const mapBars=T.civFactions.map(f=>`<div style="flex:${f.territory.toFixed(1)};background:${f.color};height:100%;transition:flex .5s"></div>`).join("");
   const factionHtml=T.civFactions.map(f=>{
     const atWar=T.civWars.some(w=>w.includes(f.id));
@@ -6268,10 +5759,6 @@ function renderCivilisation(el){
   ${factionHtml}
   ${T.civWars.length>0?`<div style="font-size:7px;color:#ff6b6b;margin-top:4px">⚔️ ${T.civWars.length} guerre(s) active(s)</div>`:""}`;
 }
-
-/* ══════════════════════════════════════════════════
-   v17 — MODE OBSERVATOIRE (6 arènes parallèles)
-══════════════════════════════════════════════════ */
 const OBS_VARIANTS=[
   {label:"Standard",     noiseBonus:0,    alphaBonus:0,   payMod:1.0},
   {label:"Bruit élevé",  noiseBonus:0.15, alphaBonus:0,   payMod:1.0},
@@ -6280,12 +5767,10 @@ const OBS_VARIANTS=[
   {label:"Coopération forcée",noiseBonus:0,alphaBonus:0,  payMod:0.7, tMod:0.6},
   {label:"Chaos pur",    noiseBonus:0.25, alphaBonus:0.05,payMod:1.0},
 ];
-
 function makeMiniPay(T0,mod,tMod){
   const t=T0.T*(tMod||1),r=T0.R,p=T0.P,s=T0.S;
   return{coop:{coop:[r*mod,r*mod],betray:[s*mod,t*mod]},betray:{coop:[t*mod,s*mod],betray:[p*mod,p*mod]}};
 }
-
 function initObservatoire(){
   const pay0=T.pendingPayoff||{R:3,T:5,P:1,S:0};
   T.obsArenas=OBS_VARIANTS.map((v,vi)=>{
@@ -6305,9 +5790,7 @@ function initObservatoire(){
   T.obsGens=0;
   addEvt("ea","🔭 OBSERVATOIRE — 6 arènes lancées simultanément !");
 }
-
 function nMoveObs(m,noise){return noise>0&&Math.random()<noise?(m==="coop"?"betray":"coop"):m;}
-
 function tickObservatoire(){
   T.obsArenas.forEach(arena=>{
     arena.gen++;
@@ -6315,7 +5798,7 @@ function tickObservatoire(){
     const N=strats.length;
     const fit=new Float64Array(N);
     const pay=arena.pay;
-    // Play each pair
+    
     for(let i=0;i<N;i++){
       for(let j=i+1;j<N;j++){
         const A=strats[i],B=strats[j];
@@ -6334,14 +5817,14 @@ function tickObservatoire(){
         B.coopRate=B.coopRate*0.92+hB.filter(x=>x==="coop").length/rmatch*0.08;
       }
     }
-    // Replicator
+    
     const avgFit=fit.reduce((s,x)=>s+x,0)/N;
     strats.forEach((s,i)=>{
       s.pop=Math.max(0.5,s.pop*(1+arena.alpha*(fit[i]-avgFit))+(Math.random()-0.5)*T.DRIFT*T.POP*0.5);
     });
     const totalPop=strats.reduce((s,x)=>s+x.pop,0);
     strats.forEach(s=>s.pop=s.pop/totalPop*T.POP);
-    // Track leader
+    
     const ldr=strats.reduce((b,s)=>s.pop>b.pop?s:b,strats[0]);
     arena.leader=ldr.idx;
     if(arena.gen%10===0){
@@ -6350,16 +5833,15 @@ function tickObservatoire(){
     }
   });
   T.obsGens++;
-  // Tally wins
+  
   const wins=new Array(T.N).fill(0);
   T.obsArenas.forEach(a=>wins[a.leader]++);
   T.obsWins=wins;
-  // Update banner
+  
   const metaLeader=wins.indexOf(Math.max(...wins));
   const ml=document.getElementById("obs-meta-leader");
   if(ml&&T.strats[metaLeader])ml.textContent=`${T.strats[metaLeader].e} ${T.strats[metaLeader].name}`;
 }
-
 function renderObservatoire(el){
   if(!T.obsArenas){el.innerHTML="";return;}
   const arenaHtml=T.obsArenas.map((arena,vi)=>{
@@ -6376,7 +5858,7 @@ function renderObservatoire(el){
       <div style="font-size:6px;color:var(--muted);margin-top:3px">${ldr?ldr.e+" "+ldr.name:""}</div>
     </div>`;
   }).join("");
-  // Meta ranking
+  
   const metaSorted=[...Array(T.N).keys()].sort((a,b)=>(T.obsWins[b]||0)-(T.obsWins[a]||0));
   const maxWins=T.obsWins[metaSorted[0]]||1;
   const metaHtml=metaSorted.slice(0,6).map((i,rank)=>{
@@ -6393,7 +5875,6 @@ function renderObservatoire(el){
   <div style="font-size:6.5px;color:var(--muted);letter-spacing:.1em;margin-bottom:4px">MÉTA-CLASSEMENT</div>
   <div class="obs-meta">${metaHtml}</div>`;
 }
-
 function renderCoevo(el){
   if(!T||!T.coevoLineage){el.innerHTML="";return;}
   const sorted=[...T.strats].sort((a,b)=>b.pop-a.pop);
@@ -6424,13 +5905,11 @@ function renderCoevo(el){
     </div>`;
   }).join("")}`;
 }
-
-/* Hook chronicle into milestone detection */
 const _v17_checkMilestones=checkMilestones;
 checkMilestones=function(){
   _v17_checkMilestones();
   if(!T)return;
-  // Pull latest milestone into chronicle
+  
   const last=T.milestones?.[T.milestones.length-1];
   if(last&&last.gen===T.gen){
     const clean=last.txt.replace(/<[^>]+>/g,"");
@@ -6438,9 +5917,6 @@ checkMilestones=function(){
     addChronicle(clean,type);
   }
 };
-/* ══════════════════════════════════════════════════
-   MOTEUR DE DIDACTICIEL
-══════════════════════════════════════════════════ */
 const tutorialSteps = [
   { target: null, title: "Bienvenue dans Arena X", text: "Ce didacticiel va vous guider pas à pas pour préparer votre premier tournoi évolutionnaire." },
   { target: "#grid-structure", title: "1. La Structure", text: "Ici, vous choisissez le format du tournoi. 'Round Robin' (chacun affronte tout le monde) est parfait pour commencer et évaluer la force brute." },
@@ -6449,37 +5925,31 @@ const tutorialSteps = [
   { target: "#char-grid", title: "4. Le Casting", text: "Voici toutes les stratégies disponibles. Pour faire simple, cliquez sur le bouton '🎲 Aléatoire' juste au-dessus pour remplir l'arène." },
   { target: ".bg.bxl", title: "5. Lancement", text: "Tout est prêt. Cliquez sur '▶ LANCER' en haut à droite pour démarrer la simulation et observer l'évolution en temps réel !" }
 ];
-
 let currentTutStep = 0;
-
 function startTutorial() {
   currentTutStep = 0;
   document.getElementById("tut-overlay").style.display = "block";
   showTutStep(currentTutStep);
 }
-
 function showTutStep(index) {
-  // Enlever la surbrillance précédente
+  
   document.querySelectorAll('.tut-highlight').forEach(el => el.classList.remove('tut-highlight'));
-
   const step = tutorialSteps[index];
   const box = document.getElementById("tut-box");
-
   document.getElementById("tut-title").textContent = step.title;
   document.getElementById("tut-text").textContent = step.text;
   document.getElementById("tut-prev").style.visibility = index > 0 ? "visible" : "hidden";
   document.getElementById("tut-next").textContent = index === tutorialSteps.length - 1 ? "Terminer" : "Suivant ▶";
-
   if (step.target) {
     const targetEl = document.querySelector(step.target);
     if (targetEl) {
       targetEl.classList.add('tut-highlight');
-      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); // Fait défiler jusqu'à l'élément
+      targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' }); 
       
-      setTimeout(() => { // Petit délai pour attendre le scroll
+      setTimeout(() => { 
         const rect = targetEl.getBoundingClientRect();
         box.style.transform = "none";
-        // Positionnement intelligent de la boîte
+        
         let topPos = rect.bottom + 15;
         if (topPos + 150 > window.innerHeight) topPos = Math.max(10, rect.top - 160); 
         box.style.top = topPos + "px";
@@ -6487,13 +5957,12 @@ function showTutStep(index) {
       }, 300);
     }
   } else {
-    // Si pas de cible, on centre la boîte au milieu de l'écran
+    
     box.style.top = "40%";
     box.style.left = "50%";
     box.style.transform = "translate(-50%, -50%)";
   }
 }
-
 function nextTut() {
   if (currentTutStep < tutorialSteps.length - 1) {
     currentTutStep++;
@@ -6502,14 +5971,12 @@ function nextTut() {
     endTutorial();
   }
 }
-
 function prevTut() {
   if (currentTutStep > 0) {
     currentTutStep--;
     showTutStep(currentTutStep);
   }
 }
-
 function endTutorial() {
   document.getElementById("tut-overlay").style.display = "none";
   document.querySelectorAll('.tut-highlight').forEach(el => el.classList.remove('tut-highlight'));
