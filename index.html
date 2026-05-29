@@ -5470,7 +5470,7 @@ function exportResults(){
     params:{alpha:T.ALPHA,noise:T.NOISE,drift:T.DRIFT,pop:T.POP,rmatch:T.RMATCH}
   };
   const blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
-  const url=URL.createObjectURL(blob);a
+  const url=URL.createObjectURL(blob);
   const a=document.createElement("a");
   a.href=url;a.download=`axelrod_sandbox_${new Date().toISOString().slice(0,10)}.json`;
   a.click();URL.revokeObjectURL(url);
