@@ -3496,6 +3496,7 @@ function renderSide(){
   if(T.structure === "bracket") renderBracket(el);
   if(T.structure === "duel" || T.structure === "duel2") renderDuel(el);
   if(T.structure === "territoire") renderTerritoire(el);
+  if(T.structure === "reseau") renderReseau(el);
   if(T.structure === "nexus") renderNexus(el);
   if(T.structure === "observatoire") renderObservatoire(el);
 
@@ -4409,7 +4410,96 @@ function reseauStep(pay){
   const total = newPop.reduce((a,b)=>a+b, 0) || 1;
   T.strats.forEach((s,i) => { s.pop = newPop[i] / total * T.POP; });
 }
+
+function renderReseau(el) {
+  if (!T || !T.graph) return;
+  // Prépare le conteneur HTML pour le canvas
+  el.innerHTML = `
+    <div class="reseau-banner" style="margin-bottom:6px; justify-content:center;">🕸️ Graphe "Small-World"</div>
+    <div class="netgraph-wrap"><canvas id="net-cv"></canvas></div>
+    <div style="font-size:7px; color:var(--muted); margin-top:4px; text-align:center; margin-bottom:8px;">Taille du nœud = Population actuelle</div>
+  `;
+  // Laisse le temps au DOM de créer le canvas avant de le dessiner
+  setTimeout(drawNetGraph, 20);
+}
+
+function drawNetGraph() {
+  const cv = document.getElementById("net-cv");
+  if (!cv || !T || !T.graph) return;
   
+  const W = cv.offsetWidth || 280, H = cv.offsetHeight || 130;
+  if (cv.width !== W || cv.height !== H) { cv.width = W; cv.height = H; }
+  const ctx = cv.getContext("2d");
+  ctx.clearRect(0, 0, W, H);
+  
+  // 1. Initialisation spatiale du graphe avec un algorithme de force (exécuté une seule fois par partie)
+  if (!T.nodesPos) {
+    T.nodesPos = [];
+    // Placement initial aléatoire
+    for (let i=0; i<T.N; i++) {
+      T.nodesPos.push({ x: W/2 + (Math.random()-0.5)*W*0.5, y: H/2 + (Math.random()-0.5)*H*0.5 });
+    }
+    
+    // Algorithme de simulation physique (100 étapes)
+    for (let step=0; step<100; step++) {
+      for (let i=0; i<T.N; i++) {
+        for (let j=i+1; j<T.N; j++) {
+           let dx = T.nodesPos[j].x - T.nodesPos[i].x;
+           let dy = T.nodesPos[j].y - T.nodesPos[i].y;
+           let dist = Math.sqrt(dx*dx + dy*dy) || 1;
+           
+           // Répulsion globale (tous les nœuds se repoussent)
+           let force = -150 / (dist*dist); 
+           // Attraction locale (les voisins s'attirent)
+           if (T.graph[i].includes(j)) force += 0.06 * (dist - 40); 
+           
+           let fx = (dx/dist)*force, fy = (dy/dist)*force;
+           T.nodesPos[i].x += fx; T.nodesPos[i].y += fy;
+           T.nodesPos[j].x -= fx; T.nodesPos[j].y -= fy;
+        }
+      }
+    }
+    
+    // Centrage et mise à l'échelle finale pour que le graphe tienne bien dans le canvas
+    let minX=Infinity, maxX=-Infinity, minY=Infinity, maxY=-Infinity;
+    T.nodesPos.forEach(p => { minX=Math.min(minX,p.x); maxX=Math.max(maxX,p.x); minY=Math.min(minY,p.y); maxY=Math.max(maxY,p.y); });
+    let scale = Math.min((W-30)/(maxX-minX||1), (H-30)/(maxY-minY||1));
+    let cx = (minX+maxX)/2, cy = (minY+maxY)/2;
+    T.nodesPos.forEach(p => { p.x = W/2 + (p.x-cx)*scale; p.y = H/2 + (p.y-cy)*scale; });
+  }
+  
+  // 2. Dessin des liens (Edges)
+  ctx.lineWidth = 1;
+  for (let i=0; i<T.N; i++) {
+    T.graph[i].forEach(n => {
+      if (n > i) { // Pour ne pas dessiner la ligne 2 fois
+        ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+        ctx.beginPath(); 
+        ctx.moveTo(T.nodesPos[i].x, T.nodesPos[i].y); 
+        ctx.lineTo(T.nodesPos[n].x, T.nodesPos[n].y); 
+        ctx.stroke();
+      }
+    });
+  }
+  
+  // 3. Dessin des nœuds (Nodes)
+  for (let i=0; i<T.N; i++) {
+    const p = T.nodesPos[i];
+    const s = T.strats[i];
+    
+    // Le rayon du nœud dépend dynamiquement de sa population en temps réel
+    const popPct = s.pop / T.POP;
+    const radius = 2 + (popPct * 18); 
+    
+    ctx.beginPath(); 
+    ctx.arc(p.x, p.y, radius, 0, Math.PI*2);
+    ctx.fillStyle = s.color; 
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.4)"; 
+    ctx.lineWidth = 1; 
+    ctx.stroke();
+  }
+}
 /* ══════════════════════════════════════════════════
    MUTATION
 ══════════════════════════════════════════════════ */
