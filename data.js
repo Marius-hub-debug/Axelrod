@@ -1,3 +1,4 @@
+
 const canvas=document.getElementById("cv");
 const ctx=canvas.getContext("2d");
 const coopCanvas=document.getElementById("coop-cv");
